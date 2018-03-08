@@ -1,3 +1,7 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/service_container.html
+imports:
+    - { resource: ./packages/admin_blocks.yaml }
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
@@ -23,13 +27,6 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
-
-    admin.goods:
-        class: App\Admin\GoodsAdmin
-        arguments: [~, App\Entity\Goods, ~]
-        tags:
-            - { name: sonata.admin, group: Товары, manager_type: orm, label: Товары }
-        public: true
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
