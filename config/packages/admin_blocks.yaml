@@ -1,0 +1,14 @@
+services:
+    admin.goods:
+        class: App\Admin\GoodsAdmin
+        arguments: [~, App\Entity\Goods, ~]
+        tags:
+            - { name: sonata.admin, group: Товары, manager_type: orm, label: Товары }
+        public: true
+
+    admin.stake_offering:
+        class: App\Admin\StakeOfferingAdmin
+        arguments: [~, App\Entity\StakeOffering, ~]
+        tags:
+            - { name: sonata.admin, group: Ставки, manager_type: orm, label: Ставки }
+        public: true
