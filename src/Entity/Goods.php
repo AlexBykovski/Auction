@@ -19,7 +19,7 @@ class Goods
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=false)
      */
     private $mainPhoto;
 
@@ -30,17 +30,17 @@ class Goods
     private $photos;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 100})
+     * @ORM\Column(type="integer", options={"default" : 100}, nullable=false)
      */
     private $cost = 100;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=false)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=false)
      */
     private $characteristics;
 
@@ -55,7 +55,7 @@ class Goods
     private $categories;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $startAt;
 
