@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Вход</title>
+
+    <!-- Bootstrap -->
+    <link href="{{ asset('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body class="login">
+    <div class="container">
+
+        {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <form  action="{{ path("fos_user_security_check") }}" method="post"
+               class="form-signin" style="max-width: 330px; padding: 15px; margin: 0 auto;">
+            {% if csrf_token %}
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+            {% endif %}
+
+            <h1>Авторизация</h1>
+
+            <label for="username" class="sr-only">Логин</label>
+            <input type="text" class="form-control" placeholder="Логин" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" />
+            <label for="password" class="sr-only">Пароль</label>
+            <input type="password" class="form-control" placeholder="Пароль" id="password" name="_password" required="required" autocomplete="current-password" />
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+        </form>
+
+    </div>
+</body>
+</html>
