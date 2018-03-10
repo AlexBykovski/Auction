@@ -1,7 +1,7 @@
 services:
-    admin.goods:
-        class: App\Admin\GoodsAdmin
-        arguments: [~, App\Entity\Goods, ~, "@app.file_upload", '%upload_image_directory%']
+    admin.product:
+        class: App\Admin\ProductAdmin
+        arguments: [~, App\Entity\Product, ~, "@app.file_upload", '%upload_image_directory%']
         tags:
             - { name: sonata.admin, group: Товары, manager_type: orm, label: Товары }
         public: true
