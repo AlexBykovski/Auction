@@ -9,6 +9,7 @@ class FileUpload
 {
     const GENERAL = 'general';
     const GOODS = 'goods';
+    const STAKE_OFFERING = 'stake_offering';
 
     private static $allowedMimeTypes = array(
         'image/jpeg',

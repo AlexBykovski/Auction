@@ -76,7 +76,7 @@ class GoodsAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('name', TextType::class, ['label' => 'Название']);
+        $listMapper->addIdentifier('name', TextType::class, ['label' => 'Название', 'sortable' => false]);
     }
 
     protected function getCategoryChoices (){
