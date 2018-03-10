@@ -1,14 +1,14 @@
 services:
     admin.goods:
         class: App\Admin\GoodsAdmin
-        arguments: [~, App\Entity\Goods, ~]
+        arguments: [~, App\Entity\Goods, ~, "@app.file_upload", '%upload_image_directory%']
         tags:
             - { name: sonata.admin, group: Товары, manager_type: orm, label: Товары }
         public: true
 
     admin.stake_offering:
         class: App\Admin\StakeOfferingAdmin
-        arguments: [~, App\Entity\StakeOffering, ~]
+        arguments: [~, App\Entity\StakeOffering, ~, "@app.file_upload", '%upload_image_directory%']
         tags:
             - { name: sonata.admin, group: Ставки, manager_type: orm, label: Ставки }
         public: true

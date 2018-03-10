@@ -6,6 +6,8 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'ru'
+    upload_directory: '%kernel.project_dir%/public/images'
+    upload_image_directory: '/images/'
 
 services:
     # default configuration for services in *this* file
@@ -28,6 +30,10 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    app.file_upload:
+        class:  App\Upload\FileUpload
+        arguments: ['@images_filesystem']
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 fos_user:
@@ -37,3 +43,14 @@ fos_user:
     from_email:
         address: "hello@aquanote.com"
         sender_name: "AquaNote Postman"
+
+knp_gaufrette:
+    adapters:
+        local_storage:
+            local:
+                directory: '%upload_directory%'
+
+    filesystems:
+        bar:
+            adapter:    local_storage
+            alias:      images_filesystem
