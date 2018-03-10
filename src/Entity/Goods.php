@@ -25,7 +25,7 @@ class Goods
 
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $photos;
 
@@ -50,7 +50,7 @@ class Goods
     private $conditions;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $categories;
 
@@ -109,6 +109,13 @@ class Goods
     public function setPhotos(array $photos)
     {
         $this->photos = serialize($photos);
+    }
+
+    public function addPhoto(string $photo){
+        $photos = $this->getPhotos();
+        $photos[] = $photo;
+
+        $this->setPhotos($photos);
     }
 
     /**
@@ -188,9 +195,9 @@ class Goods
     }
 
     /**
-     * @param array $categories
+     * @param mixed $categories
      */
-    public function setCategories(array $categories)
+    public function setCategories($categories)
     {
         $this->categories = serialize($categories);
     }
