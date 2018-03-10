@@ -7,9 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="goods")
+ * @ORM\Table(name="product")
  */
-class Goods
+class Product
 {
     /**
      * @ORM\Id

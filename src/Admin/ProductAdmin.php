@@ -2,7 +2,7 @@
 
 namespace App\Admin;
 
-use App\Entity\Goods;
+use App\Entity\Product;
 use App\Upload\FileUpload;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class GoodsAdmin extends AbstractAdmin
+class ProductAdmin extends AbstractAdmin
 {
     protected $uploader = null;
     protected $uploadDirectory = null;
@@ -26,13 +26,13 @@ class GoodsAdmin extends AbstractAdmin
         $this->uploader = $uploader;
         $this->uploadDirectory = $uploadDirectory;
 
-        $this->uploader->setFolder(FileUpload::GOODS);
+        $this->uploader->setFolder(FileUpload::PRODUCT);
     }
 
     protected function configureFormFields(FormMapper $formMapper)
     {
         $isEditAction = $this->isCurrentRoute('edit');
-        /** @var Goods $goods */
+        /** @var Product $goods */
         $goods = $this->getSubject();
 
         $formMapper->add('name', TextType::class, ['label' => 'Название', 'required' => true]);
@@ -64,14 +64,14 @@ class GoodsAdmin extends AbstractAdmin
         ]);
     }
 
-    public function prePersist($goods)
+    public function prePersist($product)
     {
-        $this->uploadFiles($this->getForm(), $goods);
+        $this->uploadFiles($this->getForm(), $product);
     }
 
-    public function preUpdate($goods)
+    public function preUpdate($product)
     {
-        $this->uploadFiles($this->getForm(), $goods);
+        $this->uploadFiles($this->getForm(), $product);
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -87,7 +87,7 @@ class GoodsAdmin extends AbstractAdmin
         ];
     }
 
-    protected function uploadFiles(Form $form, Goods $goods){
+    protected function uploadFiles(Form $form, Product $product){
         $mainFile = $form->get('mainPhotoFile')->getData();
         $otherFiles = $form->get('photosFiles')->getData();
         $otherFiles = is_array($otherFiles) ? $otherFiles : ($otherFiles instanceof UploadedFile ? [$otherFiles] : []);
@@ -95,7 +95,7 @@ class GoodsAdmin extends AbstractAdmin
         if($mainFile){
             $path = $this->uploader->upload($mainFile);
 
-            $goods->setMainPhoto($path);
+            $product->setMainPhoto($path);
         }
 
         if(count($otherFiles)){
@@ -106,7 +106,7 @@ class GoodsAdmin extends AbstractAdmin
                 $photos[] = $this->uploader->upload($file);
             }
 
-            $goods->setPhotos($photos);
+            $product->setPhotos($photos);
         }
     }
 

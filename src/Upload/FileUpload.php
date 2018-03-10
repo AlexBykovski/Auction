@@ -8,7 +8,7 @@ use Gaufrette\Filesystem;
 class FileUpload
 {
     const GENERAL = 'general';
-    const GOODS = 'goods';
+    const PRODUCT = 'product';
     const STAKE_OFFERING = 'stake_offering';
 
     private static $allowedMimeTypes = array(
