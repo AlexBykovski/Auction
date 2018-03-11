@@ -11,6 +11,7 @@ class FileUpload
     const PRODUCT = 'product';
     const STAKE_OFFERING = 'stake_offering';
     const SUPPORT_QUESTION = 'support_question';
+    const ABOUT_US_PAGE = 'about_us_page';
 
     private static $allowedMimeTypes = array(
         'image/jpeg',

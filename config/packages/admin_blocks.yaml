@@ -33,3 +33,10 @@ services:
         tags:
             - { name: sonata.admin, group: Пользователи, manager_type: orm, label: Вопросы }
         public: true
+
+    admin.general.about_us:
+        class: App\Admin\AboutUsPageAdmin
+        arguments: [~, App\Entity\AboutUsPage, ~, "@app.file_upload", '%upload_image_directory%']
+        tags:
+            - { name: sonata.admin, group: Общее, manager_type: orm, label: О нас }
+        public: true
