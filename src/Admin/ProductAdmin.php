@@ -20,6 +20,9 @@ class ProductAdmin extends AbstractAdmin
     protected $uploader = null;
     protected $uploadDirectory = null;
 
+    protected $baseRouteName = 'admin_app_product';
+    protected $baseRoutePattern = 'product';
+
     public function __construct(string $code, string $class, string $baseControllerName, FileUpload $uploader, $uploadDirectory)
     {
         parent::__construct($code, $class, $baseControllerName);
