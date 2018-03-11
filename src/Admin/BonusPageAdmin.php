@@ -4,18 +4,14 @@ namespace App\Admin;
 
 use App\Entity\Bonus;
 use App\Entity\BonusPage;
-use App\Entity\MainPage;
-use App\Entity\SoonProduct;
 use App\Upload\FileUpload;
 use App\Form\BonusForm;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
@@ -37,9 +33,6 @@ class BonusPageAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper)
     {
-        /** @var MainPage $main */
-        $main = $this->getSubject();
-
         $formMapper->add('titleDescription', TextType::class, ['label' => 'Заголовок', 'required' => false]);
         $formMapper->add('description', TextAreaType::class, ['label' => 'Описание', 'required' => false]);
         $formMapper->add('titleBonuses', TextType::class, ['label' => 'Заголовок бонусов', 'required' => false]);
