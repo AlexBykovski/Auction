@@ -85,11 +85,6 @@ class Product
     private $isProcessed = false;
 
     /**
-     * @ORM\Column(type="boolean", options={"default" : false})
-     */
-    private $isEnded = false;
-
-    /**
      * One Product has One ProductTimer.
      * @ORM\OneToOne(targetEntity="ProductTimer", mappedBy="product")
      * @ORM\JoinColumn(name="timer_id", referencedColumnName="id")
@@ -317,22 +312,6 @@ class Product
     public function setIsProcessed($isProcessed)
     {
         $this->isProcessed = $isProcessed;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIsEnded()
-    {
-        return $this->isEnded;
-    }
-
-    /**
-     * @param mixed $isEnded
-     */
-    public function setIsEnded($isEnded)
-    {
-        $this->isEnded = $isEnded;
     }
 
     /**
