@@ -47,3 +47,10 @@ services:
         tags:
             - { name: sonata.admin, group: Общее, manager_type: orm, label: Главная страница }
         public: true
+
+    admin.general.delivery_page:
+        class: App\Admin\DeliveryPageAdmin
+        arguments: [~, App\Entity\DeliveryPage, ~]
+        tags:
+            - { name: sonata.admin, group: Общее, manager_type: orm, label: Доставка }
+        public: true
