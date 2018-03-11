@@ -61,3 +61,10 @@ services:
         tags:
             - { name: sonata.admin, group: Общее, manager_type: orm, label: Вопросы и ответы }
         public: true
+
+    admin.general.bonus_page:
+        class: App\Admin\BonusPageAdmin
+        arguments: [~, App\Entity\BonusPage, ~, "@app.file_upload", '%upload_image_directory%']
+        tags:
+            - { name: sonata.admin, group: Общее, manager_type: orm, label: Бонусы }
+        public: true

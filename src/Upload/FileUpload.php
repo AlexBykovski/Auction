@@ -13,6 +13,7 @@ class FileUpload
     const SUPPORT_QUESTION = 'support_question';
     const ABOUT_US_PAGE = 'about_us_page';
     const MAIN_PAGE = 'main_page';
+    const BONUS = 'bonus';
 
     private static $allowedMimeTypes = array(
         'image/jpeg',
