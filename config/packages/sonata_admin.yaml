@@ -9,6 +9,11 @@ sonata_admin:
 
         role_super_admin: ROLE_SUPER_ADMIN
 
+    assets:
+        extra_stylesheets:
+            - build/css/admin.css
+
+
 sonata_block:
     default_contexts: [cms]
     blocks:
