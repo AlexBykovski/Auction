@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -51,14 +52,14 @@ class ProductAdmin extends AbstractAdmin
             ['label' => 'Фотографии', "multiple" => true, 'mapped' => false, 'required' => false],
             ["help" => $isEditAction ? $this->getMultipleImagesHelp($goods->getPhotos()) : ""]);
         $formMapper->add('cost', IntegerType::class, ['label' => 'Стоимость', 'required' => true]);
-        $formMapper->add('characteristics', TextType::class, ['label' => 'Характеристики', 'required' => true]);
+        $formMapper->add('characteristics', TextAreaType::class, ['label' => 'Характеристики', 'required' => true]);
         $formMapper->add('startAt', DateTimeType::class, [
             'label' => 'Начало',
             'widget' => 'single_text',
             'format' => 'yyyy.MM.dd HH:mm:ss',
             'required' => true
         ], ["help" => "<span>Формат гггг.мм.дд чч:мм:сс</span>"]);
-        $formMapper->add('conditions', TextType::class, ['label' => 'Условия ', 'required' => true]);
+        $formMapper->add('conditions', TextAreaType::class, ['label' => 'Условия ', 'required' => true]);
         $formMapper->add('categories', ChoiceType::class, [
             'label' => 'Категории',
             "choices" => $this->getCategoryChoices(),
