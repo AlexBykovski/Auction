@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,9 +35,18 @@ class BonusPage
 
     /**
      * One BonusPage has Many Bonuses.
-     * @ORM\OneToMany(targetEntity="Bonus", mappedBy="bonusPage")
+     * @ORM\OneToMany(targetEntity="Bonus", mappedBy="bonusPage", cascade={"persist"})
      */
     private $bonuses;
+
+    /**
+     * BonusPage constructor.
+     */
+    public function __construct()
+    {
+        $this->bonuses = new ArrayCollection();
+    }
+
 
     /**
      * @return mixed
@@ -116,5 +126,9 @@ class BonusPage
     public function setBonuses($bonuses)
     {
         $this->bonuses = $bonuses;
+    }
+
+    public function addBonus(Bonus $bonus){
+        $this->bonuses->add($bonus);
     }
 }

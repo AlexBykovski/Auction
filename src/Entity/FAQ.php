@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="question_page")
+ * @ORM\Table(name="faq")
  */
-class QuestionPage
+class FAQ
 {
     /**
      * @ORM\Id
