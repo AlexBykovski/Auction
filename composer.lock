@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ba5977a6f7426eff78b0d6fabedca57d",
+    "content-hash": "0935e3bc7d236631b49f81a7cc569caf",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -1150,6 +1150,71 @@
             ],
             "description": "Local adapter for Gaufrette",
             "time": "2017-06-17T15:13:50+00:00"
+        },
+        {
+            "name": "hillrange/ckeditor",
+            "version": "0.1.18",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/crayner/CKEditor.git",
+                "reference": "dc5cfcad3924bf60c4a138cd17698324bcd5d013"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/crayner/CKEditor/zipball/dc5cfcad3924bf60c4a138cd17698324bcd5d013",
+                "reference": "dc5cfcad3924bf60c4a138cd17698324bcd5d013",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^7.2",
+                "symfony/asset": "^3.4|^4.0",
+                "symfony/flex": "^1.0",
+                "symfony/form": "^3.4|^4.0",
+                "symfony/property-access": "^3.4|^4.0",
+                "symfony/templating": "^3.4|^4.0",
+                "symfony/twig-bridge": "^3.4|^4.0",
+                "symfony/twig-bundle": "^3.4|^4.0",
+                "symfony/validator": "^3.4|^4.0",
+                "twig/extensions": "^1.5",
+                "twig/twig": "^2.4"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1-dev"
+                },
+                "symfony": {
+                    "allow-contrib": "true"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hillrange\\CKEditor\\": "/"
+                },
+                "exclude-from-classmap": [
+                    "/tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eric GELOEN",
+                    "email": "geloen.eric@gmail.com"
+                },
+                {
+                    "name": "Craig Rayner",
+                    "email": "hillrange@craigrayner.com"
+                }
+            ],
+            "description": "CKEditor for Symfony 4.x",
+            "homepage": "http://www.craigrayner.com",
+            "keywords": [
+                "form"
+            ],
+            "time": "2018-03-03T20:47:53+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
