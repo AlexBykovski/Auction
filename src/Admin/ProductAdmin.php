@@ -4,6 +4,7 @@ namespace App\Admin;
 
 use App\Entity\Product;
 use App\Upload\FileUpload;
+use Hillrange\CKEditor\Form\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -51,14 +52,14 @@ class ProductAdmin extends AbstractAdmin
             ['label' => 'Фотографии', "multiple" => true, 'mapped' => false, 'required' => false],
             ["help" => $isEditAction ? $this->getMultipleImagesHelp($goods->getPhotos()) : ""]);
         $formMapper->add('cost', IntegerType::class, ['label' => 'Стоимость', 'required' => true]);
-        $formMapper->add('characteristics', TextType::class, ['label' => 'Характеристики', 'required' => true]);
+        $formMapper->add('characteristics', CKEditorType::class, ['label' => 'Характеристики', 'required' => true]);
         $formMapper->add('startAt', DateTimeType::class, [
             'label' => 'Начало',
             'widget' => 'single_text',
             'format' => 'yyyy.MM.dd HH:mm:ss',
             'required' => true
         ], ["help" => "<span>Формат гггг.мм.дд чч:мм:сс</span>"]);
-        $formMapper->add('conditions', TextType::class, ['label' => 'Условия ', 'required' => true]);
+        $formMapper->add('conditions', CKEditorType::class, ['label' => 'Условия ', 'required' => true]);
         $formMapper->add('categories', ChoiceType::class, [
             'label' => 'Категории',
             "choices" => $this->getCategoryChoices(),

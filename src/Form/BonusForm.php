@@ -3,9 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Bonus;
+use Hillrange\CKEditor\Form\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -22,7 +22,7 @@ class BonusForm extends AbstractType
                 'required' => false,
                 'mapped' => false,
             ])
-            ->add('description', TextAreaType::class, [
+            ->add('description', CKEditorType::class, [
                 'label_attr' => ['class' => 'control-label'],
                 'label' => 'Описание',
                 'required' => true,
