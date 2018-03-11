@@ -1,0 +1,19 @@
+{% if object.stakeDetail and object.stakeDetail.purchases %}
+<table class="space-cell">
+    <tr>
+        <th>Время</th>
+        <th>Сумма</th>
+        <th>Количество</th>
+    </tr>
+    {% for purchase in object.stakeDetail.purchases %}
+    <tr>
+        <td>{{ purchase.createdAt|date('d-m-Y H:i') }}</td>
+        <td>{{ purchase.count }}</td>
+        <td>{{ purchase.cost }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+<style>
+
+</style>

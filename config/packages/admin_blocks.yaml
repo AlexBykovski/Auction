@@ -19,3 +19,10 @@ services:
         tags:
             - { name: sonata.admin, group: Пользователи, manager_type: orm, label: Пользователи }
         public: true
+
+    admin.support_question:
+        class: App\Admin\SupportQuestionAdmin
+        arguments: [~, App\Entity\SupportQuestion, ~]
+        tags:
+            - { name: sonata.admin, group: Пользователи, manager_type: orm, label: Вопросы }
+        public: true
