@@ -12,3 +12,10 @@ services:
         tags:
             - { name: sonata.admin, group: Ставки, manager_type: orm, label: Ставки }
         public: true
+
+    admin.simple_user:
+        class: App\Admin\UserAdmin
+        arguments: [~, App\Entity\User, ~]
+        tags:
+            - { name: sonata.admin, group: Пользователи, manager_type: orm, label: Пользователи }
+        public: true

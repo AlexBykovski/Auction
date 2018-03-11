@@ -1,0 +1,13 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {% set sum = 0 %}
+
+    {% if object.stakeDetail and object.stakeDetail.purchases %}
+        {% for purchase in object.stakeDetail.purchases %}
+            {% set sum = sum + purchase.cost %}
+        {% endfor %}
+    {% endif %}
+
+    <div>{{ sum }}</div>
+{% endblock %}
