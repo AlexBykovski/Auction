@@ -97,14 +97,4 @@ class AboutUsPageAdmin extends AbstractAdmin
     protected function getImageHelp($image){
         return "<img style='max-height: 100px;' src='"  . $this->uploadDirectory . $image . "' />";
     }
-
-    protected function getMultipleImagesHelp($images){
-        $help = "";
-
-        foreach($images as $image){
-            $help .= $this->getImageHelp($image) . "<br />";
-        }
-
-        return $help;
-    }
 }

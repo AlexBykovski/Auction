@@ -40,3 +40,10 @@ services:
         tags:
             - { name: sonata.admin, group: Общее, manager_type: orm, label: О нас }
         public: true
+
+    admin.general.main_page:
+        class: App\Admin\MainPageAdmin
+        arguments: [~, App\Entity\MainPage, ~, "@app.file_upload", '%upload_image_directory%']
+        tags:
+            - { name: sonata.admin, group: Общее, manager_type: orm, label: Главная страница }
+        public: true
