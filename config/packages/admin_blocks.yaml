@@ -54,3 +54,10 @@ services:
         tags:
             - { name: sonata.admin, group: Общее, manager_type: orm, label: Доставка }
         public: true
+
+    admin.general.faq:
+        class: App\Admin\FAQAdmin
+        arguments: [~, App\Entity\FAQ, ~]
+        tags:
+            - { name: sonata.admin, group: Общее, manager_type: orm, label: Вопросы и ответы }
+        public: true
