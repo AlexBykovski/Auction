@@ -12,7 +12,7 @@ Encore
 
     // uncomment to define the assets of the project
     // .addEntry('js/app', './assets/js/app.js')
-     .addStyleEntry('css/admin', './assets/css/admin/table-space.css')
+     .addStyleEntry('css/admin', './assets/css/admin/admin.css')
 
     // uncomment if you use Sass/SCSS files
     // .enableSassLoader()

@@ -1,0 +1,21 @@
+nav.navbar.navbar-static-top{
+    display: none;
+}
+
+table.space-cell th, table.space-cell td{
+    padding-bottom: 8px;
+    padding-right: 20px;
+}
+
+div.custom-logout{
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    z-index: 99999999;
+}
+
+div.custom-logout span{
+    font-size: 20px;
+    padding-right: 23px;
+    color: darkslateblue
+}
