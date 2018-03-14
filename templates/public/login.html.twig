@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3">
+        <form class="form-horizontal login-form" method="post" novalidate enctype="multipart/form-data">
+            <h2 class="form-signin-heading">Авторизация</h2>
+
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                    <input class="form-control disable-autocomplete" placeholder="Телефон"
+                           type="text" id="phone" name="_phone"/>
+                </div>
+                <div class="col-md-1 col-sm-1 col-xs-1 or">или</div>
+                <div class="col-md-7 col-sm-7 col-xs-7">
+                    <input class="form-control disable-autocomplete" id="email" name="_email" placeholder="E-mail">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <input class="form-control disable-autocomplete" placeholder="Пароль" type="password" id="password"
+                           name="_password" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <input type="checkbox" id="remember_me" name="_remember_me" checked />
+                    <label for="remember_me">Запомнить меня</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <button class="btn btn-primary btn-block btn-lg" type="submit">Авторизоваться</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="widget-container"></div>
+{% endblock %}
