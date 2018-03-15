@@ -12,7 +12,9 @@
         "knplabs/knp-gaufrette-bundle": "~0.5",
         "sonata-project/admin-bundle": "^3.32",
         "sonata-project/doctrine-orm-admin-bundle": "^3.4",
+        "symfony/apache-pack": "^1.0",
         "symfony/console": "^4.0",
+        "symfony/dotenv": "^4.0",
         "symfony/flex": "^1.0",
         "symfony/framework-bundle": "^4.0",
         "symfony/lts": "^4@dev",
@@ -23,7 +25,6 @@
         "twig/extensions": "^1.5"
     },
     "require-dev": {
-        "symfony/dotenv": "^4.0",
         "symfony/web-server-bundle": "^4.0"
     },
     "config": {
