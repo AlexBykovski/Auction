@@ -6,7 +6,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  * @ORM\Table(name="product")
  */
 class Product
@@ -90,6 +90,11 @@ class Product
      * @ORM\JoinColumn(name="timer_id", referencedColumnName="id")
      */
     private $timer;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $endAt;
 
     /**
      * @return mixed
@@ -328,5 +333,21 @@ class Product
     public function setTimer($timer)
     {
         $this->timer = $timer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEndAt()
+    {
+        return $this->endAt;
+    }
+
+    /**
+     * @param mixed $endAt
+     */
+    public function setEndAt($endAt)
+    {
+        $this->endAt = $endAt;
     }
 }
