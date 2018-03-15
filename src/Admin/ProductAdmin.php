@@ -64,7 +64,8 @@ class ProductAdmin extends AbstractAdmin
             'label' => 'Категории',
             "choices" => $this->getCategoryChoices(),
             'expanded' => true,
-            'multiple' => true
+            'multiple' => true,
+            'required' => true,
         ]);
     }
 

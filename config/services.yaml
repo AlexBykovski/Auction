@@ -34,6 +34,12 @@ services:
         class:  App\Upload\FileUpload
         arguments: ['@images_filesystem']
 
+    App\Twig\ImageUrlExtension:
+        class: App\Twig\ImageUrlExtension
+        arguments: ['%upload_image_directory%']
+        tags:
+            - { name: twig.extension }
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 fos_user:
