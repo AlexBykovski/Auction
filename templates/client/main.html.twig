@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Slider</h1>
+    {% for slide in sliderImages %}
+        <img src="{{ image_url(slide) }}" style="max-height: 100px"/><br />
+    {% endfor %}
+
+    <h1>Активные аукционы</h1>
+    {% for auction in currentAuctions%}
+        <p>{{ auction.name }}</p>
+        <img src="{{ image_url(auction.mainPhoto) }}" style="max-height: 100px"/><br />
+    {% endfor %}
+
+    <h1>Soon product</h1>
+    {% if soonProduct %}
+        <p>{{ soonProduct.name }}</p>
+        <img src="{{ image_url(soonProduct.image) }}" style="max-height: 100px"/><br />
+        <p>{{ soonProduct.description }}</p>
+    {% endif %}
+
+    <h1>Завершённые аукционы</h1>
+    {% for auction in lastFinishedAuctions%}
+        <p>{{ auction.name }}</p>
+        <img src="{{ image_url(auction.mainPhoto) }}" style="max-height: 100px"/><br />
+    {% endfor %}
+{% endblock %}
