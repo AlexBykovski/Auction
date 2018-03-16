@@ -2,6 +2,20 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="description" content="SEO Description">
+        <meta name="keywords" content="keywords">
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <meta property="og:image" content="path/to/image.jpg">
+        <meta property="og:title" content="og_title"/>
+        <meta property="og:description" content="og_description"/>
+
+        <title>Title</title>
+        <link rel="shortcut icon" href="{{ image_url('default/favicon/favicon.ico') }}" type="image/x-icon">
+
+        <link rel="stylesheet" href="css/styles.min.css">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
