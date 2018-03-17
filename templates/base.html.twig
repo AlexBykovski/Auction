@@ -20,7 +20,381 @@
         {#{% block stylesheets %}{% endblock %}#}
     </head>
     <body>
+        {#start mobile sidebar#}
+        <div id="sidebarMenu" class="sidebar-menu">
+            <div class="sidebar-header">
+
+                <div class="sidebar-auth-controls-wrap">
+                    <!-- <a href="#" class="sidebar-logout-btn-block">
+                      <span class="text">Выход</span>
+                      <span class="icon"><i class="fa fa-sign-in"></i></span>
+                    </a> -->
+
+                    <div href="#login-modal" id="login-modal-trigger" class="sidebar-login-btn-block">
+                        <span class="text">Вход</span>
+                        <span class="icon"><i class="fa fa-sign-in"></i></span>
+                    </div>
+
+                    <div href="#register-modal" id="register-modal-trigger" class="sidebar-register-btn-block">
+                        <span class="text">Регистрация</span>
+                        <span class="icon"><i class="fa fa-address-card-o"></i></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="sidebar-main">
+
+                <!-- <div class="sidebar-profile-nav">
+                  <a href="#" class="profile-bar">
+                    <div class="profile-img"><img src="img/profile_avatar.png" alt=""></div>
+
+                    <div class="profile-name-wrap">
+                      <div class="name">Ivan007</div>
+                      <div class="profile-nav-text">Личный кабинет</div>
+                    </div>
+                  </a>
+
+                  <ul class="profile-nav">
+                    <li class="nav-item"><a href="#">Мои аукционы</a></li>
+                    <li class="nav-item"><a href="#">Ставки</a></li>
+                    <li class="nav-item"><a href="#">История</a></li>
+                    <li class="nav-item"><a href="#">Данные</a></li>
+                    <li class="nav-item"><a href="#">Помощь</a></li>
+                  </ul>
+                </div> -->
+
+                <ul class="main-sidebar-nav">
+                    <li class="nav-item active"><a href="#">Все аукционы</a></li>
+                    <li class="nav-item"><a href="#">Как это работает</a></li>
+                    <li class="nav-item"><a href="#">Доставка</a></li>
+                    <li class="nav-item"><a href="#">Вопросы-ответы</a></li>
+                    <li class="nav-item"><a href="#">Бонусы</a></li>
+                    <li class="nav-item"><a href="#">Помощь</a></li>
+                    <li class="nav-item"><a href="#">О нас</a></li>
+                </ul>
+
+            </div>
+        </div>
+    {#end mobile sidebar#}
+        <div id="main-wrap" class="main-wrapper">
+
+            <header class="main-header">
+                <div class="header-main">
+                    <div class="container">
+                        <div class="row">
+                            <div id="header-logo-col" class="header-main-col col-6 col-xs-4 col-md-3">
+
+                                <div class="logo-wrapper">
+                                    <a href="/" class="logo" style="background-image: url({{ image_url('default/logo.png') }});"></a>
+                                </div>
+
+                            </div>
+                            <!-- <div class="header-main-col col-2 d-none d-md-flex">
+
+                              <a href="#" class="header-logout-btn-block">
+                                <span class="text">Выход</span>
+                                <span class="icon"><i class="fa fa-sign-in"></i></span>
+                              </a>
+
+                            </div>
+                            <div class="header-main-col col-3 d-none d-md-flex">
+
+                              <div class="header-profile-nav">
+                                <a href="#" class="profile-img"><img src="img/profile_avatar.png" alt=""></a>
+
+                                <div class="profile-name-wrap">
+                                  <div class="name"><a href="#">Ivan007</a></div>
+                                  <div class="profile-nav-text"><a href="#">Личный кабинет</a> <i class="fa fa-caret-down"></i></div>
+                                </div>
+
+                                <ul class="profile-nav">
+                                  <li class="nav-item"><a href="#">Мои аукционы</a></li>
+                                  <li class="nav-item"><a href="#">Ставки</a></li>
+                                  <li class="nav-item"><a href="#">История</a></li>
+                                  <li class="nav-item"><a href="#">Данные</a></li>
+                                  <li class="nav-item"><a href="#">Помощь</a></li>
+                                </ul>
+                              </div>
+
+                            </div> -->
+                            <div class="header-main-col col-2 d-none d-md-flex">
+
+                                <a href="#login-modal" id="login-modal-trigger" class="header-login-btn-block">
+                                    <span class="text">Вход</span>
+                                    <span class="icon"><i class="fa fa-sign-in"></i></span>
+                                </a>
+
+                            </div>
+                            <div class="header-main-col col-3 d-none d-md-flex">
+
+                                <a href="#register-modal" id="register-modal-trigger" class="header-register-btn-block">
+                                    <span class="text">Регистрация</span>
+                                    <span class="icon"><i class="fa fa-address-card-o"></i></span>
+                                </a>
+
+                            </div>
+                            <div id="header-phone-col" class="header-main-col col-xs-5 col-md-4 order-3 order-xs-initial">
+
+                                <div class="header-phone-wrapper">
+                                    <a href="tel:80(29) 344-44-22" class="phone-wrapper">
+                                        <span class="icon"><i class="fa fa-phone"></i></span>
+                                        <span class="phone">80(29) 344-44-22</span>
+                                        <span id="phone-support-icon-wrap" class="icon"><img src="{{ image_url('default/callcenter_woman_icon.png') }}" alt=""></span>
+                                    </a>
+
+                                    <div class="phone-subcr">24 часа, звонок по Беларуси бесплатный</div>
+                                </div>
+
+                            </div>
+                            <div id="header-toggle-sidemenu-btn-col" class="header-main-col col-6 col-xs-3 order-2 order-xs-initial d-md-none">
+
+                                <div id="toggleSideMenuBtn" class="toggle-mnu-wrapper">
+                                    <div class="toggle-mnu active sandwich">
+                                        <div class="sw-topper"></div>
+                                        <div class="sw-bottom"></div>
+                                        <div class="sw-footer"></div>
+                                    </div>
+
+                                    <span class="toggle-mnu-text">Меню</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header-nav-wrapper d-none d-md-flex">
+                    <div class="container">
+                        <div class="row">
+
+                            <ul class="main-header-nav">
+                                <li class="nav-item active"><a href="#">Все аукционы</a></li>
+                                <li class="nav-item"><a href="#">Как это работает</a></li>
+                                <li class="nav-item"><a href="#">Доставка</a></li>
+                                <li class="nav-item"><a href="#">Вопросы-ответы</a></li>
+                                <li class="nav-item"><a href="#">Бонусы</a></li>
+                                <li class="nav-item"><a href="#">Помощь</a></li>
+                                <li class="nav-item"><a href="#">О нас</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </header>
         {% block body %}{% endblock %}
+            {#start footer#}
+            <footer class="main-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-4 col-lg-3 col-xl-2 offset-xl-1 order-lg-2">
+
+                            <div class="footer-column footer-nav-col">
+                                <div class="footer-nav-list-title">newAuction</div>
+
+                                <ul class="footer-nav-list">
+                                    <li class="nav-item"><a href="#">Все аукционы</a></li>
+                                    <li class="nav-item"><a href="#">Мои аукционы</a></li>
+                                    <li class="nav-item"><a href="#">Личный кабинет</a></li>
+                                    <li class="nav-item"><a href="#">Купить ставки</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="col-xs-4 col-lg-3 order-lg-3 mt-4 mt-xs-0">
+
+                            <div class="footer-column footer-nav-col">
+                                <div class="footer-nav-list-title">Важная информация</div>
+
+                                <ul class="footer-nav-list">
+                                    <li class="nav-item"><a href="#">Пользовательское соглашение</a></li>
+                                    <li class="nav-item"><a href="#">Условия купли-продажи</a></li>
+                                    <li class="nav-item"><a href="#">ООбработка персональных данных</a></li>
+                                    <li class="nav-item"><a href="#">Партнерская программа</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="col-xs-4 col-lg-3 order-lg-4 mt-4 mt-xs-0">
+
+                            <div class="footer-column footer-nav-col">
+                                <div class="footer-nav-list-title">Полезные ссылки</div>
+
+                                <ul class="footer-nav-list">
+                                    <li class="nav-item"><a href="#">Как это работает</a></li>
+                                    <li class="nav-item"><a href="#">Секреты успеха</a></li>
+                                    <li class="nav-item"><a href="#">Вопросы-ответы</a></li>
+                                    <li class="nav-item"><a href="#">Доставка</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-3 order-lg-1 mt-4 mt-lg-0">
+
+                            <div id="footer-logo-col" class="footer-column">
+                                <div class="footer-logo-wrapper">
+                                    <div class="logo-wrapper">
+                                        <a href="/" class="logo" style="background-image: url({{ image_url('default/logo.png') }});"></a>
+                                    </div>
+
+                                    <div class="footer-logo-subscr">Интернет-аукцион</div>
+                                </div>
+
+                                <div class="footer-socials-list-wrap">
+                                    <p class="socials-title">Присоединяйтесь к нам</p>
+
+                                    <ul class="socials-list">
+                                        <li><a target="_blank" class="social-link small"><i class="fa fa-vk"></i></a></li>
+                                        <li><a target="_blank" class="social-link small"><i class="fa fa-instagram"></i></a></li>
+                                        <li><a target="_blank" class="social-link small"><i class="fa fa-facebook"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            {#end footer#}
+
+            {#start login modal#}
+            <div id="login-modal" class="login-modal card-box mfp-hide mfp-with-anim">
+                <div class="box-body">
+                    <h6 class="login-title">Вход в систему</h6>
+
+                    <div class="login-controls">
+                        <fieldset class="form-group">
+                            <input type="text" class="fg-input input-block" placeholder="Введите логин или email">
+                        </fieldset>
+
+                        <fieldset class="form-group">
+                            <input type="text" class="fg-input input-block" placeholder="Введите пароль">
+                        </fieldset>
+                    </div>
+
+                    <div class="forget-pass-link-wrap">
+                        <a href="#">Забыли пароль?</a>
+                    </div>
+
+                    <div class="login-btn-wrap">
+                        <button class="bttn bttn-sm bttn-red">Войти</button>
+                    </div>
+
+                    <fieldset id="login-agree-fieldset-wrap" class="form-group">
+                        <label class="custom-checkbox checkbox-inline">
+                            Запомнить меня
+                            <input type="checkbox" checked>
+                            <span class="checkmark"></span>
+                        </label>
+                    </fieldset>
+                </div>
+            </div>
+            {#end login modal#}
+
+            {#start register modal#}
+            <div id="register-modal" class="register-modal card-box mfp-hide mfp-with-anim">
+                <div class="box-title">
+
+                    <div class="logo-wrapper">
+                        <span class="logo" style="background-image: url({{ image_url('default/logo.png') }});"></span>
+                    </div>
+
+                </div>
+
+                <div class="box-body">
+                    <div class="row no-gutters">
+                        <div id="register-col" class="col-xs-6">
+
+                            <div class="register-wrapper">
+                                <h6 class="register-title">Регистрация</h6>
+
+                                <div class="register-controls">
+                                    <fieldset class="form-group">
+                                        <input type="text" class="fg-input input-block" placeholder="Введите ваш email">
+                                    </fieldset>
+
+                                    <fieldset class="form-group">
+                                        <input type="text" class="fg-input input-block" placeholder="придумайте Имя(Ник)">
+                                    </fieldset>
+
+                                    <fieldset class="form-group">
+                                        <input type="text" class="fg-input input-block" placeholder="Придумайте пароль">
+                                    </fieldset>
+
+                                    <fieldset class="form-group">
+                                        <input type="text" class="fg-input input-block" placeholder="Повторите пароль">
+                                    </fieldset>
+
+                                    <fieldset id="register-agree-fieldset-wrap" class="form-group">
+                                        <label class="custom-checkbox">
+                                            С условиями согласен
+                                            <input type="checkbox" checked>
+                                            <span class="checkmark"></span>
+                                        </label>
+
+                                        <label class="custom-checkbox">
+                                            На обработку данных согласен
+                                            <input type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+
+                                        <label class="custom-checkbox">
+                                            Получать новости
+                                            <input type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </fieldset>
+                                </div>
+
+                                <div class="register-btn-wrap">
+                                    <button class="bttn bttn-sm bttn-red">Продолжить</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-xs-6">
+
+                            <div class="login-wrapper">
+                                <h6 class="login-title">Вход в систему</h6>
+
+                                <div class="login-controls">
+                                    <fieldset class="form-group">
+                                        <input type="text" class="fg-input input-block" placeholder="Введите логин или email">
+                                    </fieldset>
+
+                                    <fieldset class="form-group">
+                                        <input type="text" class="fg-input input-block" placeholder="Введите пароль">
+                                    </fieldset>
+                                </div>
+
+                                <div class="forget-pass-link-wrap">
+                                    <a href="#">Забыли пароль?</a>
+                                </div>
+
+                                <div class="login-btn-wrap">
+                                    <button class="bttn bttn-sm bttn-red">Войти</button>
+                                </div>
+
+                                <fieldset id="login-agree-fieldset-wrap" class="form-group">
+                                    <label class="custom-checkbox checkbox-inline">
+                                        Запомнить меня
+                                        <input type="checkbox" checked>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </fieldset>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {#end register modal#}
+
+            <span id="close-sidebar-btn"><i class="fa fa-close"></i></span>
+
+            <div id="to-top-btn" class="to-top"><i class="fa fa-angle-up"></i></div>
+
+        </div>
         {#{% block javascripts %}{% endblock %}#}
         <!--[if lt IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
