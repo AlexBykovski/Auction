@@ -13,14 +13,26 @@
         <meta property="og:description" content="og_description"/>
 
         <title>Title</title>
-        <link rel="shortcut icon" href="{{ image_url('default/favicon/favicon.ico') }}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{ image_url('favicon/favicon.ico') }}" type="image/x-icon">
 
-        <link rel="stylesheet" href="css/styles.min.css">
+        <link rel="stylesheet" href="/build/css/styles.min.css">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {#{% block stylesheets %}{% endblock %}#}
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {#{% block javascripts %}{% endblock %}#}
+        <!--[if lt IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- htmlbuild:js -->
+        {#<script type="text/javascript" src="js/libs.min.js"></script>#}
+        {#<script type="text/javascript" src="js/common.js"></script>#}
+        <script type="text/javascript" src="/build/js/scripts.min.js"></script>
+        <!-- endbuild -->
     </body>
 </html>
