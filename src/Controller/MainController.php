@@ -15,7 +15,7 @@ class MainController extends BaseController
     /**
      * @Route("/", name="homepage")
      */
-    public function indexAction(Request $request)
+    public function mainPageAction(Request $request)
     {
         /** @var MainPage $mainPage */
         $mainPage = $this->getDoctrine()->getRepository(MainPage::class)->findAll()[0];

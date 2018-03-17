@@ -1,0 +1,1552 @@
+@import "base"
+
+
+body
+  &.ishome
+    .main-header
+      margin-bottom: 0
+
+
+// --------- MAIN WRAPPER --------- //
+.main-wrapper
+  position: relative
+  &::after
+    position: absolute
+    content: ''
+    top: 0
+    right: 0
+    width: 0
+    height: 0
+    background-color: $sky-blue
+    opacity: 0
+    z-index: 998
+    cursor: pointer
+    transition: opacity 0.3s, width 0.1s 0.3s, height 0.1s 0.3s
+  &.sidebar-opened
+    #close-sidebar-btn
+      visibility: visible
+    &::after
+      width: 100%
+      height: 100%
+      opacity: .5
+      transition: opacity 0.3s
+  #close-sidebar-btn
+    position: fixed
+    top: 0
+    right: 0
+    top: 0
+    right: 0
+    visibility: hidden
+    padding: 10px
+    cursor: pointer
+    z-index: 999
+    transition: visibility .1s
+    i
+      font-size: 30px
+      color: #000
+      opacity: .4
+// -------------------------------- //
+
+
+// --- SANDWICH OPEN SIDEMENU BTN --- //
+.toggle-mnu-wrapper
+  display: flex
+  align-items: center
+  cursor: pointer
+  .toggle-mnu-text
+    color: #fff
+    font-weight: 700
+
+.toggle-mnu
+  position: relative
+  display: inline-block
+  z-index: 998
+
+$w: 26px // optimal width for this burger animation
+$h: 2px // optimal height for this burger animation
+$sp: 2.5px // spacing
+$p: 8px // padding
+$c: #fff // burger color
+
+.sandwich
+  width: $w + $p * 2
+  height: $h * 7 + $p * 2
+  padding: $p
+  cursor: pointer
+  .sw-topper
+    position: relative
+    width: $w 
+    height: $h
+    background: $c
+    border-radius: 10px
+  .sw-bottom
+    position: relative
+    width: $w
+    height: $h
+    top: $sp * 2
+    background: $c
+    border-radius: 10px
+  .sw-footer
+    position: relative
+    width: $w
+    height: $h
+    top: $sp * 4
+    background: $c
+    border-radius: 10px
+// ---------------------------------- //
+
+
+// ---------- MOBILE MENU --------- //
+.sidebar-menu
+  position: fixed
+  top: 0
+  left: -300px
+  z-index: 999
+  width: 300px
+  height: 100%
+  overflow-y: auto
+  background-color: #fff
+  font-weight: 300
+  background-color: lighten($steel-blue, 5%)
+  box-shadow: 0 0px 20px 0px $sky-blue
+  transition: left .3s ease
+  &.opened
+    left: 0
+  .sidebar-auth-controls-wrap
+    background: linear-gradient(to bottom, lighten($sky-blue, 5%), lighten($steel-blue, 5%))
+  // Sidebar auth controls
+  .sidebar-login-btn-block, .sidebar-register-btn-block, .sidebar-logout-btn-block
+    display: flex
+    padding: 5px
+    align-items: center
+    justify-content: center
+    text-decoration: none
+    cursor: pointer
+    border-bottom: 1px solid lighten($sky-blue, 5%)
+    .text
+      margin-right: 10px
+      font-size: 16px
+      font-weight: 700
+      color: $royal-blue
+      +mt(.1s)
+    .icon
+      i
+        font-size: 30px
+        color: $royal-blue
+        +mt(.1s)
+    &:hover
+      .text, .icon i
+        color: #fff
+
+  .sidebar-main
+    margin-top: 20px
+    .main-sidebar-nav
+      margin-top: 20px
+  // Sidebar profile nav
+  .sidebar-profile-nav
+    max-width: 80%
+    margin: 0 auto
+    .profile-bar
+      position: relative
+      display: flex
+      align-items: center
+      justify-content: center
+      padding: 8px
+      background-color: #689BB0
+      border-top-left-radius: 10px
+      border-top-right-radius: 10px
+      color: #fff
+      text-decoration: none
+      +mt(.2s)
+      &:hover
+        background-color: lighten(#689BB0, 3%)
+      .profile-img
+        display: inline-block
+        width: 45px
+        height: 45px
+        border-radius: 100%
+        overflow: hidden
+        text-align: center
+        text-decoration: none
+        img
+          max-width: 100%
+          max-height: 100%
+      .profile-name-wrap
+        flex: 1
+        margin-left: 15px
+        .name
+          font-size: 16px
+          font-weight: 700
+          a
+            text-decoration: none
+            &:hover
+              text-decoration: underline
+        .profile-nav-text
+          margin-top: 3px
+    .profile-nav
+      width: 100%
+      margin: 0
+      padding: 0
+      list-style-type: none
+      background-color: lighten(#3E89A9, 2%)
+      z-index: 9
+      border-bottom-left-radius: 10px
+      border-bottom-right-radius: 10px
+      .nav-item
+        a
+          display: block
+          padding: 7px 15px
+          color: #fff
+          text-decoration: none
+          text-align: center
+          border-left: 3px solid transparent
+          &:hover
+            background-color: #27C25D
+            border-color: darken(#27C25D, 10%)
+        &:not(:last-child)
+          border-bottom: 1px solid lighten(#3E89A9, 4%)
+        &:last-child
+          a
+            border-bottom-left-radius: 10px
+            border-bottom-right-radius: 10px
+  // Sidebar main nav
+  .main-sidebar-nav
+    margin: 0
+    padding: 0
+    list-style-type: none
+    .nav-item
+      display: block
+      &:not(:last-child)
+        border-bottom: 1px solid $sky-blue
+      a
+        display: block
+        padding: 8px 20px
+        color: #fff
+        font-size: 16px
+        line-height: 1
+        font-weight: 500
+        background-color: lighten($steel-blue, 5%)
+        text-decoration: none
+        text-align: center
+        +mt(.2s)
+        &:hover
+          background-color: darken($sky-blue, 4%)
+// -------------------------------- //
+
+
+// ------------ HEADER ------------ //
+.main-header
+  margin-bottom: 15px
+  background: linear-gradient(to bottom, $sky-blue, $steel-blue)
+
+  // Header main
+  .header-main
+    border-bottom: 1px solid $sky-blue
+    .row
+      align-items: stretch
+      .header-main-col
+        display: flex
+        align-items: center
+        justify-content: center
+        padding-top: 15px
+        padding-bottom: 15px
+        &:not(:last-child)
+          border-right: 1px solid $sky-blue
+    #header-toggle-sidemenu-btn-col
+      justify-content: flex-end
+    // Header auth controls
+    .header-login-btn-block, .header-register-btn-block, .header-logout-btn-block
+      display: flex
+      align-items: center
+      justify-content: center
+      text-decoration: none
+      cursor: pointer
+      .text
+        margin-right: 10px
+        font-size: 16px
+        font-weight: 700
+        color: $royal-blue
+        +mt(.1s)
+      .icon
+        i
+          font-size: 30px
+          color: $royal-blue
+          +mt(.1s)
+      &:hover
+        .text, .icon i
+          color: #fff
+    // Header profile nav block
+    .header-profile-nav
+      position: relative
+      display: flex
+      align-items: center
+      justify-content: center
+      padding: 6px
+      background-color: #689BB0
+      border-radius: 10px
+      color: #fff
+      +mt(.1s)
+      &:hover
+        border-bottom-left-radius: 0
+        border-bottom-right-radius: 0
+        .profile-nav
+          display: block
+      a
+        color: #fff
+      .profile-img
+        display: inline-block
+        width: 45px
+        height: 45px
+        border-radius: 100%
+        overflow: hidden
+        text-align: center
+        text-decoration: none
+        img
+          max-width: 100%
+          max-height: 100%
+      .profile-name-wrap
+        flex: 1
+        margin-left: 15px
+        .name
+          font-size: 16px
+          font-weight: 700
+          a
+            text-decoration: none
+            &:hover
+              text-decoration: underline
+        .profile-nav-text
+          margin-top: 3px
+          a
+            text-decoration: none
+            &:hover
+              text-decoration: underline
+      .profile-nav
+        display: none
+        width: 100%
+        position: absolute
+        top: 100%
+        left: 0
+        margin: 0
+        padding: 0
+        list-style-type: none
+        background-color: #3E89A9
+        z-index: 9
+        border-bottom-left-radius: 10px
+        border-bottom-right-radius: 10px
+        .nav-item
+          a
+            display: block
+            padding: 7px 15px
+            text-decoration: none
+            border-left: 3px solid transparent
+            color: #fff
+            &:hover
+              background-color: #27C25D
+              border-color: darken(#27C25D, 10%)
+          &:last-child
+            a
+              border-bottom-left-radius: 10px
+              border-bottom-right-radius: 10px
+    // Header phone block
+    .header-phone-wrapper
+      .phone-wrapper
+        display: flex
+        align-items: center
+        justify-content: center
+        text-decoration: none
+        .phone
+          margin: 0 10px
+          color: #fff
+          font-size: 24px
+          font-weight: 500
+        .icon
+          position: relative
+          top: 3px
+          .fa-phone
+            color: $lime-green
+            font-size: 25px
+        #phone-support-icon-wrap
+          img
+            width: 24px
+      .phone-subcr
+        text-align: center
+        color: #fff
+        font-size: 11px
+
+// Header nav
+.main-header-nav
+  margin: 0 auto
+  padding: 0
+  padding: 8px 0px
+  text-align: center
+  list-style-type: none
+  .nav-item
+    display: inline-block
+    margin-top: 5px
+    margin-bottom: 5px
+    &:not(:last-child)
+      margin-right: 15px
+    a
+      padding: .5px 6px
+      color: #fff
+      font-size: 16px
+      line-height: 1
+      font-weight: 500
+      text-decoration: none
+      border-radius: 8px
+      border: 1px solid transparent
+      +mt(.2s)
+      &:hover
+        background-color: darken($sky-blue, 4%)
+        border-color: lighten($slate-grey, 5%)
+
+// Logo
+.logo-wrapper
+  text-align: center
+
+.logo
+  display: inline-block
+  width: 200px
+  height: 40px
+  background-size: contain
+  background-repeat: no-repeat
+  background-position: center center
+// -------------------------------- //
+
+
+// ------ HEADER MAIN SLIDER ------ //
+.header-main-slider
+  .header-slide-wrapper
+    display: flex
+    align-items: center
+    justify-content: center
+    background-color: rgba(255, 255, 255, .7)
+    border-radius: 10px
+    .slide-content
+      padding: 10px 30px
+      flex: 0 0 100%
+      .slide-img-wrap
+        margin-top: 50px
+        .slide-img
+          display: inline-block
+          max-width: 90%
+          margin: 0 auto
+      .slide-main-welcome-block
+        padding: 80px 50px
+        background-image: url(../img/painted_bg.png)
+        background-size: contain
+        background-repeat: no-repeat
+        background-position: center center
+        text-align: center
+        .title
+          font-size: 36px
+          color: #fff
+        .welcome-block-btn
+          margin-top: 24px
+          padding: 6px 30px
+          border: 2px solid #fff
+          font-size: 20px
+          font-weight: 500
+      .slide-subscr-wrap
+        margin-top: 10px
+        .discount-sum-wrap
+          display: inline-block
+          position: relative
+          .sum
+            font-weight: 700
+            font-size: 140px
+            line-height: 110px
+            color: $red
+            .first-sign, .second-sign
+              display: inline-block
+            .second-sign
+              position: relative
+              top: 25px
+              margin-left: -35px
+          #percent-sign-img
+            position: absolute
+            top: -10px
+            right: -68px
+            width: 130px
+        #subscr-text
+          display: inline-block
+          margin-top: -25px
+          margin-left: 190px
+          font-size: 18px
+          font-weight: 500
+          #discount-text
+            display: block
+            margin-bottom: -6px
+            font-size: 30px
+            line-height: 30px
+            color: $red
+            letter-spacing: 1px
+  .owl-dots
+    position: absolute
+    top: 50%
+    right: 7px
+    transform: translateY(-50%)
+    .owl-dot
+      position: relative
+      display: block
+      margin: 5px 0
+      width: 12px
+      height: 12px
+      border: 2px solid $red
+      border-radius: 100%
+      opacity: .7
+      +mt(.2s)
+      &:hover
+        opacity: 1
+      &.active
+        background-color: $red
+        opacity: 1
+        &::before
+          content: ''
+          position: absolute
+          top: 3px
+          left: -14px
+          height: 2px
+          width: 12px
+          background-color: $red
+// -------------------------------- //
+
+
+// ------ PRODUCT OFFERS LIST ------ //
+#product-offers-list-sect
+  margin: 30px 0 55px
+  padding: 40px 0
+  position: relative
+  background: linear-gradient(to bottom, $sky-blue, $steel-blue)
+  &::before
+    content: ''
+    position: absolute
+    top: -30px
+    left: 0
+    background-image: url(../img/bg1_torned_border_top.png)
+    width: 100%
+    height: 44px
+  &::after
+    content: ''
+    position: absolute
+    bottom: -47px
+    left: 0
+    background-image: url(../img/bg1_torned_border_bottom.png)
+    width: 100%
+    height: 47px
+
+.product-offers-list-wrapper
+  .product-offers-list-filters-bar
+    display: flex
+    align-items: center
+    justify-content: space-between
+    .product-offers-sort-select
+      position: relative
+      padding-left: 10px
+      padding-right: 20px
+      appearance: none
+      border: none
+      outline: none
+      background-color: darken($sky-blue, 1%)
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAMAAABrrFhUAAAA4VBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+sqgLzAAAASnRSTlMAAQIDBAYHCQ0OEBESFBUWFxgaHCIlJiowMTU2ODlHSUtMTVteY2tsb3F0dXd8iYuSlJq1t7m8w8fIyszOz9fi5Obt7/P19/n7/X3aZyAAAANjSURBVBgZ7cGHYlVVFATQSQgRBcGNBVFULKAmg2LDFlTCWDL//0ECKhJ4SV655ZS9FlJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaXUpK3LNz7+dK9tn9/64M3zWOjVO7+7E9+9t4XnvfS1e/LrdRz3zh/uzFfn8Ixb7s9Pu3jqtnv0y3n863336fstPHH5yJ26gyd+cLdexyPvul/38MjP7thV4JJ7RuBD9+w34K67tosDdy3w0F17C3+5a9fwwF17A9+6axdBd20b192ze8DOkTt2E8CX7tfRLoCL7tceHtt3rw538Nj2fXfqGv7x8qG79An+c0Xu0D7+F3J3iGeF3BniuJC7Qjwv5I4QLwq5G8QiIXeCWCzkLhAnCbkDxMlCbh5xmpAbR5wu5KYRZwm5YcTZQm4WsYyQG0UsJ+QmEcsKuUHE8kJuDrGKkBtDrCbkphCrCrkhxOpCbgaxjpAbQawn5CYQ6wq5AcT6Qq4esYmQK0dsJuSqEZsKuWLE5kKuFjGEkCtFDCPkKhFDCblCxHBCrg4xpJArQwwr5KoQQwu5IsTwQq4GMYaQK0GMI+QqEGMJuQLEeEIuHjGmkAtHjCvkohFjC7lgxPhCLhYxhZALRUwj5CIRUwm5QMR0Qi4OMaWQC0NMK+SiEFMLuSDE9EIuBjGHkAtBzCPkIhBzCbkAxHxCnh0xp5BnRswr5FkRcwt5RsT8Qp4NUYKQZ0KUIeRZEKUIeQZEOUKeHFGSkCdGlCXkSRGlCXlCRHlCngxRopAnQpQp5EkQpQp5AkS5Qh4dUbKQR0aULeRREaULeURE+UIeDVGDkEdC1CHkURC1CHkERD1CHhxRk5AHRtQl5EERtQl5QER9Qh4MUaOQB0LUKeRBELUKeQBEvULeGFGzkDdE1C3kjRC1C3kDRP1CXhvRgpDXRLQh5LUQrQh5DUQ7Ql4Z0ZKQV0S0JeSVEK0JeQVEe0JeGtGikJdEtCnkpRCtCnkJRLtCPhPRspDPQLQt5FMRrQv5FET7Qj4R0YOQT0D0IeSFiF5cOfQCn6EfF+77BTfRk+09H/fja+jMK18c+amDG+jQztv73zz48+HB3Y8uIaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkppc38Dkv+iItb6i+YAAAAASUVORK5CYII=')
+      background-size: 8px 8px
+      background-repeat: no-repeat
+      background-position: right 6px center
+      font-weight: 700
+      text-transform: uppercase
+      color: #fff
+      cursor: pointer
+      &::after
+        content: '\f0d7'
+        position: absolute
+        top: 0
+        right: 0
+        width: 20px
+        height: 20px
+        font-family: 'FontAwesome'
+    .user-balance-wrap
+      color: #fff
+  .product-offers-list
+    .product-offer
+      margin-top: 50px
+  .product-offers-list-navi-wrapper
+    margin-top: 55px
+  .offers-navi-controls
+    float: right
+    .offer-nav-btn
+      position: relative
+      display: inline-block
+      width: 35px
+      height: 35px
+      border-radius: 100%
+      background-color: $red
+      text-decoration: none
+      cursor: pointer
+      i
+        position: absolute
+        top: 50%
+        left: 8px
+        transform: translateY(-50%)
+        color: $steel-blue
+        font-size: 20px
+      &.disabled
+        background-color: darken($red, 10%)
+        cursor: default
+        pointer-events: none
+      &.prev
+        margin-right: 40px
+
+.user-balance-wrap
+  font-weight: 700
+  font-size: 16px
+  #bet-count
+    color: $red
+
+// Product offer item
+.product-offer
+  position: relative
+  .box-body
+    padding-bottom: 0
+  .offer-present-label
+    position: absolute
+    top: -20px
+    left: -20px
+    img
+      width: 56px
+  .offer-new-label
+    position: absolute
+    top: 8px
+    right: 15%
+    img
+      width: 20px
+  .offer-img-wrap
+    margin: 0 auto
+    width: 70%
+    height: 150px
+    .offer-img
+      display: inline-block
+      width: 100%
+      height: 100%
+      background-size: contain
+      background-repeat: no-repeat
+      background-position: center center
+  .offer-title
+    margin-top: 12px
+    margin-bottom: 17px
+    text-align: center
+    color: $red
+    font-size: 16px
+    font-weight: 700
+    a
+      text-decoration: none
+      color: $red
+      font-weight: 700
+      font-size: 16px
+  .offer-time-to-end-box
+    margin-top: 15px
+  .offer-winner-msg
+    margin-top: 15px
+    margin-bottom: 7px
+    color: $red
+    font-weight: bold
+    text-align: center
+  .offer-end-date
+    margin-top: 15px
+    font-size: 14px
+    font-weight: 700
+    text-align: center
+  .offer-winner-name
+    margin-top: 10px
+    font-size: 16px
+    font-weight: 700
+    color: $red
+    text-align: center
+  .offer-controls
+    position: relative
+    top: 15px
+    display: flex
+    justify-content: center
+    .bttn
+      font-weight: 700
+      &:not(:last-child)
+        margin-right: 15px
+
+.offer-rate-sum-box, .offer-time-to-end-box
+  position: relative
+  padding: 3.5px 45px
+  border: 1px solid $light-grey
+  border-radius: 15px
+  text-align: center
+  font-size: 16px
+  font-weight: 700
+  &::before, &::after
+    position: absolute
+    width: 20px
+    height: 20px
+    background-size: contain
+    background-position: center center
+    background-repeat: no-repeat
+.offer-rate-sum-box
+  &::before
+    content: ''
+    top: 50%
+    left: 15px
+    transform: translateY(-50%)
+    background-image: url(../img/coins_icon.png)
+.offer-time-to-end-box
+  &::before
+    content: ''
+    top: 50%
+    left: 15px
+    transform: translateY(-50%)
+    background-image: url(../img/time_icon.png)      
+  &::after
+    content: ''
+    top: 50%
+    right: 15px
+    transform: translateY(-50%)
+    background-image: url(../img/time_limit_icon.png)
+// --------------------------------- //
+
+
+// ----- SOON AUCTION UPDATES ----- //
+#soon-auction-updates-info-sect
+  .sect-title
+    margin-bottom: 45px
+  .img-with-descr-wrap
+    margin: 0 auto
+
+.img-with-descr-wrap
+    margin: 0 auto
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 290px
+    height: 290px
+    border: 3px dashed $red
+    border-radius: 100%
+    .content
+      .title
+        color: $red
+        font-size: 16px
+        font-weight: 700
+        text-align: center
+// -------------------------------- //
+
+
+// ---- PRODUCT OFFERS CAROUSEL ---- //
+.product-offers-carousel
+  padding-bottom: 75px
+  .product-offer
+    margin: 20px
+    margin-bottom: 20px
+  .owl-nav
+    display: block !important
+    position: absolute
+    bottom: 0
+    right: 0
+    .owl-prev, .owl-next
+      position: relative
+      display: inline-block
+      width: 35px
+      height: 35px
+      border-radius: 100%
+      background-color: $red
+      text-decoration: none
+      cursor: pointer
+      i
+        position: absolute
+        top: 50%
+        left: 8px
+        transform: translateY(-50%)
+        color: #fff
+        font-size: 20px
+    .owl-prev
+      margin-right: 40px
+// --------------------------------- //
+
+
+.product-offer-inner-wrapper
+  .product-footer
+    margin-top: 30px
+
+.product-image-gallery-wrap
+  height: 100%
+  .box-body
+    padding-top: 40px
+  .product-title
+    margin-top: 20px
+    text-align: center
+    color: $red
+    font-size: 16px
+    font-weight: 700
+
+// Product image gallery
+.product-image-gallery
+  .gallery-slide
+    padding: 0 110px
+    .product-img-wrap
+      margin: 0 auto
+      text-align: center
+      img
+        display: inline-block
+        max-width: 100%
+  &:hover
+    .owl-nav
+      .owl-next, .owl-prev
+        opacity: 1
+      .owl-prev
+        left: 2%
+      .owl-next
+        right: 2%
+  .owl-nav
+    .owl-prev, .owl-next
+      position: absolute
+      top: 50%
+      transform: translateY(-50%)
+      display: inline-block
+      opacity: 0
+      transition: left .3s, right .3s, opacity .3s, background-color .25s, border .25s
+      i
+        position: relative
+        font-size: 40px
+        font-weight: 900
+        color: $red
+        +mt(.25s)
+      &:hover
+        i
+          color: darken($red, 10%)
+    .owl-prev
+      left: 2.5%
+      i
+        left: 2px
+    .owl-next
+      right: 2.5%
+      i
+        left: 6px
+
+#product-auction-bet-col
+  padding-left: 50px
+
+// Product betting form
+.product-auction-bet-form
+  height: 100%
+  border: 1px solid $sky-blue
+  .bet-form-main
+    padding: 20px
+    padding-bottom: 0
+  .bet-form-footer
+    padding: 20px
+    padding-top: 10px
+    border-top: 1px solid $ghost-white
+  .user-balance-wrap
+    margin-bottom: 20px
+    text-align: center
+  .offer-time-to-end-box
+    margin-top: 15px
+  #product-offer-bet-btn
+    margin-top: 15px
+  .user-profile-info-wrap
+    text-align: center
+  .user-profile-info
+    display: inline-flex
+    align-items: center
+    padding: 10px 0
+    .profile-img
+      display: inline-block
+      width: 28px
+      height: 28px
+      border-radius: 100%
+      overflow: hidden
+      text-align: center
+      text-decoration: none
+      img
+        max-width: 100%
+        max-height: 100%
+    .profile-user-descr
+      flex: 1
+      margin-left: 10px
+      .name
+        font-weight: 500
+  .betting-settings-wrap
+    position: relative
+    +mt(.3s)
+    .settings-title
+      text-align: center
+      font-weight: 700
+      #autobet-switch-input
+        margin-top: 6px
+        margin-left: 5px
+      #product-autobet-settings-trigger
+        position: relative
+        top: 3px
+        margin-left: 10px
+        color: $luminous-red
+        font-size: 25px
+        cursor: pointer
+    .settings
+      display: none
+      position: absolute
+      top: 30px
+      width: 100%
+      left: 0
+      margin-top: 5px
+      padding: 12px
+      background-color: #fff
+      border: 1px solid $sky-blue
+      border-radius: 10px
+      font-weight: 500
+      z-index: 9
+      &.active
+        display: block
+      .settings-categories-wrap
+        display: flex
+      .bet-period-settings
+        flex: 0 0 50%
+        #bet-period-fieldset
+          margin-bottom: 0
+        .bet-until-time-block
+          display: inline-block
+          padding: 0 8px
+          font-size: 12px
+          border: 1px solid $sky-blue
+          border-radius: 10px
+      .bet-parameters-settings
+        flex: 0 0 50%
+        #bet-count-select
+          display: inline-block
+          width: 55px
+          height: 25px
+          padding: 0 15px
+      #bet-btn-wrap
+        position: relative
+        top: 20px
+        text-align: center
+
+
+.bet-packages-title
+  margin-bottom: 0
+  text-align: center
+
+.bet-packages-list
+  .bet-package-wrap
+    margin-top: 30px
+
+.bet-package-wrap
+  position: relative
+  display: block
+  .bet-package-input
+    position: absolute
+    top: 0
+    left: 0
+    opacity: 0
+    &:checked ~ .bet-package
+      color: #fff
+      border: 1px solid $red
+  .bet-package
+    display: flex
+    align-items: center
+    justify-content: center
+    height: 160px
+    padding: 15px
+    background-color: rgba(255, 255, 255, 0.4)
+    cursor: pointer
+    +mt(.2s)
+    .block-bg
+      width: 100%
+      height: 100%
+      background-image: url(../img/store_package.png)
+      background-size: contain
+      background-repeat: no-repeat
+      background-position: center center
+    .bet-discount-label
+      position: absolute
+      top: -5px
+      right: -10px
+      font-size: 30px
+      font-weight: 500
+      font-style: italic
+      color: $red
+    .bet-descr
+      position: absolute
+      margin-top: 15px
+      text-align: center
+      color: #fff
+      .bet-count
+        font-size: 25px
+        font-weight: 700
+      .bet-text
+        margin-top: 8px
+        text-transform: uppercase
+        font-weight: 700
+    &:hover
+      background-color: #fff
+  .bet-package-price
+    margin-top: 12px
+    text-align: center
+    font-weight: 500
+    #bet-count
+      color: $red
+      font-size: 16px
+      font-weight: 700
+
+
+.payment-ways-list
+  .payment-way-wrap
+    margin-top: 30px  
+
+.payment-way-wrap
+  position: relative
+  display: block
+  .payment-way-input
+    position: absolute
+    top: 0
+    left: 0
+    opacity: 0
+    &:checked ~ .payment-way
+      background-color: #fff
+      border: 1px solid $red
+  #payment-visa-mscard
+    .payment-logo
+      background-image: url(../img/visa-mastercard-logo.png)
+  #payment-qiwi
+    .payment-logo
+      background-image: url(../img/qiwi-logo.png)
+  #payment-ipay
+    .payment-logo
+      background-image: url(../img/ipay-logo.png)
+  #payment-ydmoney
+    .payment-logo
+      background-image: url(../img/ydmoney-logo.png)
+  .payment-way
+    height: 100px
+    padding: 15px
+    background-color: rgba(255, 255, 255, .4)
+    border-radius: 10px
+    cursor: pointer
+    +mt(.2s)
+    &:hover
+      background-color: #fff
+    .payment-logo
+      width: 100%
+      height: 100%
+      background-size: contain
+      background-position: center center
+      background-repeat: no-repeat
+
+#bet-packages-purchase-btn-wrap
+  margin-top: 40px
+  text-align: right
+  .bttn
+    padding-left: 70px
+    padding-right: 70px
+
+
+#lk-info-gender-select
+  width: 80px
+
+.lk-profile-info-wrap
+  .box-body
+    padding-bottom: 0
+  .profile-data-block
+    &:not(:last-child)
+      margin-bottom: 20px
+    .block-title
+      color: $silver
+      font-size: 16px
+      font-weight: 500
+      cursor: pointer
+      &:hover
+        color: darken($silver, 10%)
+      .title-icon
+        i
+          position: relative
+          top: 2px
+          margin-left: 5px
+          font-size: 20px
+          transition: transform .2s
+    .profile-data-set
+      display: none
+      padding-top: 15px
+      padding-left: 40px
+      padding-right: 40px
+    &.active
+      .block-title
+        color: $sky-blue
+        .title-icon
+          i
+            transform: rotate(180deg)
+        &:hover
+          color: darken($sky-blue, 10%)
+  #lk-profile-info-save-btn-wrap
+    position: relative
+    top: 10px
+    text-align: right
+
+.lk-profile-avatar-upload-wrap
+  text-align: center
+  .current-avatar-img-wrap
+    display: inline-block
+    width: 210px
+    height: 210px
+    border-radius: 100%
+    overflow: hidden
+    text-align: center
+    text-decoration: none
+    img
+      max-width: 100%
+      max-height: 100%
+  #avatar-upload-btn-container
+    margin-top: 10px
+
+
+#lk-user-success-auctions-sect
+  .user-balance-wrap
+    text-align: right
+  .user-success-auctions-list
+    .product-offer
+      margin-top: 30px
+
+
+#lk-user-my-auctions-sect
+  .user-balance-wrap
+    text-align: right
+  .user-my-auctions-list
+    .product-offer
+      margin-top: 30px
+
+
+#lk-user-help-sect
+  .contact-info-title
+    margin-bottom: 0px
+    color: $red
+    font-weight: 500
+  .contact-form-wrap
+    #contact-form-box
+      margin-top: 30px
+    .contact-form-controls
+      display: flex
+      justify-content: space-between
+      align-items: flex-start
+      margin-top: 18px
+  .contact-info-items-list
+    margin-top: 55px
+
+.contact-info-items-list
+  margin: 0
+  padding: 0
+  list-style-type: none
+  .info-item
+    display: flex
+    align-items: center
+    .icon
+      i
+        font-size: 25px
+      .fa-map-marker
+        color: $red
+      .fa-phone
+        color: $spring-green
+      .fa-at
+        color: $sky-blue
+      .fa-skype
+        color: $skype-color
+    .info
+      flex: 1
+      margin-left: 10px
+      .title
+        margin-bottom: 5px
+    &:not(:last-child)
+      margin-bottom: 30px
+
+
+#lk-user-bets-balance-sect
+  .lk-bets-charge-off-wrap
+    .block-title
+      color: $red
+      font-weight: 500
+  .lk-bets-charge-wrap
+    margin-top: 40px
+    .block-title
+      color: $red
+      font-weight: 500
+  #lk-buy-bets-btn-wrap
+    margin-top: 25px
+    text-align: right
+    .bttn
+      padding-left: 60px
+      padding-right: 60px
+
+
+.about-us-wrap
+  .ceo-photo-wrap
+    display: block
+    margin: 0 auto
+    width: 350px
+    height: 350px
+    border-radius: 100%
+    background-size: cover
+    background-position: top center
+    border-right: 
+
+.about-us-achievements-list
+  .our-achievement-wrap
+    margin-bottom: 40px
+
+.our-achievement-wrap
+  text-align: center
+  .achiev-title
+    margin-bottom: 30px
+    font-size: 24px
+  .achiev-num
+    color: $red
+    font-size: 48px
+    line-height: 45px
+    font-weight: 500
+  .achiev-img-wrap
+    text-align: center
+    img
+      display: inline-block
+      //max-width: 60px
+      height: 40px
+  .achiev-descr
+    margin-top: 15px
+    font-size: 18px
+
+
+.order-form-box
+  .box-body
+    padding-left: 75px
+    padding-right: 75px
+  .order-form-controls
+    position: relative
+    top: 35px
+    text-align: center
+
+
+.bonuses-bet-packages-list
+  margin-top: 40px
+
+.bonus-bet-package-wrap
+  position: relative
+  display: block
+  text-align: center
+  .bonus-bet-package-input
+    position: absolute
+    top: 0
+    left: 0
+    opacity: 0
+    &:checked ~ .bet-package
+      color: #fff
+      border: 1px solid $red
+  .bonus-bet-package
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    width: 220px
+    height: 220px
+    padding: 40px
+    background-color: rgba(255, 255, 255, 0.4)
+    border: 2px dashed $sky-blue
+    border-radius: 100%
+    +mt(.2s)
+    .block-bg
+      width: 100%
+      height: 100%
+      background-image: url(../img/store_package.png)
+      background-size: contain
+      background-repeat: no-repeat
+      background-position: center center
+    .bet-discount-label
+      position: absolute
+      top: -5px
+      right: -10px
+      font-size: 30px
+      font-weight: 500
+      font-style: italic
+      color: $red
+    .bet-descr
+      position: absolute
+      margin-top: 15px
+      text-align: center
+      color: #fff
+      .bet-count
+        font-size: 25px
+        font-weight: 700
+      .bet-text
+        margin-top: 8px
+        text-transform: uppercase
+        font-weight: 700
+    &:hover
+      background-color: #fff
+  .bet-package-price
+    margin-top: 12px
+    text-align: center
+    font-weight: 700
+    #gift-text
+      color: $red
+      font-size: 16px
+      font-weight: 700
+
+
+.delivery-to-country-cell
+  display: flex
+  align-items: flex-start
+  flex-flow: row nowrap
+  .country-img-wrap
+    text-align: center
+    img
+      width: 45px
+  .country-descr
+    flex: 1
+    margin-left: 10px
+
+
+.how-it-works-articles-nav-list
+  display: flex
+  flex-flow: row wrap
+  justify-content: center
+  margin-top: 50px
+  text-align: center
+  .nav-item-col
+    flex: 0 0 20%
+    .hiw-article-nav-item
+      margin: 20px
+
+.hiw-article-nav-item
+  display: inline-block
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  width: 130px
+  height: 130px
+  padding: 10px
+  text-align: center
+  border: 2px dashed $red
+  border-radius: 100%
+  text-decoration: none
+  +mt(.2s)
+  &:hover
+    background-color: #fff
+  .step-num
+    color: $red
+    font-size: 36px
+  .step-descr
+    margin-top: 15px
+    font-weight: 500
+
+.how-it-works-steps-block
+  margin-top: 35px
+  background-image: url(../img/step_arrows.png)
+  background-repeat: no-repeat
+  background-position: 50% 35%
+  background-size: 60%
+
+.hiw-step-wrap
+  display: inline-block
+  width: 150px
+  text-align: center
+  .step-circle
+    position: relative
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    width: 140px
+    height: 140px
+    background-color: rgba(255, 255, 255, .92)
+    border-radius: 100%
+    border: 2px dashed $sky-blue
+    .step-num
+      position: absolute
+      top: 0
+      right: 12px
+      width: 20px
+      height: 20px
+      text-align: center
+      color: #fff
+      background: linear-gradient(to bottom, $sky-blue, $steel-blue)
+      border-radius: 100%
+    .step-img
+      width: 100%
+      height: 100%
+      background-size: contain
+      background-repeat: no-repeat
+      background-position: center center
+    #bet-step
+      width: 65%
+      height: 65%
+    #search-step
+      width: 80%
+      height: 80%
+  .step-descr
+    margin-top: 10px
+    font-weight: 700
+
+
+.testimonials-carousel
+  .testimonial-item
+    margin: 30px
+
+.testimonial-item
+  position: relative
+  padding: 15px
+  padding-left: 100px
+  .testimonial-photo
+    position: absolute
+    top: -30px
+    left: -30px
+    display: inline-block
+    width: 110px
+    height: 110px
+    background-image: url(../img/testimonial_photo.png)
+    background-size: cover
+    background-position: top center
+  .testimonial-descr
+    .author-name
+      color: #000
+      font-size: 16px
+      font-weight: 500
+    .author-location
+      margin-top: 10px
+      color: #000
+      font-size: 16px
+      font-weight: 500
+    .testimonial-text
+      margin-top: 17px
+      font-size: 16px
+
+
+// ------------- MODAL ------------- //
+.modal
+  display: block
+  background: white
+  padding: 20px 30px
+  border-radius: 20px
+  text-align: left
+  max-width: 500px
+  margin: 40px auto
+  position: relative
+
+
+// Login modal
+.login-modal
+  max-width: 340px
+  margin: 0 auto
+  margin-bottom: 30%
+  text-align: center
+  background-color: #fff
+  .box-body
+    padding: 30px 45px 15px
+  .login-title
+    margin-bottom: 20px
+  .forget-pass-link-wrap
+    margin-top: 5px
+    text-align: right
+    a
+      color: $dim-grey
+      text-decoration: none
+      &:hover
+        text-decoration: underline
+  .login-btn-wrap
+    margin-top: 10px
+    .bttn
+      width: 140px
+  #login-agree-fieldset-wrap
+    margin-top: 12px
+  .mfp-close-btn-in
+    .mfp-close
+      color: $sky-blue
+
+
+//  Register modal
+.register-modal
+  max-width: 620px
+  margin: 0 auto
+  margin-bottom: 16%
+  .box-body
+    padding: 0
+  #register-col
+    border-right: 2px solid $sky-blue
+  
+  // Register block
+  .register-wrapper
+    padding: 20px 30px 15px
+    text-align: center
+    .register-title
+      margin-bottom: 10px
+    #register-agree-fieldset-wrap
+      margin-top: 20px
+
+  // Login block
+  .login-wrapper
+    padding: 20px 30px 15px
+    text-align: center
+    .login-title
+      margin-bottom: 10px
+    .forget-pass-link-wrap
+      margin-top: 5px
+      text-align: right
+      a
+        color: $dim-grey
+        text-decoration: none
+        &:hover
+          text-decoration: underline
+    .login-btn-wrap
+      margin-top: 10px
+      .bttn
+        width: 140px
+    #login-agree-fieldset-wrap
+      margin-top: 12px
+// --------------------------------- //
+
+
+// ------------ FOOTER ------------ //
+.main-footer
+  position: relative
+  margin-top: 50px
+  padding: 60px 0 30px
+  background: linear-gradient(to bottom, $sky-blue, $steel-blue)
+  color: darken($light-grey, 5%)
+  font-weight: 500
+  &::before
+    content: ''
+    position: absolute
+    top: -30px
+    left: 0
+    background-image: url(../img/footer_torned_border_top.png)
+    width: 100%
+    height: 44px
+  .footer-logo-subscr
+    margin-top: 7px
+    text-align: center
+    color: #fff
+  .footer-socials-list-wrap
+    text-align: center
+    .socials-title
+      margin-top: 25px
+    .socials-list
+      .social-link
+        background-color: #B8D1DC
+        color: $steel-blue
+  .footer-nav-list-title
+    margin-bottom: 15px
+    color: darken($slate-grey, 10%)
+    font-size: 16px
+  .footer-nav-list
+    margin: 0
+    padding: 0
+    list-style-type: none
+    .nav-item
+      a
+        color: $light-grey
+        font-size: 16px
+        text-decoration: none
+        +mt(.1s)
+        &:hover
+          color: #fff
+      &:not(:last-child)
+        margin-bottom: 6px
+// -------------------------------- //
+
+
+// Media queries
+@import "media"
