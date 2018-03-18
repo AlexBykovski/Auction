@@ -18,7 +18,7 @@ class StakeDetail
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="integer")
      */
     private $count;
 
