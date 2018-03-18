@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="main">
+
+        <section id="about-us-sect">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="sect-title">
+                            <h4>О нас</h4>
+                        </div>
+
+                        <div class="about-us-wrap">
+                            <div class="row">
+                                <div class="col-xs-5">
+
+                                    <div class="ceo-photo-wrap" style="background-image: url('{{ image_url(aboutUsPage.image) }}');"></div>
+
+                                </div>
+                                <div class="col-xs-7 col-md-6 offset-md-1 mt-4 mt-xs-0">
+                                    {{ aboutUsPage.information }}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about-us-short-info-sect">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="sect-title">
+                            <h4>Краткая информация</h4>
+                        </div>
+
+                        <div class="about-us-achievements-list">
+                            <div class="row">
+                                <div class="col-xs-6 col-md-3">
+
+                                    <div class="our-achievement-wrap">
+                                        <h4 class="achiev-title">Ассортимент</h4>
+
+                                        <div class="achiev-num">{{ aboutUsPage.assortment }}</div>
+
+                                        <div class="achiev-descr">наименований</div>
+                                    </div>
+
+                                </div>
+                                <div class="col-xs-6 col-md-3">
+
+                                    <div class="our-achievement-wrap">
+                                        <h4 class="achiev-title">География</h4>
+
+                                        <div class="achiev-num">{{ aboutUsPage.countries }}</div>
+
+                                        <div class="achiev-descr">стран</div>
+                                    </div>
+
+                                </div>
+                                <div class="col-xs-6 col-md-3">
+
+                                    <div class="our-achievement-wrap">
+                                        <h4 class="achiev-title">Достижения</h4>
+
+                                        <div class="achiev-img-wrap">
+                                            <img src="{{ image_url(aboutUsPage.achievementImage) }}" alt="">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-xs-6 col-md-3">
+
+                                    <div class="our-achievement-wrap">
+                                        <h4 class="achiev-title">Стаж работы</h4>
+
+                                        <div class="achiev-num">{{ aboutUsPage.experience }}</div>
+
+                                        <div class="achiev-descr">года</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+{% endblock %}
