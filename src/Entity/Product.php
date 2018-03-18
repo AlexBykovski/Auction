@@ -350,4 +350,14 @@ class Product
     {
         $this->endAt = $endAt;
     }
+
+    public function toArrayMainPage()
+    {
+        return [
+            "id" => $this->id,
+            "mainPhoto" => $this->mainPhoto,
+            "name" => $this->name,
+            "cost" => $this->cost,
+        ];
+    }
 }

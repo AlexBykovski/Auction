@@ -63,7 +63,10 @@ gulp.task('bower-components', function () {
 
 gulp.task('client-js', function () {
     return gulp.src([
-            projectDir + '/js/client/*'
+            projectDir + '/js/client/common.js',
+            projectDir + '/js/client/app.js',
+            projectDir + '/js/client/bonus-controller.js',
+            projectDir + '/js/client/main-controller.js',
         ])
         .pipe(concat('client.min.js'))
         .pipe(uglify())
