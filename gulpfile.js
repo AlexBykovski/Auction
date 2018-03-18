@@ -36,8 +36,7 @@ gulp.task('sass', function () {
         .pipe(rename({suffix: '.min', prefix : ''}))
         .pipe(autoprefixer(['last 15 versions']))
         .pipe(cleanCSS())
-        .pipe(gulp.dest(projectDir + '/css'))
-        //.pipe(browserSync.reload({stream: true}))
+        .pipe(gulp.dest(projectDistDir + '/css'))
 });
 
 gulp.task('js-libs', function () {
@@ -49,14 +48,33 @@ gulp.task('js-libs', function () {
         ])
         .pipe(concat('libs.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest(projectDir + '/js'));
+        .pipe(gulp.dest(projectDistDir + '/js'));
 });
 
-gulp.task('watch', ['sass', 'js-libs', 'browser-sync'], function () {
-    gulp.watch(projectDir + '/sass/**/*.sass', ['sass']);
-    //gulp.watch(projectDir + '/*.html', browserSync.reload);
-    //gulp.watch(projectDir + '/js/*.js', browserSync.reload);
+gulp.task('bower-components', function () {
+    return gulp.src([
+            projectDir + '/bower-components/angular/angular.min.js',
+            projectDir + '/bower-components/angular-sanitize/angular-sanitize.min.js'
+        ])
+        .pipe(concat('bower_components.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(projectDistDir + '/js'));
 });
+
+gulp.task('client-js', function () {
+    return gulp.src([
+            projectDir + '/js/client/*'
+        ])
+        .pipe(concat('client.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(projectDistDir + '/js'));
+});
+
+//gulp.task('watch', ['sass', 'js-libs', 'browser-sync'], function () {
+//    gulp.watch(projectDir + '/sass/**/*.sass', ['sass']);
+//    //gulp.watch(projectDir + '/*.html', browserSync.reload);
+//    //gulp.watch(projectDir + '/js/*.js', browserSync.reload);
+//});
 
 gulp.task('imagemin', function () {
     return gulp.src(projectDir + '/img/**/*')
@@ -69,35 +87,22 @@ gulp.task('imagemin', function () {
         .pipe(gulp.dest(projectDistImageDir));
 });
 
-gulp.task('buildFiles', function () {
-    var buildHTML = gulp.src(projectDir + '/*.html')
-        .pipe(htmlbuild({
-            js: htmlbuild.preprocess.js(function (block) {
-                block.write('./js/scripts.min.js');
-                block.end();
-            })
-        }))
-        .pipe(gulp.dest(projectDistDir));
-
-    var buildJs = gulp.src([
-            projectDir + '/js/libs.min.js',
-            projectDir + '/js/common.js'
+gulp.task('simple-move-css', function () {
+    return gulp.src([
+            projectDir + '/css/admin/*'
         ])
-        .pipe(concat('scripts.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest(projectDistDir + '/js'));
-
-    var buildRest = gulp.src([
-            projectDir + '/**/*',
-            '!' + projectDir + '/*.html',
-            '!' + projectDir + '/js/**/*',
-            '!' + projectDir + '/sass/**/*',
-            '!' + projectDir + '/libs/**/*'
-        ])
-        .pipe(gulp.dest(projectDistDir));
+        .pipe(concat('admin.css'))
+        .pipe(gulp.dest(projectDistDir + '/css/admin'));
 });
 
-gulp.task('build', ['removedist', 'imagemin', 'sass', 'js-libs', 'buildFiles'], function () {
+gulp.task('simple-move-fonts', function () {
+    return gulp.src([
+            projectDir + '/fonts/**/*'
+        ])
+        .pipe(gulp.dest(projectDistDir + '/fonts'));
+});
+
+gulp.task('build', ['removedist', 'imagemin', 'sass', 'simple-move-css', 'js-libs', 'bower-components', 'client-js', 'simple-move-fonts'], function () {
     runSequence('cleanDist', function () {});
 });
 
