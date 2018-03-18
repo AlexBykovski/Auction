@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\DeliveryPage;
+use App\Entity\FAQ;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -30,6 +31,18 @@ class StaticController extends BaseController
 
         return $this->render('client/delivery-help.html.twig', [
             "delivery" => $deliveryPage
+        ]);
+    }
+
+    /**
+     * @Route("/faq", name="faq")
+     */
+    public function FAQAction(Request $request)
+    {
+        $faqs = $this->getDoctrine()->getRepository(FAQ::class)->findAll();
+
+        return $this->render('client/faq.html.twig', [
+            "faqs" => $faqs
         ]);
     }
 }
