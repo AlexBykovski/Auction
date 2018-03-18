@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <main class="main">
+    <main class="main" ng-controller="BonusController">
 
         <section id="bonuses-sect">
             <div class="container">
@@ -38,7 +38,7 @@
                                                         <div class="block-bg" style="background-image: url({{ image_url(bonus.image) }}) "></div>
                                                     </div>
 
-                                                    <div class="bet-package-price" ng-bind-html="{{ bonus.description }}"></div>
+                                                    <div class="bet-package-price" ng-bind-html="'{{ bonus.description }}'"></div>
                                                 </div>
 
                                             </div>
