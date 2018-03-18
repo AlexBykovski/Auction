@@ -19,7 +19,7 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {#{% block stylesheets %}{% endblock %}#}
     </head>
-    <body>
+    <body ng-app="appAuction">
         {#start mobile sidebar#}
         <div id="sidebarMenu" class="sidebar-menu">
             <div class="sidebar-header">
@@ -404,9 +404,9 @@
         <![endif]-->
 
         <!-- htmlbuild:js -->
-        {#<script type="text/javascript" src="js/libs.min.js"></script>#}
-        {#<script type="text/javascript" src="js/common.js"></script>#}
-        <script type="text/javascript" src="/build/js/scripts.min.js"></script>
+        <script type="text/javascript" src="/build/js/libs.min.js"></script>
+        <script type="text/javascript" src="/build/js/bower_components.min.js"></script>
+        <script type="text/javascript" src="/build/js/client.min.js"></script>
         <!-- endbuild -->
     </body>
 </html>
