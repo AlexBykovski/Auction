@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\AboutUsPage;
 use App\Entity\BonusPage;
 use App\Entity\DeliveryPage;
 use App\Entity\FAQ;
@@ -57,6 +58,19 @@ class StaticController extends BaseController
 
         return $this->render('client/bonus.html.twig', [
             "bonusPage" => $bonusPage
+        ]);
+    }
+
+    /**
+     * @Route("/about-us", name="about_us")
+     */
+    public function aboutUsPageShowAction(Request $request)
+    {
+        /** @var AboutUsPage $aboutUsPage */
+        $aboutUsPage = $this->getDoctrine()->getRepository(AboutUsPage::class)->findAll()[0];
+
+        return $this->render('client/about-us.html.twig', [
+            "aboutUsPage" => $aboutUsPage
         ]);
     }
 }
