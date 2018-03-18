@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <main class="main">
+
+        <section id="bonuses-sect">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="sect-title">
+                            <h4>Бонусы</h4>
+                        </div>
+
+                        <div class="bonuses-descr-block-wrap">
+                            <h4 class="title-highlight">{{ bonusPage.titleDescription }}</h4>
+
+                            <div class="box-space-left">
+                                <p>{{ bonusPage.description }}</p>
+                            </div>
+
+                            <br>
+
+                            <h4 class="title-highlight">{{ bonusPage.titleBonuses }}</h4>
+
+                            <div class="bonuses-bet-packages-list">
+                                {% for bonus in bonusPage.bonuses %}
+                                    {% if loop.index0 % 3 == 0 %}
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                    {% else %}
+                                            <div class="col-md-4 mt-5 mt-md-0">
+                                    {% endif %}
+
+                                                <div class="bonus-bet-package-wrap">
+                                                    <div class="bonus-bet-package">
+                                                        <div class="block-bg" style="background-image: url({{ image_url(bonus.image) }}) "></div>
+                                                    </div>
+
+                                                    <div class="bet-package-price" ng-bind-html="{{ bonus.description }}"></div>
+                                                </div>
+
+                                            </div>
+                                    {% if loop.index0 % 3 == 2 %}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+{% endblock %}
