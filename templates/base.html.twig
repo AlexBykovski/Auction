@@ -18,24 +18,29 @@
         <link rel="stylesheet" href="/build/css/styles.min.css">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {#{% block stylesheets %}{% endblock %}#}
+        <style>
+            [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+                display: none !important;
+            }
+        </style>
     </head>
-    <body>
+    <body ng-cloak ng-controller="AppController as app" ng-init="app.init({{ app.user ? "'" ~ app.user.toArray | json_encode ~ "'" : null }})">
         {#start mobile sidebar#}
         <div id="sidebarMenu" class="sidebar-menu">
             <div class="sidebar-header">
 
                 <div class="sidebar-auth-controls-wrap">
-                    <!-- <a href="#" class="sidebar-logout-btn-block">
+                    <a href="#" class="sidebar-logout-btn-block" ng-show="app.CurrentUserService.isUserLoggedIn()">
                       <span class="text">Выход</span>
                       <span class="icon"><i class="fa fa-sign-in"></i></span>
-                    </a> -->
+                    </a>
 
-                    <div href="#login-modal" id="login-modal-trigger" class="sidebar-login-btn-block">
+                    <div href="#login-modal" id="login-modal-trigger" class="sidebar-login-btn-block" ng-hide="app.CurrentUserService.isUserLoggedIn()">
                         <span class="text">Вход</span>
                         <span class="icon"><i class="fa fa-sign-in"></i></span>
                     </div>
 
-                    <div href="#register-modal" id="register-modal-trigger" class="sidebar-register-btn-block">
+                    <div href="#register-modal" id="register-modal-trigger" class="sidebar-register-btn-block" ng-hide="app.CurrentUserService.isUserLoggedIn()">
                         <span class="text">Регистрация</span>
                         <span class="icon"><i class="fa fa-address-card-o"></i></span>
                     </div>
@@ -82,7 +87,7 @@
             <header class="main-header">
                 <div class="header-main">
                     <div class="container">
-                        <div class="row">
+                        <div class="row" ng-controller="SecurityController as security">
                             <div id="header-logo-col" class="header-main-col col-6 col-xs-4 col-md-3">
 
                                 <div class="logo-wrapper">
@@ -90,21 +95,21 @@
                                 </div>
 
                             </div>
-                            <!-- <div class="header-main-col col-2 d-none d-md-flex">
+                            <div class="header-main-col col-2 d-none d-md-flex" ng-show="app.isUserLoggedIn()">
 
-                              <a href="#" class="header-logout-btn-block">
+                              <a href="{{ logout_path("main") }}" class="header-logout-btn-block">
                                 <span class="text">Выход</span>
                                 <span class="icon"><i class="fa fa-sign-in"></i></span>
                               </a>
 
                             </div>
-                            <div class="header-main-col col-3 d-none d-md-flex">
+                            <div class="header-main-col col-3 d-none d-md-flex" ng-show="app.isUserLoggedIn()">
 
                               <div class="header-profile-nav">
                                 <a href="#" class="profile-img"><img src="img/profile_avatar.png" alt=""></a>
 
                                 <div class="profile-name-wrap">
-                                  <div class="name"><a href="#">Ivan007</a></div>
+                                  <div class="name"><a nohref ng-bind="app.getCurrentUser().username"></a></div>
                                   <div class="profile-nav-text"><a href="#">Личный кабинет</a> <i class="fa fa-caret-down"></i></div>
                                 </div>
 
@@ -116,19 +121,19 @@
                                   <li class="nav-item"><a href="#">Помощь</a></li>
                                 </ul>
                               </div>
+                            </div>
 
-                            </div> -->
-                            <div class="header-main-col col-2 d-none d-md-flex">
+                            <div class="header-main-col col-2 d-none d-md-flex" ng-hide="app.isUserLoggedIn()">
 
-                                <a href="#login-modal" id="login-modal-trigger" class="header-login-btn-block">
+                                <a nohref ng-click="security.loginClick()" id="login-modal-trigger" class="header-login-btn-block">
                                     <span class="text">Вход</span>
                                     <span class="icon"><i class="fa fa-sign-in"></i></span>
                                 </a>
 
                             </div>
-                            <div class="header-main-col col-3 d-none d-md-flex">
+                            <div class="header-main-col col-3 d-none d-md-flex" ng-hide="app.isUserLoggedIn()">
 
-                                <a href="#register-modal" id="register-modal-trigger" class="header-register-btn-block">
+                                <a nohref ng-click="security.registerClick()" id="register-modal-trigger" class="header-register-btn-block">
                                     <span class="text">Регистрация</span>
                                     <span class="icon"><i class="fa fa-address-card-o"></i></span>
                                 </a>
@@ -259,34 +264,7 @@
 
             {#start login modal#}
             <div id="login-modal" class="login-modal card-box mfp-hide mfp-with-anim">
-                <div class="box-body">
-                    <h6 class="login-title">Вход в систему</h6>
-
-                    <div class="login-controls">
-                        <fieldset class="form-group">
-                            <input type="text" class="fg-input input-block" placeholder="Введите логин или email">
-                        </fieldset>
-
-                        <fieldset class="form-group">
-                            <input type="text" class="fg-input input-block" placeholder="Введите пароль">
-                        </fieldset>
-                    </div>
-
-                    <div class="forget-pass-link-wrap">
-                        <a href="#">Забыли пароль?</a>
-                    </div>
-
-                    <div class="login-btn-wrap">
-                        <button class="bttn bttn-sm bttn-red">Войти</button>
-                    </div>
-
-                    <fieldset id="login-agree-fieldset-wrap" class="form-group">
-                        <label class="custom-checkbox checkbox-inline">
-                            Запомнить меня
-                            <input type="checkbox" checked>
-                            <span class="checkmark"></span>
-                        </label>
-                    </fieldset>
+                <div id="login-box-body" class="box-body" ng-controller="LoginController as login" ng-bind-html="login.loginForm">
                 </div>
             </div>
             {#end login modal#}
@@ -301,7 +279,7 @@
 
                 </div>
 
-                <div class="box-body">
+                <div id="register-box-body" class="box-body">
                     <div class="row no-gutters">
                         <div id="register-col" class="col-xs-6">
 

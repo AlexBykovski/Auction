@@ -231,4 +231,14 @@ class User extends BaseUser
     {
         $this->questions = $questions;
     }
+
+    public function toArray()
+    {
+        $stakeDetail = $this->getStakeDetail();
+
+        return [
+            "username" => $this->getUsername(),
+            "stakes" => $stakeDetail instanceof StakeDetail ? $stakeDetail->getCount() : 0,
+        ];
+    }
 }
