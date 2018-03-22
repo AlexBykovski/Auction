@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\Type\LoginType;
+use App\Helper\LoginHelper;
 use Symfony\Bridge\Doctrine\Security\User\EntityUserProvider;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,29 +57,23 @@ class SecurityController extends BaseController
     /**
      * @Route("/login-user", name="login_simple_user")
      */
-    public function loginAction(Request $request, UserPasswordEncoderInterface $encoder)
+    public function loginAction(Request $request, UserPasswordEncoderInterface $encoder, LoginHelper $loginHelper)
     {
+        $referrer = $request->headers->get('referer');
+        $form = $this->createForm(LoginType::class);
+        $errorsForm = [[
+            "element" => "remember_me",
+            "message" => "Неверные данные",
+        ]];
+
         if($this->getUser() instanceof User){
-            return new JsonResponse([
-                "success" => true,
-                "message" => "User has already logged in.",
-                "user" => $this->getUser()->toArray(),
-            ]);
+            return $loginHelper->loginSuccessfullyResponse($this->getUser(), "User has already logged in.");
         }
 
-        $referrer = $request->headers->get('referer');
-
-        $form = $this->createForm(LoginType::class);
-
         if(!$referrer || !parse_url($referrer) || parse_url($referrer)["host"] !== $request->getHost()){
-            $form->get("remember_me")->addError(new FormError("Incorrect host."));
+            $errorsForm[0]["message"] = "Incorrect host.";
 
-            return $this->render(
-                'client/security/login.html.twig',
-                [
-                    "form" => $form->createView(),
-                ]
-            );
+            return $this->getLoginResponseWithForm($form, $errorsForm);
         }
 
         $form->handleRequest($request);
@@ -87,79 +83,27 @@ class SecurityController extends BaseController
             $password = $form->get("password")->getData();
             $rememberMe = $form->get("remember_me")->getData();
 
-            if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
-                $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(["email" => $username]);
-            } else {
-                $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(["username" => $username]);
+            $user = $loginHelper->isValidCredential($encoder, $username, $password);
+
+            if($user instanceof User){
+                return $loginHelper->login($user, $request, $rememberMe);
             }
 
-            if(!$user){
-                $form->get("remember_me")->addError(new FormError("Неверные данные"));
-
-                return $this->render(
-                    'client/security/login.html.twig',
-                    [
-                        "form" => $form->createView(),
-                    ]
-                );
-            }
-
-            $isCorrectPassword = $encoder->isPasswordValid($user, $password);
-
-            if($isCorrectPassword){
-                $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
-
-                $this->get('security.token_storage')->setToken($token);
-
-                $this->get('session')->set('_security_main', serialize($token));
-
-                $event = new InteractiveLoginEvent($request, $token);
-                $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
-
-                $response = new JsonResponse([
-                    'success' => true,
-                    'message' => "User has been login successfully",
-                    "user" => $user->toArray(),
-                ]);
-
-                if($rememberMe){
-                    $providerKey = 'main';
-                    $securityKey = $this->getParameter("secret");
-
-                    $rememberMeService = new TokenBasedRememberMeServices([$user], $securityKey, $providerKey, [
-                            'path' => '/',
-                            'name' => 'REMEMBERME',
-                            'domain' => null,
-                            'secure' => false,
-                            'httponly' => true,
-                            'lifetime' => 1209600, // 14 days
-                            'always_remember_me' => true,
-                            'remember_me_parameter' => 'remember_me']
-                    );
-
-                    $rememberMeService->loginSuccess($request, $response, $token);
-                }
-                return $response;
-            }
-
-            $form->get("remember_me")->addError(new FormError("Неверные данные"));
-
-            return $this->render(
-                'client/security/login.html.twig',
-                [
-                    "form" => $form->createView(),
-                ]
-            );
+            return $this->getLoginResponseWithForm($form, $errorsForm);
         }
         elseif($form->isSubmitted() && !$form->isValid()){
             $form->get("remember_me")->addError(new FormError("Неверные данные"));
 
-            return $this->render(
-                'client/security/login.html.twig',
-                [
-                    "form" => $form->createView(),
-                ]
-            );
+            return $this->getLoginResponseWithForm($form, $errorsForm);
+        }
+
+        return $this->getLoginResponseWithForm($form);
+    }
+
+    public function getLoginResponseWithForm(FormInterface $form, array $errors = [])
+    {
+        foreach($errors as $error){
+            $form->get($error["element"])->addError(new FormError($error["message"]));
         }
 
         return $this->render(

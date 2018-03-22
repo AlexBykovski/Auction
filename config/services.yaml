@@ -35,6 +35,10 @@ services:
         class:  App\Upload\FileUpload
         arguments: ['@images_filesystem']
 
+    app.helper.login_helper:
+        class:  App\Helper\LoginHelper
+        arguments: ['@service_container', '@doctrine.orm.entity_manager']
+
     App\Twig\ImageUrlExtension:
         class: App\Twig\ImageUrlExtension
         arguments: ['%upload_image_directory%']
