@@ -9,9 +9,6 @@ appAuction.factory('CurrentUserService', [function() {
             return !!(currentUser && currentUser !== {});
         },
         setUser: function(user) {
-            console.log("set user ");
-            console.log(user);
-
             currentUser = user;
         },
         getUser: function(){
