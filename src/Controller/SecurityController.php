@@ -4,15 +4,18 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\Type\LoginType;
+use Symfony\Bridge\Doctrine\Security\User\EntityUserProvider;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\Security\Http\RememberMe\TokenBasedRememberMeServices;
 
 class SecurityController extends BaseController
 {
@@ -105,6 +108,7 @@ class SecurityController extends BaseController
 
             if($isCorrectPassword){
                 $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+
                 $this->get('security.token_storage')->setToken($token);
 
                 $this->get('session')->set('_security_main', serialize($token));
@@ -112,15 +116,31 @@ class SecurityController extends BaseController
                 $event = new InteractiveLoginEvent($request, $token);
                 $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
 
-                return new JsonResponse([
+                $response = new JsonResponse([
                     'success' => true,
                     'message' => "User has been login successfully",
                     "user" => $user->toArray(),
                 ]);
+
+                if($rememberMe){
+                    $providerKey = 'main';
+                    $securityKey = $this->getParameter("secret");
+
+                    $rememberMeService = new TokenBasedRememberMeServices([$user], $securityKey, $providerKey, [
+                            'path' => '/',
+                            'name' => 'REMEMBERME',
+                            'domain' => null,
+                            'secure' => false,
+                            'httponly' => true,
+                            'lifetime' => 1209600, // 14 days
+                            'always_remember_me' => true,
+                            'remember_me_parameter' => 'remember_me']
+                    );
+
+                    $rememberMeService->loginSuccess($request, $response, $token);
+                }
+                return $response;
             }
-//            $this->get('security.token_storage')->setToken(null);
-//            $request->getSession()->invalidate();
-//            $request->cookies->remove( "REMEMBERME" );
 
             $form->get("remember_me")->addError(new FormError("Неверные данные"));
 

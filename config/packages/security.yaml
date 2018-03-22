@@ -31,6 +31,12 @@ security:
                 path: /logout
                 target: /test-dev/
 
+            remember_me:
+                secret:   '%env(APP_SECRET)%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
+                always_remember_me: true
+
             # activate different ways to authenticate
 
             # http_basic: ~
