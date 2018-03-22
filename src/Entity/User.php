@@ -11,8 +11,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity
  * @ORM\Table(name="`user`")
- * @UniqueEntity("username")
- * @UniqueEntity("email")
+ * @UniqueEntity("username", message="Пользователь с таким ником уже существует")
+ * @UniqueEntity("email", message="Пользователь с таким email уже существует")
  */
 class User extends BaseUser
 {
@@ -51,21 +51,21 @@ class User extends BaseUser
 
     /**
      * One User has One UserDeliveryDetail.
-     * @ORM\OneToOne(targetEntity="UserDeliveryDetail")
+     * @ORM\OneToOne(targetEntity="UserDeliveryDetail", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="delivery_detail_id", referencedColumnName="id")
      */
     private $deliveryDetail;
 
     /**
      * One User has One NotificationDetail.
-     * @ORM\OneToOne(targetEntity="NotificationDetail")
+     * @ORM\OneToOne(targetEntity="NotificationDetail", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="notification_detail_id", referencedColumnName="id")
      */
     private $notificationDetail;
 
     /**
      * One User has One StakeDetail.
-     * @ORM\OneToOne(targetEntity="StakeDetail")
+     * @ORM\OneToOne(targetEntity="StakeDetail", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="stake_detail_id", referencedColumnName="id")
      */
     private $stakeDetail;
@@ -155,7 +155,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return mixed
+     * @return UserDeliveryDetail
      */
     public function getDeliveryDetail()
     {
@@ -163,7 +163,7 @@ class User extends BaseUser
     }
 
     /**
-     * @param mixed $deliveryDetail
+     * @param UserDeliveryDetail $deliveryDetail
      */
     public function setDeliveryDetail($deliveryDetail)
     {

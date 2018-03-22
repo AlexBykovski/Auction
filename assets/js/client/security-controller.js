@@ -7,29 +7,8 @@
         }
 
         function registerClick(){
-            openPopup("#register-modal");
-        }
-
-        function openPopup(id){
-            $.magnificPopup.open({
-                items: {
-                    src: id
-                },
-
-                type: 'inline',
-
-                fixedContentPos: false,
-                fixedBgPos: true,
-
-                overflowY: 'auto',
-
-                closeBtnInside: true,
-                preloader: false,
-
-                removalDelay: 1000,
-
-                mainClass: 'mfp-zoom-in'
-            });
+            $rootScope.$broadcast('open-registration-modal');
+            //openPopup("#register-modal");
         }
 
         this.loginClick = loginClick;

@@ -71,6 +71,7 @@ gulp.task('client-js', function () {
             projectDir + '/js/client/main-controller.js',
             projectDir + '/js/client/security-controller.js',
             projectDir + '/js/client/login-controller.js',
+            projectDir + '/js/client/registration-controller.js',
         ])
         .pipe(concat('client.min.js'))
         .pipe(uglify())
