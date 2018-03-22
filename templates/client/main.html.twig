@@ -73,7 +73,8 @@
                                                 <h4 class="offer-title"><a href="#">{{ '{{ auction.name }}' }}</a></h4>
 
                                                 <div class="offer-rate-sum-box">{{ '{{ auction.cost }}' }} руб.</div>
-                                                <div class="offer-time-to-end-box">0:00:48</div>
+                                                {#<div class="offer-time-to-end-box">0:00:48</div>#}
+                                                <div class="offer-time-to-end-box"><timer interval="1000" countdown="10">{{ '{{ countdown }}' }}</timer></div>
 
                                                 <div class="offer-controls">
                                                     <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-red">Подробнее</a>

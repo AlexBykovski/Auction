@@ -41,8 +41,6 @@
 
                     if(!isExistSubmitHandler){
                         $(loginSelector).submit(function(e) {
-                            console.log(e);
-                            console.log("submit login");
                             e.preventDefault();
                             var data = $(loginSelector).serialize();
 
