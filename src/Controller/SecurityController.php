@@ -2,56 +2,77 @@
 
 namespace App\Controller;
 
+use App\Entity\NotificationDetail;
+use App\Entity\StakeDetail;
 use App\Entity\User;
+use App\Entity\UserDeliveryDetail;
 use App\Form\Type\LoginType;
+use App\Form\Type\RegistrationType;
 use App\Helper\LoginHelper;
-use Symfony\Bridge\Doctrine\Security\User\EntityUserProvider;
+use App\Helper\RegistrationHelper;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Symfony\Component\Security\Http\RememberMe\TokenBasedRememberMeServices;
 
 class SecurityController extends BaseController
 {
     /**
      * @Route("/registration", name="register")
+     *
      * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @param RegistrationHelper $registrationHelper
+     * @param LoginHelper $loginHelper
+     *
      * @return Response
      */
-    public function registerAction(Request $request)
+    public function registerAction(Request $request, UserPasswordEncoderInterface $encoder, RegistrationHelper $registrationHelper, LoginHelper $loginHelper)
     {
-//        $user = new InsuranceClient();
-//
-//        $form = $this->createForm(UserType::class, $user);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $password = $this->get('security.password_encoder')
-//                ->encodePassword($user, $user->getPassword());
-//
-//            $user->setPassword($password);
-//            $em = $this->getDoctrine()->getManager();
-//            $em->persist($user);
-//            $em->flush();
-//
-//            $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
-//            $this->get('security.token_storage')->setToken($token);
-//            $this->get('session')->set('_security_main', serialize($token));
-//
-//            return new JsonResponse(['success' => true]);
-//        }
+        $em = $this->getDoctrine()->getManager();
+        $referrer = $request->headers->get('referer');
+        $user = new User();
+        $form = $this->createForm(RegistrationType::class, $user);
+        $errorsForm = [[
+            "element" => "email",
+            "message" => "Неверные данные",
+        ]];
 
-        return $this->render('patient/edit.html.twig', [
-            //'form' => $form->createView(),
-        ]);
+        if($this->getUser() instanceof User){
+            return $loginHelper->loginSuccessfullyResponse($this->getUser(), "User has already logged in.");
+        }
+
+        if(!$referrer || !parse_url($referrer) || parse_url($referrer)["host"] !== $request->getHost()){
+            $errorsForm[0]["message"] = "Incorrect host.";
+
+            return $this->getRegistrationResponseWithForm($form, $errorsForm);
+        }
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $getNews = $form->get("get_news")->getData();
+
+            $password = $encoder->encodePassword($user, $user->getPassword());
+            $user->setDeliveryDetail(new UserDeliveryDetail());
+            $notificationDetail = new NotificationDetail();
+            $notificationDetail->setNews($getNews);
+            $user->setNotificationDetail(new NotificationDetail());
+            $user->setStakeDetail(new StakeDetail());
+            $user->setPassword($password);
+
+            $em->persist($user);
+            $em->flush();
+
+            return $loginHelper->login($user, $request, false);
+        }
+        elseif($form->isSubmitted() && !$form->isValid()){
+            return $this->getRegistrationResponseWithForm($form);
+        }
+
+        return $this->getRegistrationResponseWithForm($form);
     }
 
     /**
@@ -108,6 +129,20 @@ class SecurityController extends BaseController
 
         return $this->render(
             'client/security/login.html.twig',
+            [
+                "form" => $form->createView(),
+            ]
+        );
+    }
+
+    public function getRegistrationResponseWithForm(FormInterface $form, array $errors = [])
+    {
+        foreach($errors as $error){
+            $form->get($error["element"])->addError(new FormError($error["message"]));
+        }
+
+        return $this->render(
+            'client/security/registration.html.twig',
             [
                 "form" => $form->createView(),
             ]

@@ -265,7 +265,7 @@
 
                 {#start login modal#}
                 <div id="login-modal" class="login-modal card-box mfp-hide mfp-with-anim">
-                    <div id="login-box-body" class="box-body" ng-controller="LoginController as login" ng-bind-html="login.loginForm">
+                    <div id="login-box-body" class="box-body" ng-init="login.init('login')" ng-controller="LoginController as login" ng-bind-html="login.loginForm">
                     </div>
                 </div>
                 {#end login modal#}
@@ -273,94 +273,17 @@
                 {#start register modal#}
                 <div id="register-modal" class="register-modal card-box mfp-hide mfp-with-anim">
                     <div class="box-title">
-
                         <div class="logo-wrapper">
                             <span class="logo" style="background-image: url({{ image_url('default/logo.png') }});"></span>
                         </div>
-
                     </div>
 
-                    <div id="register-box-body" class="box-body">
+                    <div id="register-box-body" class="box-body" ng-controller="RegistrationController as register">
                         <div class="row no-gutters">
-                            <div id="register-col" class="col-xs-6">
-
-                                <div class="register-wrapper">
-                                    <h6 class="register-title">Регистрация</h6>
-
-                                    <div class="register-controls">
-                                        <fieldset class="form-group">
-                                            <input type="text" class="fg-input input-block" placeholder="Введите ваш email">
-                                        </fieldset>
-
-                                        <fieldset class="form-group">
-                                            <input type="text" class="fg-input input-block" placeholder="придумайте Имя(Ник)">
-                                        </fieldset>
-
-                                        <fieldset class="form-group">
-                                            <input type="text" class="fg-input input-block" placeholder="Придумайте пароль">
-                                        </fieldset>
-
-                                        <fieldset class="form-group">
-                                            <input type="text" class="fg-input input-block" placeholder="Повторите пароль">
-                                        </fieldset>
-
-                                        <fieldset id="register-agree-fieldset-wrap" class="form-group">
-                                            <label class="custom-checkbox">
-                                                С условиями согласен
-                                                <input type="checkbox" checked>
-                                                <span class="checkmark"></span>
-                                            </label>
-
-                                            <label class="custom-checkbox">
-                                                На обработку данных согласен
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
-
-                                            <label class="custom-checkbox">
-                                                Получать новости
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </fieldset>
-                                    </div>
-
-                                    <div class="register-btn-wrap">
-                                        <button class="bttn bttn-sm bttn-red">Продолжить</button>
-                                    </div>
-                                </div>
-
+                            <div id="register-col" class="col-xs-6"  ng-bind-html="register.registrationForm">
                             </div>
                             <div class="col-xs-6">
-
-                                <div class="login-wrapper">
-                                    <h6 class="login-title">Вход в систему</h6>
-
-                                    <div class="login-controls">
-                                        <fieldset class="form-group">
-                                            <input type="text" class="fg-input input-block" placeholder="Введите логин или email">
-                                        </fieldset>
-
-                                        <fieldset class="form-group">
-                                            <input type="text" class="fg-input input-block" placeholder="Введите пароль">
-                                        </fieldset>
-                                    </div>
-
-                                    <div class="forget-pass-link-wrap">
-                                        <a href="#">Забыли пароль?</a>
-                                    </div>
-
-                                    <div class="login-btn-wrap">
-                                        <button class="bttn bttn-sm bttn-red">Войти</button>
-                                    </div>
-
-                                    <fieldset id="login-agree-fieldset-wrap" class="form-group">
-                                        <label class="custom-checkbox checkbox-inline">
-                                            Запомнить меня
-                                            <input type="checkbox" checked>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </fieldset>
+                                <div class="login-wrapper" ng-init="login.init('registration')" ng-controller="LoginController as login" ng-bind-html="login.loginRegisterForm">
                                 </div>
 
                             </div>

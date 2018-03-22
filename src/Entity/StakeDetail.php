@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,9 +19,9 @@ class StakeDetail
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default" : 0})
      */
-    private $count;
+    private $count = 0;
 
     /**
      * One StakeDetail has Many StakePurchases.
@@ -39,6 +40,16 @@ class StakeDetail
      * @ORM\OneToMany(targetEntity="AutoStake", mappedBy="stakeDetail")
      */
     private $autoStakes;
+
+    /**
+     * StakeDetail constructor.
+     */
+    public function __construct()
+    {
+        $this->purchases = new ArrayCollection();
+        $this->expenses = new ArrayCollection();
+        $this->autoStakes = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -73,7 +84,7 @@ class StakeDetail
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
     public function getPurchases()
     {
@@ -81,7 +92,7 @@ class StakeDetail
     }
 
     /**
-     * @param mixed $purchases
+     * @param ArrayCollection $purchases
      */
     public function setPurchases($purchases)
     {
@@ -89,7 +100,7 @@ class StakeDetail
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
     public function getExpenses()
     {
@@ -97,7 +108,7 @@ class StakeDetail
     }
 
     /**
-     * @param mixed $expenses
+     * @param ArrayCollection $expenses
      */
     public function setExpenses($expenses)
     {
@@ -105,7 +116,7 @@ class StakeDetail
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
     public function getAutoStakes()
     {
@@ -113,7 +124,7 @@ class StakeDetail
     }
 
     /**
-     * @param mixed $autoStakes
+     * @param ArrayCollection $autoStakes
      */
     public function setAutoStakes($autoStakes)
     {

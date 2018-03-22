@@ -40,7 +40,7 @@ class LoginHelper
     {
         return new JsonResponse([
             "success" => true,
-            "message" => "User has already logged in.",
+            "message" => $message,
             "user" => $user->toArray(),
         ]);
     }

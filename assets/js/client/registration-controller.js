@@ -1,15 +1,10 @@
 (function(appAuction) {
     'use strict';
 
-    appAuction.controller('LoginController', ['$scope', '$rootScope', '$http', '$sce', function($scope, $rootScope, $http, $sce) {
+    appAuction.controller('RegistrationController', ['$scope', '$rootScope', '$http', '$sce', function($scope, $rootScope, $http, $sce) {
         var self = this;
-        var method = "login";
-        this.loginForm = "";
-        this.loginRegisterForm = "";
-
-        this.init = function(passMethod){
-            method = passMethod;
-        };
+        var registrationSelector = "#registration-form";
+        this.registrationForm = "";
 
         function request(url, data, callback) {
             $http({
@@ -24,16 +19,12 @@
             });
         }
 
-        function showLoginPopup() {
-            request("/login-user", null, function (response) {
-                setForm(response.data);
+        function showRegisterPopup() {
+            openPopup();
+            request("/registration", null, function (response) {
+                self.registrationForm = $sce.trustAsHtml(response.data);
 
-                if(method === "login") {
-                    openPopup();
-                }
-
-
-                $("#login-form").ready(function(){
+                $(registrationSelector).ready(function(){
 
                     var formEvents = $.data($(this).get(0), 'events');
                     var isExistSubmitHandler = !!(formEvents && formEvents.submit);
@@ -41,23 +32,22 @@
                     if(!isExistSubmitHandler){
                         $(this).submit(function(e) {
                             e.preventDefault();
-                            var data = $("#login-form").serialize();
+                            var data = $(registrationSelector).serialize();
 
-                            angular.element("#login-form").find("button[type=submit]").prop("disabled", true);
+                            angular.element(registrationSelector).find("button[type=submit]").prop("disabled", true);
 
-                            request("/login-user", data, function (response) {
+                            request("/registration", data, function (response) {
                                 if(response.data.success){
                                     $rootScope.$broadcast('user-logged-in', {user: response.data.user});
                                     closePopup();
-                                    self.loginForm = "";
 
                                     return true;
                                 }
                                 else{
-                                    setForm(response.data);
+                                    self.registrationForm = $sce.trustAsHtml(response.data);
                                 }
 
-                                $('#login-form').find("button[type=submit]").prop("disabled", false);
+                                $(registrationSelector).find("button[type=submit]").prop("disabled", false);
                             });
 
                             return false;
@@ -71,7 +61,7 @@
         function openPopup(){
             $.magnificPopup.open({
                 items: {
-                    src: "#login-modal"
+                    src: "#register-modal"
                 },
 
                 type: 'inline',
@@ -94,27 +84,8 @@
             $.magnificPopup.close();
         }
 
-        function setForm(data){
-            if(method === "login"){
-                self.loginForm = $sce.trustAsHtml(data);
-                self.loginRegisterForm = "";
-            }
-            else{
-                self.loginForm = "";
-                self.loginRegisterForm = $sce.trustAsHtml(data);
-            }
-        }
-
-        $rootScope.$on('open-login-modal', function(){
-            if(method === "login") {
-                showLoginPopup();
-            }
-        });
-
         $rootScope.$on('open-registration-modal', function(){
-            if(method === "registration") {
-                showLoginPopup();
-            }
+            showRegisterPopup();
         });
 
     }]);

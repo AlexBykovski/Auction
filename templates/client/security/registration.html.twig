@@ -1,0 +1,76 @@
+<form id="registration-form" method="post" novalidate enctype="multipart/form-data">
+    {{ form_widget(form._token) }}
+    <div class="register-wrapper">
+        <h6 class="register-title">Регистрация</h6>
+        <div class="register-controls">
+            <fieldset class="form-group">
+                {#<input type="text" class="fg-input input-block" placeholder="Введите ваш email">#}
+                {{ form_widget(form.email, {attr: {class: 'fg-input input-block', placeholder: 'Введите ваш email'}} ) }}
+                {% for key, error in form.email.vars.errors.form.getErrors(true)%}
+                    <p style="color: red">{{ error.message }}</p>
+                {% endfor %}
+            </fieldset>
+
+            <fieldset class="form-group">
+                {#<input type="text" class="fg-input input-block" placeholder="придумайте Имя(Ник)">#}
+                {{ form_widget(form.username, {attr: {class: 'fg-input input-block', placeholder: 'придумайте Имя(Ник)'}} ) }}
+                {% for key, error in form.username.vars.errors.form.getErrors(true)%}
+                    <p style="color: red">{{ error.message }}</p>
+                {% endfor %}
+            </fieldset>
+
+            <fieldset class="form-group">
+                {#<input type="text" class="fg-input input-block" placeholder="Придумайте пароль">#}
+                {{ form_widget(form.password.first, {attr: {class: 'fg-input input-block', placeholder: 'Придумайте пароль'}} ) }}
+                {% for key, error in form.password.first.vars.errors.form.getErrors(true)%}
+                    <p style="color: red">{{ error.message }}</p>
+                {% endfor %}
+            </fieldset>
+
+            <fieldset class="form-group">
+                {#<input type="text" class="fg-input input-block" placeholder="Повторите пароль">#}
+                {{ form_widget(form.password.second, {attr: {class: 'fg-input input-block', placeholder: 'Повторите пароль'}} ) }}
+                {% for key, error in form.password.second.vars.errors.form.getErrors(true)%}
+                    <p style="color: red">{{ error.message }}</p>
+                {% endfor %}
+            </fieldset>
+
+            <fieldset id="register-agree-fieldset-wrap" class="form-group">
+                <label class="custom-checkbox">
+                    С условиями согласен
+                    {#<input type="checkbox" checked>#}
+                    {{ form_widget(form.conditions_agree) }}
+                    {% for key, error in form.conditions_agree.vars.errors.form.getErrors(true)%}
+                        <p style="color: red">{{ error.message }}</p>
+                    {% endfor %}
+                    <span class="checkmark"></span>
+                </label>
+
+                <label class="custom-checkbox">
+                    На обработку данных согласен
+                    {#<input type="checkbox">#}
+                    {{ form_widget(form.processing_agree) }}
+                    {% for key, error in form.processing_agree.vars.errors.form.getErrors(true)%}
+                        <p style="color: red">{{ error.message }}</p>
+                    {% endfor %}
+                    <span class="checkmark"></span>
+                </label>
+
+                <label class="custom-checkbox">
+                    Получать новости
+                    {#<input type="checkbox">#}
+                    {{ form_widget(form.get_news) }}
+                    {% for key, error in form.get_news.vars.errors.form.getErrors(true)%}
+                        <p style="color: red">{{ error.message }}</p>
+                    {% endfor %}
+                    <span class="checkmark"></span>
+                </label>
+            </fieldset>
+        </div>
+
+        <div class="register-btn-wrap">
+            {{ form_widget(form.submit, {attr: {class: 'bttn bttn-sm bttn-red'}, label: 'Продолжить'} ) }}
+            {#<button class="bttn bttn-sm bttn-red">Продолжить</button>#}
+        </div>
+    </div>
+</form>
