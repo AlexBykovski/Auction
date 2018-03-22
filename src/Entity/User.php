@@ -16,6 +16,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User extends BaseUser
 {
+    const DEFAULT_PHOTO = "default/profile_avatar.png";
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -239,6 +241,7 @@ class User extends BaseUser
         return [
             "username" => $this->getUsername(),
             "stakes" => $stakeDetail instanceof StakeDetail ? $stakeDetail->getCount() : 0,
+            "photo" => self::DEFAULT_PHOTO
         ];
     }
 }
