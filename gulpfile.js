@@ -65,8 +65,12 @@ gulp.task('client-js', function () {
     return gulp.src([
             projectDir + '/js/client/common.js',
             projectDir + '/js/client/app.js',
+            projectDir + '/js/client/service/current-user-service.js',
+            projectDir + '/js/client/app-controller.js',
             projectDir + '/js/client/bonus-controller.js',
             projectDir + '/js/client/main-controller.js',
+            projectDir + '/js/client/security-controller.js',
+            projectDir + '/js/client/login-controller.js',
         ])
         .pipe(concat('client.min.js'))
         .pipe(uglify())
@@ -78,6 +82,10 @@ gulp.task('client-js', function () {
 //    //gulp.watch(projectDir + '/*.html', browserSync.reload);
 //    //gulp.watch(projectDir + '/js/*.js', browserSync.reload);
 //});
+
+gulp.task('watch', ['client-js'], function () {
+   gulp.watch(projectDir + '/js/client/*.js', ['client-js']);
+});
 
 gulp.task('imagemin', function () {
     return gulp.src(projectDir + '/img/**/*')

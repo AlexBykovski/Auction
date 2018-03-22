@@ -54,9 +54,7 @@
                                     <option>Сортировка 5</option>
                                 </select>
 
-                                {% if app.user and not app.user.hasRole('ROLE_SUPER_ADMIN') %}
-                                    <div class="user-balance-wrap">ВАШ БАЛАНС: <span id="bet-count">{{ app.user.stakeDetail.count }}</span> ставок</div>
-                                {% endif %}
+                                <div class="user-balance-wrap" ng-show="app.isUserLoggedIn()">ВАШ БАЛАНС: <span id="bet-count" ng-bind="app.getCurrentUser().stakes"></span> ставок</div>
                             </div>
 
                             <div class="product-offers-list">
