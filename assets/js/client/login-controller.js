@@ -4,6 +4,7 @@
     appAuction.controller('LoginController', ['$scope', '$rootScope', '$http', '$sce', function($scope, $rootScope, $http, $sce) {
         var self = this;
         var method = "login";
+        var loginSelector = "#login-form";
         this.loginForm = "";
         this.loginRegisterForm = "";
 
@@ -33,17 +34,19 @@
                 }
 
 
-                $("#login-form").ready(function(){
+                $(loginSelector).ready(function(){
 
                     var formEvents = $.data($(this).get(0), 'events');
                     var isExistSubmitHandler = !!(formEvents && formEvents.submit);
 
                     if(!isExistSubmitHandler){
-                        $(this).submit(function(e) {
+                        $(loginSelector).submit(function(e) {
+                            console.log(e);
+                            console.log("submit login");
                             e.preventDefault();
-                            var data = $("#login-form").serialize();
+                            var data = $(loginSelector).serialize();
 
-                            angular.element("#login-form").find("button[type=submit]").prop("disabled", true);
+                            angular.element(loginSelector).find("button[type=submit]").prop("disabled", true);
 
                             request("/login-user", data, function (response) {
                                 if(response.data.success){
@@ -57,7 +60,7 @@
                                     setForm(response.data);
                                 }
 
-                                $('#login-form').find("button[type=submit]").prop("disabled", false);
+                                $(loginSelector).find("button[type=submit]").prop("disabled", false);
                             });
 
                             return false;

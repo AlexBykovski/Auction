@@ -30,7 +30,7 @@
                     var isExistSubmitHandler = !!(formEvents && formEvents.submit);
 
                     if(!isExistSubmitHandler){
-                        $(this).submit(function(e) {
+                        $(registrationSelector).submit(function(e) {
                             e.preventDefault();
                             var data = $(registrationSelector).serialize();
 
