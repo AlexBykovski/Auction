@@ -73,8 +73,7 @@
                                                 <h4 class="offer-title"><a href="#">{{ '{{ auction.name }}' }}</a></h4>
 
                                                 <div class="offer-rate-sum-box">{{ '{{ auction.cost }}' }} руб.</div>
-                                                {#<div class="offer-time-to-end-box">0:00:48</div>#}
-                                                <div class="offer-time-to-end-box"><timer interval="1000" countdown="10">{{ '{{ countdown }}' }}</timer></div>
+                                                <div class="offer-time-to-end-box"><timer interval="1000" countdown="10">0:00:{{ '{{ sseconds }}' }}</timer></div>
 
                                                 <div class="offer-controls">
                                                     <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-red">Подробнее</a>
@@ -89,8 +88,9 @@
 
                             <div class="product-offers-list-navi-wrapper">
                                 <div class="offers-navi-controls">
-                                    <a href="#" class="offer-nav-btn prev disabled"><i class="fa fa-long-arrow-left"></i></a>
-                                    <a href="#" class="offer-nav-btn next"><i class="fa fa-long-arrow-right"></i></a>
+                                    {% set canBackAuctions = page > 1 %}
+                                    <a href="{{ path("list_products", {"page" : page - 1 }) }}" class="offer-nav-btn prev {{ canBackAuctions ? "" : "disabled" }}"><i class="fa fa-long-arrow-left"></i></a>
+                                    <a href="{{ path("list_products", {"page" : page + 1 }) }}" class="offer-nav-btn next {{ leftCount > 0 ? "" : "disabled" }}"><i class="fa fa-long-arrow-right"></i></a>
                                 </div>
                             </div>
 
