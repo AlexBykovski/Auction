@@ -8,9 +8,7 @@ use App\Parser\ProductParser;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @Route("/test-dev")
- */
+
 class MainController extends BaseController
 {
     const AUCTION_PER_PAGE = 9;
