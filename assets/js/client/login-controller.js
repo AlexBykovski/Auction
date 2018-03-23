@@ -48,6 +48,12 @@
 
                             request("/login-user", data, function (response) {
                                 if(response.data.success){
+                                    if(response.data.redirect){
+                                        location.href = response.data.redirect;
+
+                                        return true;
+                                    }
+
                                     $rootScope.$broadcast('user-logged-in', {user: response.data.user});
                                     closePopup();
                                     self.loginForm = "";

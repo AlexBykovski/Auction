@@ -38,11 +38,17 @@ class LoginHelper
 
     public function loginSuccessfullyResponse(User $user, $message)
     {
-        return new JsonResponse([
+        $parameters = [
             "success" => true,
             "message" => $message,
             "user" => $user->toArray(),
-        ]);
+        ];
+
+        if($user->hasRole("ROLE_SUPER_ADMIN")){
+            $parameters["redirect"] = "/admin";
+        }
+
+        return new JsonResponse($parameters);
     }
 
     public function login(User $user, Request $request, $rememberMe)
