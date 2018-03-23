@@ -1,27 +1,180 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Slider</h1>
-    {% for slide in sliderImages %}
-        <img src="{{ image_url(slide) }}" style="max-height: 100px"/><br />
-    {% endfor %}
+    {#<h1>Завершённые аукционы</h1>#}
+    {#{% for auction in lastFinishedAuctions%}#}
+        {#<p>{{ auction.name }}</p>#}
+        {#<img src="{{ image_url(auction.mainPhoto) }}" style="max-height: 100px"/><br />#}
+    {#{% endfor %}#}
+    <main class="main" ng-init="default_image_directory = '{{ default_image_directory }}';
+    image_directory = '{{ image_directory }}';
+    init('{{ currentAuctions | json_encode }}')" ng-controller="MainController">
 
-    <h1>Активные аукционы</h1>
-    {% for auction in currentAuctions%}
-        <p>{{ auction.name }}</p>
-        <img src="{{ image_url(auction.mainPhoto) }}" style="max-height: 100px"/><br />
-    {% endfor %}
+        <section id="header-main-slider-sect">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
 
-    <h1>Soon product</h1>
-    {% if soonProduct %}
-        <p>{{ soonProduct.name }}</p>
-        <img src="{{ image_url(soonProduct.image) }}" style="max-height: 100px"/><br />
-        <p>{{ soonProduct.description }}</p>
-    {% endif %}
+                        <div class="header-main-slider owl-carousel">
+                            {% for slide in sliderImages %}
+                                <div class="header-slide-wrapper">
+                                    <div class="slide-content">
+                                        <div class="row">
+                                            <div class="col-md-5 d-none d-md-block">
+                                                <div class="slide-img-wrap">
+                                                    <img src="{{ image_url(slide) }}" class="slide-img" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
 
-    <h1>Завершённые аукционы</h1>
-    {% for auction in lastFinishedAuctions%}
-        <p>{{ auction.name }}</p>
-        <img src="{{ image_url(auction.mainPhoto) }}" style="max-height: 100px"/><br />
-    {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="product-offers-list-sect">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="product-offers-list-wrapper">
+
+                            <div class="product-offers-list-filters-bar">
+                                <select class="product-offers-sort-select">
+                                    <option>Сортировать</option>
+                                    <option>Сортировка 1</option>
+                                    <option>Сортировка 2</option>
+                                    <option>Сортировка 3</option>
+                                    <option>Сортировка 4</option>
+                                    <option>Сортировка 5</option>
+                                </select>
+
+                                <div class="user-balance-wrap" ng-show="app.isUserLoggedIn()">ВАШ БАЛАНС: <span id="bet-count" ng-bind="app.getCurrentUser().stakes"></span> ставок</div>
+                            </div>
+
+                            <div class="product-offers-list">
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-4" ng-repeat="auction in currentAuctions">
+
+                                        <div class="product-offer card-box">
+                                            <div class="box-body">
+                                                <span class="offer-present-label"><img ng-src="{{'{{ default_image_directory }}'}}/present_small.png" alt=""></span>
+                                                <span class="offer-new-label"><img ng-src="{{'{{ default_image_directory }}'}}/new_label.png" alt=""></span>
+
+                                                <div class="offer-img-wrap">
+                                                    <a href="#" class="offer-img" style="background-image: url({{ '{{ image_directory + auction.mainPhoto}}' }});"></a>
+                                                </div>
+
+                                                <h4 class="offer-title"><a href="#">{{ '{{ auction.name }}' }}</a></h4>
+
+                                                <div class="offer-rate-sum-box">{{ '{{ auction.cost }}' }} руб.</div>
+                                                <div class="offer-time-to-end-box"><timer interval="1000" countdown="10">0:00:{{ '{{ sseconds }}' }}</timer></div>
+
+                                                <div class="offer-controls">
+                                                    <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-red">Подробнее</a>
+                                                    <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-green">Ставка</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="product-offers-list-navi-wrapper">
+                                <div class="offers-navi-controls">
+                                    {% set canBackAuctions = page > 1 %}
+                                    <a href="{{ path("list_products", {"page" : page - 1 }) }}" class="offer-nav-btn prev {{ canBackAuctions ? "" : "disabled" }}"><i class="fa fa-long-arrow-left"></i></a>
+                                    <a href="{{ path("list_products", {"page" : page + 1 }) }}" class="offer-nav-btn next {{ leftCount > 0 ? "" : "disabled" }}"><i class="fa fa-long-arrow-right"></i></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {% if soonProduct %}
+            <section id="soon-auction-updates-info-sect">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="sect-title">
+                                <h4>Скоро на аукционах</h4>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-5">
+
+                                    <div class="img-with-descr-wrap">
+                                        <div class="content">
+                                            <img src="{{ image_url(soonProduct.image) }}" class="img-fluid" alt="">
+                                            <p class="title">{{ soonProduct.name }}</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-7 mt-4 mt-md-0">
+                                    <p>{{ soonProduct.description }}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+
+
+        <section id="completed-offers-sect">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="sect-title">
+                            <h4>Завершенные аукционы</h4>
+                        </div>
+
+                        <div class="product-offers-carousel owl-carousel">
+                            {% for auction in lastFinishedAuctions%}
+                                <div class="product-offer card-box">
+                                    <div class="box-body">
+                                        <span class="offer-new-label"><img src="{{ image_url('default/new_label.png')}}" alt=""></span>
+
+                                        <div class="offer-img-wrap">
+                                            <a href="#" class="offer-img" style="background-image: url({{ image_url(auction.mainPhoto)}});"></a>
+                                        </div>
+
+                                        <h4 class="offer-title"><a href="#">{{ auction.name }}</a></h4>
+
+                                        <div class="offer-rate-sum-box">{{ auction.cost }} руб.</div>
+
+                                        <div class="offer-end-date">{{ auction.endAt | date("d.m.Y H:i") }}</div>
+
+                                        <div class="offer-winner-name">{{ auction.winner.username }}</div>
+
+                                        <div class="offer-controls">
+                                            <a href="#" class="bttn bttn-sm bttn-silver bttn-rounded">Завершено</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
 {% endblock %}

@@ -19,24 +19,6 @@ $(document).ready(function () {
     openMenu();
   });
 
-  // Modal popup
-  $('#login-modal-trigger, #register-modal-trigger').magnificPopup({
-    type: 'inline',
-
-    fixedContentPos: false,
-    fixedBgPos: true,
-
-    overflowY: 'auto',
-
-    closeBtnInside: true,
-    preloader: false,
-    
-    midClick: true,
-    removalDelay: 1000,
-
-    mainClass: 'mfp-zoom-in'
-  });
-
 	// Carousels
   $(".header-main-slider").owlCarousel({
     items: 1,

@@ -85,10 +85,15 @@ class ProductAdmin extends AbstractAdmin
     }
 
     protected function getCategoryChoices (){
-
         return [
-            'Новый' => 'new',
-            'Популярный' => 'popular',
+            'apple' => 'apple',
+            'детские товары' => 'child',
+            'игровые приставки и аксессуары' => 'gaming_сonsoles_accessories',
+            'ноутбуки, планшеты и аксессуары' => 'laptop_tablet_accessories',
+            'подарочные карты и сертификаты' => 'present_cards_sertificates',
+            'телефоны и аксессуары' => 'phones_accessories',
+            'товары для дома' => 'home',
+            'фото- и видеотехника' => 'photo_video',
         ];
     }
 

@@ -44,7 +44,8 @@ gulp.task('js-libs', function () {
             projectDir + '/js/vendor/jquery-3.3.1.min.js',
             projectDir + '/js/vendor/equalHeights.js',
             projectDir + '/js/vendor/owl.carousel.min.js',
-            projectDir + '/js/vendor/magnific-popup.min.js'
+            projectDir + '/js/vendor/magnific-popup.min.js',
+            projectDir + '/js/vendor/countdown.min.js'
         ])
         .pipe(concat('libs.min.js'))
         .pipe(uglify())
@@ -54,7 +55,11 @@ gulp.task('js-libs', function () {
 gulp.task('bower-components', function () {
     return gulp.src([
             projectDir + '/bower-components/angular/angular.min.js',
-            projectDir + '/bower-components/angular-sanitize/angular-sanitize.min.js'
+            projectDir + '/bower-components/angular-sanitize/angular-sanitize.min.js',
+            projectDir + '/bower-components/moment/min/moment.min.js',
+            projectDir + '/bower-components/moment/min/locales.min.js',
+            projectDir + '/bower-components/humanize-duration/humanize-duration.js',
+            projectDir + '/bower-components/angular-timer/dist/angular-timer.min.js'
         ])
         .pipe(concat('bower_components.min.js'))
         .pipe(uglify())
@@ -63,7 +68,15 @@ gulp.task('bower-components', function () {
 
 gulp.task('client-js', function () {
     return gulp.src([
-            projectDir + '/js/client/*'
+            projectDir + '/js/client/common.js',
+            projectDir + '/js/client/app.js',
+            projectDir + '/js/client/service/current-user-service.js',
+            projectDir + '/js/client/app-controller.js',
+            projectDir + '/js/client/bonus-controller.js',
+            projectDir + '/js/client/main-controller.js',
+            projectDir + '/js/client/security-controller.js',
+            projectDir + '/js/client/login-controller.js',
+            projectDir + '/js/client/registration-controller.js',
         ])
         .pipe(concat('client.min.js'))
         .pipe(uglify())
@@ -75,6 +88,10 @@ gulp.task('client-js', function () {
 //    //gulp.watch(projectDir + '/*.html', browserSync.reload);
 //    //gulp.watch(projectDir + '/js/*.js', browserSync.reload);
 //});
+
+gulp.task('watch', ['client-js'], function () {
+   gulp.watch(projectDir + '/js/client/*.js', ['client-js']);
+});
 
 gulp.task('imagemin', function () {
     return gulp.src(projectDir + '/img/**/*')

@@ -44,7 +44,7 @@ class NotificationDetail
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function getNews()
     {
@@ -52,7 +52,7 @@ class NotificationDetail
     }
 
     /**
-     * @param mixed $news
+     * @param bool $news
      */
     public function setNews($news)
     {
@@ -60,7 +60,7 @@ class NotificationDetail
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function getNoveltyAppearance()
     {
@@ -68,7 +68,7 @@ class NotificationDetail
     }
 
     /**
-     * @param mixed $noveltyAppearance
+     * @param bool $noveltyAppearance
      */
     public function setNoveltyAppearance($noveltyAppearance)
     {
