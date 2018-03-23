@@ -107,7 +107,13 @@ class SecurityController extends BaseController
             $user = $loginHelper->isValidCredential($encoder, $username, $password);
 
             if($user instanceof User){
-                return $loginHelper->login($user, $request, $rememberMe);
+                $response = $loginHelper->login($user, $request, $rememberMe);
+
+                if($user->hasRole("ROLE_SUPER_ADMIN")){
+                    $this->redirectToRoute("sonata_admin_dashboard");
+                }
+
+                return $response;
             }
 
             return $this->getLoginResponseWithForm($form, $errorsForm);
