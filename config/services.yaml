@@ -8,6 +8,7 @@ parameters:
     locale: 'ru'
     upload_directory: '%kernel.project_dir%/public/images'
     upload_image_directory: '/images/'
+    secret: '%env(APP_SECRET)%'
 
 services:
     # default configuration for services in *this* file
@@ -22,7 +23,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{Entity,Migrations,Tests,Form,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -33,6 +34,10 @@ services:
     app.file_upload:
         class:  App\Upload\FileUpload
         arguments: ['@images_filesystem']
+
+    app.helper.login_helper:
+        class:  App\Helper\LoginHelper
+        arguments: ['@service_container', '@doctrine.orm.entity_manager']
 
     App\Twig\ImageUrlExtension:
         class: App\Twig\ImageUrlExtension

@@ -1,0 +1,40 @@
+<form id="login-form" method="post" novalidate enctype="multipart/form-data">
+    {{ form_widget(form._token) }}
+    <h6 class="login-title">Вход в систему</h6>
+    {% for key, error in form.vars.errors.form.getErrors(true)%}
+        <p style="color: red">{{ error.message }}</p>
+    {% endfor %}
+
+    <div class="login-controls">
+        <fieldset class="form-group">
+            {{ form_widget(form.username, {attr: {class: 'fg-input input-block', placeholder: 'Введите логин или email'}} ) }}
+            {#{{ form_errors(form.username) }}#}
+            {#<input type="text" class="fg-input input-block" placeholder="Введите логин или email">#}
+        </fieldset>
+
+        <fieldset class="form-group">
+            {{ form_widget(form.password, {attr: {class: 'fg-input input-block', placeholder: 'Введите пароль'}} ) }}
+            {#{{ form_errors(form.password) }}#}
+            {#<input type="password" class="fg-input input-block" placeholder="Введите пароль">#}
+        </fieldset>
+    </div>
+
+    <div class="forget-pass-link-wrap">
+        <a href="#">Забыли пароль?</a>
+    </div>
+
+    <div class="login-btn-wrap">
+        {#<button class="bttn bttn-sm bttn-red">Войти</button>#}
+        {{ form_widget(form.submit, {attr: {class: 'bttn bttn-sm bttn-red'}, label: 'Войти'}) }}
+    </div>
+
+    <fieldset id="login-agree-fieldset-wrap" class="form-group">
+        <label class="custom-checkbox checkbox-inline">
+            Запомнить меня
+            {{ form_widget(form.remember_me) }}
+            {#{{ form_errors(form.remember_me) }}#}
+            {#<input type="checkbox" ng-model="login.loginData.isRememberMe">#}
+            <span class="checkmark"></span>
+        </label>
+    </fieldset>
+</form>
