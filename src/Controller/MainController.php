@@ -8,15 +8,12 @@ use App\Parser\ProductParser;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @Route("/test-dev")
- */
 class MainController extends BaseController
 {
     const AUCTION_PER_PAGE = 9;
 
     /**
-     * @Route("/{page}", name="list_products", defaults={"page" = 1})
+     * @Route("/{page}", name="list_products", requirements={"page"="\d+"}, defaults={"page" = 1})
      */
     public function mainPageAction(Request $request, ProductParser $productParser, $page)
     {

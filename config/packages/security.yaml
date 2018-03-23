@@ -29,7 +29,7 @@ security:
 
             logout:
                 path: /logout
-                target: /test-dev/
+                target: /
 
             remember_me:
                 secret:   '%env(APP_SECRET)%'
