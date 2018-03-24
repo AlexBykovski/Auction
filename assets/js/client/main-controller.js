@@ -1,13 +1,26 @@
 (function(appAuction) {
     'use strict';
 
-    appAuction.controller('MainController', ['$scope', function($scope) {
-        $scope.currentAuctions = [];
+    appAuction.controller('MainController', ['$http', function($http) {
+        var self = this;
+        this.currentAuctions = [];
 
         function init(currentAuctions){
-            $scope.currentAuctions = angular.fromJson(currentAuctions);
+            self.currentAuctions = angular.fromJson(currentAuctions);
         }
 
-        $scope.init = init;
+        function makeStake(productId){
+            $http({
+                method: 'POST',
+                url: "/make-manual-stake/" + productId
+            }).then(function (response) {
+                console.log("OK");
+            }, function (response) {
+                console.error("error");
+            });
+        }
+
+        this.init = init;
+        this.makeStake = makeStake;
     }]);
 })(window.appAuction);

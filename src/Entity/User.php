@@ -187,7 +187,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return mixed
+     * @return StakeDetail
      */
     public function getStakeDetail()
     {
@@ -195,7 +195,7 @@ class User extends BaseUser
     }
 
     /**
-     * @param mixed $stakeDetail
+     * @param StakeDetail $stakeDetail
      */
     public function setStakeDetail($stakeDetail)
     {
