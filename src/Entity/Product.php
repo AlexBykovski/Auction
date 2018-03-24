@@ -86,7 +86,7 @@ class Product
 
     /**
      * One Product has One ProductTimer.
-     * @ORM\OneToOne(targetEntity="ProductTimer", mappedBy="product")
+     * @ORM\OneToOne(targetEntity="ProductTimer", mappedBy="product", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="timer_id", referencedColumnName="id")
      */
     private $timer;
@@ -320,7 +320,7 @@ class Product
     }
 
     /**
-     * @return mixed
+     * @return ProductTimer
      */
     public function getTimer()
     {
@@ -328,7 +328,7 @@ class Product
     }
 
     /**
-     * @param mixed $timer
+     * @param ProductTimer $timer
      */
     public function setTimer($timer)
     {

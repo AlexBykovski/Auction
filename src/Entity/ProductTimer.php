@@ -12,6 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class ProductTimer
 {
+    const TIME = 10;// in seconds
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -32,7 +34,7 @@ class ProductTimer
      *     value = 0
      * )
      */
-    private $time = 10; //in seconds
+    private $time = self::TIME; //in seconds
 
     /**
      * @ORM\Column(type="datetime")
@@ -109,5 +111,10 @@ class ProductTimer
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    public function restartTimer(){
+        $this->updatedAt = new DateTime();
+        $this->time = self::TIME;
     }
 }
