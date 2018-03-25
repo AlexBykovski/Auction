@@ -27,11 +27,20 @@ class StakeController extends BaseController
         $em = $this->getDoctrine()->getManager();
         /** @var User $user */
         $user = $this->getUser();
+        $stakeDetail = $user->getStakeDetail();
+
+        if(!$stakeDetail || !$stakeDetail->getCount()){
+            return new JsonResponse([
+                "success" => false,
+            ]);
+        }
+
+        $stakeDetail->setCount($stakeDetail->getCount() - 1);
 
         $stakeExpense = new StakeExpense();
         $stakeExpense->setCount(1);
         $stakeExpense->setProduct($product);
-        $stakeExpense->setStakeDetail($user->getStakeDetail());
+        $stakeExpense->setStakeDetail($stakeDetail);
 
         $em->persist($stakeExpense);
 
