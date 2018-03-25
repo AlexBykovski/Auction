@@ -43,6 +43,10 @@ services:
         class:  App\Helper\LoginHelper
         arguments: ['@service_container', '@doctrine.orm.entity_manager']
 
+    app.socket.helper:
+        class:  App\Socket\SocketHelper
+        arguments: ['@service_container']
+
     App\Twig\ImageUrlExtension:
         class: App\Twig\ImageUrlExtension
         arguments: ['%upload_image_directory%']
