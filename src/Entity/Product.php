@@ -353,11 +353,18 @@ class Product
 
     public function toArrayMainPage()
     {
+        $now = new DateTime();
+        $timer = $this->getTimer();
+
         return [
             "id" => $this->id,
             "mainPhoto" => $this->mainPhoto,
             "name" => $this->name,
             "cost" => $this->cost,
+            "isProcessing" => !$this->winner && $this->startAt <= $now,
+            "isFinish" => $this->winner instanceof User,
+            "isSoon" => !$this->winner && $this->startAt > $now,
+            "timeEnd" => $timer->getEndTimeInMS()
         ];
     }
 }

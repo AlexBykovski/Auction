@@ -56,10 +56,7 @@ gulp.task('bower-components', function () {
     return gulp.src([
             projectDir + '/bower-components/angular/angular.min.js',
             projectDir + '/bower-components/angular-sanitize/angular-sanitize.min.js',
-            projectDir + '/bower-components/moment/min/moment.min.js',
-            projectDir + '/bower-components/moment/min/locales.min.js',
-            projectDir + '/bower-components/humanize-duration/humanize-duration.js',
-            projectDir + '/bower-components/angular-timer/dist/angular-timer.min.js'
+            projectDir + '/bower-components/jquery.countdown/dist/jquery.countdown.min.js'
         ])
         .pipe(concat('bower_components.min.js'))
         .pipe(uglify())
