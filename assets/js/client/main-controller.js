@@ -1,7 +1,7 @@
 (function(appAuction) {
     'use strict';
 
-    appAuction.controller('MainController', ['$scope', '$http', function($scope, $http) {
+    appAuction.controller('MainController', ['$scope', '$http', 'WebSocketService', function($scope, $http, WebSocketService) {
         var self = this;
         this.currentAuctions = [];
 
@@ -25,7 +25,7 @@
                 url: "/make-manual-stake/" + productId
             }).then(function (response) {
                 console.log("OK");
-
+                WebSocketService.send(productId);
             }, function (response) {
                 console.error("error");
             });
