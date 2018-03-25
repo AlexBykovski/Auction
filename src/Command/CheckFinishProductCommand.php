@@ -2,8 +2,10 @@
 
 namespace App\Command;
 
+ini_set('max_execution_time', 60);
+
 use App\Entity\Product;
-use App\Entity\StakeExpense;
+use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -21,21 +23,28 @@ class CheckFinishProductCommand extends ContainerAwareCommand
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $time = new DateTime();
+        $time->add(new DateInterval("PT1M"));
+
         $container = $this->getContainer();
         /** @var EntityManagerInterface $em */
         $em = $container->get('doctrine.orm.default_entity_manager');
 
-        $products = $em->getRepository(Product::class)->findAllAlreadyFinished();
+        while($time > (new DateTime())){
+            $products = $em->getRepository(Product::class)->findAllAlreadyFinished();
 
-        $output->writeln(count($products));
+            //$output->writeln(count($products));
 
-        /** @var Product $product */
-        foreach($products as $product){
-            $product->setEndAt(new DateTime());
-            $product->setWinner($product->getPotentialWinner());
+            /** @var Product $product */
+            foreach($products as $product){
+                $product->setEndAt(new DateTime());
+                $product->setWinner($product->getPotentialWinner());
+            }
+
+            $em->flush();
         }
 
-        $em->flush();
-        $output->writeln("<info>Done!</info>");
+
+        //$output->writeln("<info>Done!</info>");
     }
 }
