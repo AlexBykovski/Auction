@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityRepository;
 
@@ -16,7 +17,6 @@ class ProductRepository extends EntityRepository
     {
         return $this->createQueryBuilder('p')
             ->select('p')
-            ->where("p.winner IS NOT NULL")
             ->where("p.endAt IS NOT NULL")
             ->orderBy("p.endAt", "DESC")
             ->setMaxResults($limit)
@@ -43,7 +43,7 @@ class ProductRepository extends EntityRepository
 //            ->getResult();
         return $this->createQueryBuilder('p')
             ->select('p')
-            ->where("p.winner IS NULL")
+            ->where("p.endAt IS NULL")
             ->orderBy("p.startAt", "ASC")
             ->setFirstResult( $offset )
             ->setMaxResults($limit)
@@ -60,7 +60,7 @@ class ProductRepository extends EntityRepository
     {
         return $this->createQueryBuilder('p')
             ->select('count(p.id)')
-            ->where("p.winner IS NULL")
+            ->where("p.endAt IS NULL")
             ->getQuery()
             ->getSingleScalarResult();
     }
@@ -72,6 +72,21 @@ class ProductRepository extends EntityRepository
             ->where("p.id IN(:ids)")
             ->setParameter("ids", $ids)
             ->orderBy("p.startAt", "ASC")
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllAlreadyFinished()
+    {
+        $nowMinus10Sec = new DateTime();
+        $nowMinus10Sec->sub(new DateInterval("PT10S"));
+
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->innerJoin('p.timer', 't')
+            ->where("t.updatedAt < :checkTimer")
+            ->andWhere("p.endAt IS NULL")
+            ->setParameter("checkTimer", $nowMinus10Sec)
             ->getQuery()
             ->getResult();
     }
