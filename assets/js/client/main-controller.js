@@ -7,7 +7,6 @@
 
         function init(currentAuctions){
             self.currentAuctions = angular.fromJson(currentAuctions);
-            console.log(self.currentAuctions);
 
             $(".product-offers-list").ready(function(){
                 $(".time-countdown").each(function(index, el){
@@ -26,11 +25,6 @@
                 url: "/make-manual-stake/" + productId
             }).then(function (response) {
                 console.log("OK");
-                if(response.status){
-                    $scope.$broadcast('timer-reset');
-                    $scope.$broadcast('timer-start');
-                }
-                //self.currentAuctions[productId]["time"] = 10;
 
             }, function (response) {
                 console.error("error");
