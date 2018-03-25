@@ -1,7 +1,8 @@
 (function(appAuction) {
     'use strict';
 
-    appAuction.controller('MainController', ['$scope', '$http', 'WebSocketService', function($scope, $http, WebSocketService) {
+    appAuction.controller('MainController', ['$scope', '$http', '$interval', '$rootScope', 'UpdateService',
+        function($scope, $http, $interval, $rootScope, UpdateService) {
         var self = this;
         this.currentAuctions = [];
 
@@ -16,6 +17,29 @@
                         );
                     });
                 });
+
+                var stop = $interval(function() {
+                    UpdateService.updateProducts(Object.keys(self.currentAuctions), function(response){
+                        if(!response.success){
+                            return console.error("Wrong response");
+                        }
+
+                        if(response.user){
+                            $rootScope.$broadcast('update-user', {user: response.user});
+                        }
+
+                        self.currentAuctions = response.auctions;
+
+                        $(".time-countdown").each(function(index, el){
+                            $(this).countdown(self.currentAuctions[$(el).attr("element-key")].timeEnd, function(event) {
+                                $(this).text(
+                                    event.strftime('%H:%M:%S')
+                                );
+                            });
+                        });
+
+                    });
+                }, 1000);
             });
         }
 
@@ -25,7 +49,7 @@
                 url: "/make-manual-stake/" + productId
             }).then(function (response) {
                 console.log("OK");
-                WebSocketService.send(productId);
+                //WebSocketService.send(productId);
             }, function (response) {
                 console.error("error");
             });
