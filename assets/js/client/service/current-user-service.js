@@ -13,6 +13,9 @@ appAuction.factory('CurrentUserService', [function() {
         },
         getUser: function(){
             return currentUser;
+        },
+        setCountStakes: function(count){
+            return currentUser["stakes"];
         }
     };
 }]);

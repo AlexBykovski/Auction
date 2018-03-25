@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateInterval;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,6 +13,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class ProductTimer
 {
+    const TIME = 10;// in seconds
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -32,7 +35,7 @@ class ProductTimer
      *     value = 0
      * )
      */
-    private $time = 10; //in seconds
+    private $time = self::TIME; //in seconds
 
     /**
      * @ORM\Column(type="datetime")
@@ -96,7 +99,7 @@ class ProductTimer
     }
 
     /**
-     * @return mixed
+     * @return DateTime
      */
     public function getUpdatedAt()
     {
@@ -104,10 +107,24 @@ class ProductTimer
     }
 
     /**
-     * @param mixed $updatedAt
+     * @param DateTime $updatedAt
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt(DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    public function restartTimer()
+    {
+        $this->updatedAt = new DateTime();
+        $this->time = self::TIME;
+    }
+
+    public function getEndTimeInMS()
+    {
+        $endAt = $this->updatedAt;
+        $endAt->add(new DateInterval("PT" . $this->time . "S"));
+
+        return $endAt->getTimestamp() * 1000;
     }
 }

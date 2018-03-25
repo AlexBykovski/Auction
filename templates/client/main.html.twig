@@ -8,7 +8,7 @@
     {#{% endfor %}#}
     <main class="main" ng-init="default_image_directory = '{{ default_image_directory }}';
     image_directory = '{{ image_directory }}';
-    init('{{ currentAuctions | json_encode }}')" ng-controller="MainController">
+    main.init('{{ currentAuctions | json_encode }}')" ng-controller="MainController as main">
 
         <section id="header-main-slider-sect">
             <div class="container">
@@ -59,7 +59,7 @@
 
                             <div class="product-offers-list">
                                 <div class="row">
-                                    <div class="col-sm-6 col-md-4" ng-repeat="auction in currentAuctions">
+                                    <div class="col-sm-6 col-md-4" ng-repeat="auction in main.currentAuctions">
 
                                         <div class="product-offer card-box">
                                             <div class="box-body">
@@ -73,11 +73,11 @@
                                                 <h4 class="offer-title"><a href="#">{{ '{{ auction.name }}' }}</a></h4>
 
                                                 <div class="offer-rate-sum-box">{{ '{{ auction.cost }}' }} руб.</div>
-                                                <div class="offer-time-to-end-box"><timer interval="1000" countdown="10">0:00:{{ '{{ sseconds }}' }}</timer></div>
+                                                <div class="offer-time-to-end-box"><div id="time-countdown-{{ '{{ auction.id }}' }}" element-key="{{ '{{ auction.id }}' }}" class="time-countdown"></div></div>
 
                                                 <div class="offer-controls">
                                                     <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-red">Подробнее</a>
-                                                    <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-green">Ставка</a>
+                                                    <a nohref ng-click="main.makeStake( auction.id )" class="bttn bttn-sm bttn-block bttn-rounded bttn-green">Ставка</a>
                                                 </div>
                                             </div>
                                         </div>
