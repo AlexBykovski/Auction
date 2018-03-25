@@ -64,4 +64,15 @@ class ProductRepository extends EntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function findAuctionsByIds($ids)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->where("p.id IN(:ids)")
+            ->setParameter("ids", $ids)
+            ->orderBy("p.startAt", "ASC")
+            ->getQuery()
+            ->getResult();
+    }
 }
