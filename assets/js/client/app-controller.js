@@ -24,5 +24,9 @@
         $rootScope.$on('user-logged-in', function(event, args){
             CurrentUserService.setUser(args.user);
         });
+
+        $rootScope.$on('update-user', function(event, args){
+            CurrentUserService.setUser(args.user);
+        });
     }]);
 })(window.appAuction);
