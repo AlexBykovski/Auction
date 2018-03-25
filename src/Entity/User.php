@@ -77,6 +77,12 @@ class User extends BaseUser
     private $winProducts;
 
     /**
+     * One User has Many Products.
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="potentialWinner")
+     */
+    private $potentialProducts;
+
+    /**
      * One User has Many SupportQuestions.
      * @ORM\OneToMany(targetEntity="SupportQuestion", mappedBy="user")
      */

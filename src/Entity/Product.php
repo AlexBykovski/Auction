@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -67,6 +68,13 @@ class Product
     private $winner;
 
     /**
+     * Many Product have One User.
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="potentialProducts")
+     * @ORM\JoinColumn(name="potential_winner_id", referencedColumnName="id")
+     */
+    private $potentialWinner;
+
+    /**
      * One Product has One ProductDeliveryDetail.
      * @ORM\OneToOne(targetEntity="ProductDeliveryDetail")
      * @ORM\JoinColumn(name="delivery_detail_id", referencedColumnName="id")
@@ -95,6 +103,15 @@ class Product
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $endAt;
+
+    /**
+     * Product constructor.
+     */
+    public function __construct()
+    {
+        $this->stakeExpenses = new ArrayCollection();
+    }
+
 
     /**
      * @return mixed
@@ -288,7 +305,7 @@ class Product
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
     public function getStakeExpenses()
     {
@@ -296,7 +313,7 @@ class Product
     }
 
     /**
-     * @param mixed $stakeExpenses
+     * @param ArrayCollection $stakeExpenses
      */
     public function setStakeExpenses($stakeExpenses)
     {
@@ -351,20 +368,46 @@ class Product
         $this->endAt = $endAt;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPotentialWinner()
+    {
+        return $this->potentialWinner;
+    }
+
+    /**
+     * @param mixed $potentialWinner
+     */
+    public function setPotentialWinner($potentialWinner)
+    {
+        $this->potentialWinner = $potentialWinner;
+    }
+
     public function toArrayMainPage()
     {
         $now = new DateTime();
-        $timer = $this->getTimer();
 
-        return [
+        $parameters = [
             "id" => $this->id,
             "mainPhoto" => $this->mainPhoto,
             "name" => $this->name,
             "cost" => $this->cost,
-            "isProcessing" => !$this->winner && $this->startAt <= $now,
-            "isFinish" => $this->winner instanceof User,
-            "isSoon" => !$this->winner && $this->startAt > $now,
-            "timeEnd" => $timer->getEndTimeInMS()
+            "isProcessing" => !$this->endAt && $this->startAt <= $now,
+            "isFinish" => $this->endAt instanceof DateTime,
+            "isSoon" => !$this->endAt && $this->startAt > $now,
         ];
+
+        if($parameters["isFinish"]){
+            $parameters["winner"] = $this->winner ? $this->winner->getUsername() : null;
+        }
+        elseif($parameters["isSoon"]){
+            $parameters["startAt"] = $this->startAt;
+        }
+        else{
+            $parameters["timeEnd"] = $this->getTimer()->getEndTimeInMS();
+        }
+
+        return $parameters;
     }
 }

@@ -10,13 +10,7 @@
             self.currentAuctions = angular.fromJson(currentAuctions);
 
             $(".product-offers-list").ready(function(){
-                $(".time-countdown").each(function(index, el){
-                    $(this).countdown(self.currentAuctions[$(el).attr("element-key")].timeEnd, function(event) {
-                        $(this).text(
-                            event.strftime('%H:%M:%S')
-                        );
-                    });
-                });
+                updateTime();
 
                 var stop = $interval(function() {
                     UpdateService.updateProducts(Object.keys(self.currentAuctions), function(response){
@@ -30,14 +24,7 @@
 
                         self.currentAuctions = response.auctions;
 
-                        $(".time-countdown").each(function(index, el){
-                            $(this).countdown(self.currentAuctions[$(el).attr("element-key")].timeEnd, function(event) {
-                                $(this).text(
-                                    event.strftime('%H:%M:%S')
-                                );
-                            });
-                        });
-
+                        updateTime();
                     });
                 }, 1000);
             });
@@ -52,6 +39,18 @@
                 //WebSocketService.send(productId);
             }, function (response) {
                 console.error("error");
+            });
+        }
+
+        function updateTime(){
+            $(".time-countdown").each(function(index, el){
+                if(self.currentAuctions[$(el).attr("element-key")].isProcessing) {
+                    $(this).countdown(self.currentAuctions[$(el).attr("element-key")].timeEnd, function (event) {
+                        $(this).text(
+                            event.strftime('%H:%M:%S')
+                        );
+                    });
+                }
             });
         }
 
