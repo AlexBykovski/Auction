@@ -41,6 +41,7 @@ class StakeController extends BaseController
         $stakeExpense->setCount(1);
         $stakeExpense->setProduct($product);
         $stakeExpense->setStakeDetail($stakeDetail);
+        $product->setPotentialWinner($user);
 
         $em->persist($stakeExpense);
 

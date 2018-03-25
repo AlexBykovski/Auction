@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('Europe/Minsk');
+
 return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],

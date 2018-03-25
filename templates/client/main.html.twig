@@ -72,10 +72,18 @@
 
                                                 <h4 class="offer-title"><a href="#">{{ '{{ auction.name }}' }}</a></h4>
 
-                                                <div class="offer-rate-sum-box">{{ '{{ auction.cost }}' }} руб.</div>
-                                                <div class="offer-time-to-end-box"><div id="time-countdown-{{ '{{ auction.id }}' }}" element-key="{{ '{{ auction.id }}' }}" class="time-countdown"></div></div>
+                                                <div ng-show="auction.isSoon">
+                                                    <p><b>Скоро</b></p>
+                                                </div>
+                                                <div ng-show="auction.isProcessing">
+                                                    <div class="offer-rate-sum-box">{{ '{{ auction.cost }}' }} руб.</div>
+                                                    <div class="offer-time-to-end-box"><div id="time-countdown-{{ '{{ auction.id }}' }}" element-key="{{ '{{ auction.id }}' }}" class="time-countdown"></div></div>
+                                                </div>
+                                                <div ng-show="auction.isFinish">
+                                                    <p><b>Завершён</b></p>
+                                                </div>
 
-                                                <div class="offer-controls">
+                                                <div class="offer-controls" ng-show="auction.isProcessing">
                                                     <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-red">Подробнее</a>
                                                     <a nohref ng-click="main.makeStake( auction.id )" class="bttn bttn-sm bttn-block bttn-rounded bttn-green">Ставка</a>
                                                 </div>
