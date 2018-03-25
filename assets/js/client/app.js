@@ -1,3 +1,3 @@
 (function(angular) {
-    window.appAuction = angular.module('appAuction', ['ngSanitize', 'timer']);
+    window.appAuction = angular.module('appAuction', ['ngSanitize']);
 })(window.angular);

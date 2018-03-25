@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Entity\Product;
+use App\Entity\ProductTimer;
 use App\Upload\FileUpload;
 use Hillrange\CKEditor\Form\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -72,6 +73,12 @@ class ProductAdmin extends AbstractAdmin
     public function prePersist($product)
     {
         $this->uploadFiles($this->getForm(), $product);
+
+        $timer = new ProductTimer();
+        $timer->setUpdatedAt($product->getStartAt());
+        $timer->setProduct($product);
+
+        $product->setTimer($timer);
     }
 
     public function preUpdate($product)

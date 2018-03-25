@@ -12,7 +12,7 @@ class ProductParser
 
         /** @var Product $product */
         foreach($products as $product){
-            $parsedProducts[] = $product->toArrayMainPage();
+            $parsedProducts[$product->getId()] = $product->toArrayMainPage();
         }
 
         return $parsedProducts;
