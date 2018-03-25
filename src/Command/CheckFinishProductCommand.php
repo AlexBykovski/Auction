@@ -2,21 +2,21 @@
 
 namespace App\Command;
 
-
 use App\Entity\Product;
-use App\Entity\ProductTimer;
+use App\Entity\StakeExpense;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CreateTimerForExistProductsCommand extends ContainerAwareCommand
+class CheckFinishProductCommand extends ContainerAwareCommand
 {
     public function configure()
     {
         $this
-            ->setName('app:product:timer:create')
-            ->setDescription('Create timer for products');
+            ->setName('app:product:check-finish')
+            ->setDescription('Check finish auctions');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -25,17 +25,14 @@ class CreateTimerForExistProductsCommand extends ContainerAwareCommand
         /** @var EntityManagerInterface $em */
         $em = $container->get('doctrine.orm.default_entity_manager');
 
-        $products = $em->getRepository(Product::class)->findBy(["timer" => null]);
+        $products = $em->getRepository(Product::class)->findAllAlreadyFinished();
+
+        $output->writeln(count($products));
 
         /** @var Product $product */
         foreach($products as $product){
-            $timer = new ProductTimer();
-            $timer->setUpdatedAt($product->getStartAt());
-            $timer->setProduct($product);
-
-            $em->persist($timer);
-
-            $product->setTimer($timer);
+            $product->setEndAt(new DateTime());
+            $product->setWinner($product->getPotentialWinner());
         }
 
         $em->flush();
