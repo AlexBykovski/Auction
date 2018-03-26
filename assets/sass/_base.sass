@@ -50,7 +50,7 @@ body
   font-family: $base_font, sans-serif
   font-weight: normal
   color: $dim-grey
-  background-image: url(/images/default/site_bg1.jpg)
+  background-image: url(../img/site_bg1.jpg)
   background-size: cover
   background-repeat: no-repeat
   font-size: 14px
@@ -239,6 +239,17 @@ textarea
       border-color: $luminous-red
       &::after
         background-color: $luminous-red
+  &.input-filled
+    .checkmark
+      &::after
+        content: none
+    input
+      &:checked ~ .checkmark
+        background-color: lighten($steel-blue, 5%)
+    &.input-highlight
+      input
+        &:checked ~ .checkmark
+          background-color: $luminous-red
 
 
 // Custom radio

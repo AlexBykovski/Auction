@@ -45,14 +45,103 @@
                         <div class="product-offers-list-wrapper">
 
                             <div class="product-offers-list-filters-bar">
-                                <select class="product-offers-sort-select">
-                                    <option>Сортировать</option>
-                                    <option>Сортировка 1</option>
-                                    <option>Сортировка 2</option>
-                                    <option>Сортировка 3</option>
-                                    <option>Сортировка 4</option>
-                                    <option>Сортировка 5</option>
-                                </select>
+                                <div class="product-offers-sort-select-wrap">
+                                    <span class="select-text">Сортировать</span>
+
+                                    <div class="backdrop"></div>
+
+                                    <div class="select-dropdown">
+                                        <div class="select-cols">
+                                            <div class="select-col">
+                                                <h6 class="col-title">Категория товара:</h6>
+
+                                                <fieldset class="form-group">
+                                                    <label class="custom-checkbox input-filled input-highlight">
+                                                        все категории
+                                                        <input type="checkbox">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+
+                                                    <label class="custom-checkbox input-filled input-highlight">
+                                                        новинки недели
+                                                        <input type="checkbox" checked>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+
+                                                    <label class="custom-checkbox input-filled input-highlight">
+                                                        телефоны
+                                                        <input type="checkbox">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+
+                                                    <label class="custom-checkbox input-filled input-highlight">
+                                                        бытовая техника
+                                                        <input type="checkbox">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+
+                                                    <label class="custom-checkbox input-filled input-highlight">
+                                                        все для дома
+                                                        <input type="checkbox">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </fieldset>
+                                            </div>
+
+                                            <div class="select-col">
+                                                <h6 class="col-title">Время начала:</h6>
+
+                                                <fieldset class="form-group">
+                                                    <label class="custom-checkbox input-filled input-highlight">
+                                                        все аукционы
+                                                        <input type="checkbox" checked>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+
+                                                    <label class="custom-checkbox input-filled input-highlight">
+                                                        активные аукционы
+                                                        <input type="checkbox">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+
+                                                    <label class="custom-checkbox input-filled input-highlight">
+                                                        будущие аукционы
+                                                        <input type="checkbox">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </fieldset>
+                                            </div>
+
+                                            <div class="select-col">
+                                                <h6 class="col-title">Тип аукциона:</h6>
+
+                                                <fieldset class="form-group">
+                                                    <label class="custom-checkbox input-filled input-highlight">
+                                                        все типы
+                                                        <input type="checkbox">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+
+                                                    <label class="custom-checkbox input-filled input-highlight">
+                                                        простые аукционы
+                                                        <input type="checkbox" checked>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+
+                                                    <label class="custom-checkbox input-filled input-highlight">
+                                                        хиты продаж
+                                                        <input type="checkbox">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+
+                                        <div class="sort-btn-wrap">
+                                            <button id="filter-apply-btn" class="bttn bttn-sm bttn-rounded bttn-green">Применить</button>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="user-balance-wrap" ng-show="app.isUserLoggedIn()">ВАШ БАЛАНС: <span id="bet-count" ng-bind="app.getCurrentUser().stakes"></span> ставок</div>
                             </div>
@@ -167,7 +256,7 @@
 
                                         <div class="offer-end-date">{{ auction.endAt | date("d.m.Y H:i") }}</div>
 
-                                        <div class="offer-winner-name">{{ auction.winner.username }}</div>
+                                        <div class="offer-winner-name">{{ auction.winner ?  auction.winner.username : "" }}</div>
 
                                         <div class="offer-controls">
                                             <a href="#" class="bttn bttn-sm bttn-silver bttn-rounded">Завершено</a>
