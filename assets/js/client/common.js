@@ -70,6 +70,18 @@ $(document).ready(function () {
     }
   });
 
+  $('.product-offers-sort-select-wrap .select-text').click(function () {
+    $(this).parent().addClass('active');
+
+    $(this).parent().find('.backdrop').on('click', closeSortSelect);
+    // $(this).parent().find('#filter-apply-btn').on('click', closeSortSelect);
+
+    function closeSortSelect () {
+      $(this).parent().removeClass('active');
+      $(this).parent().find('.backdrop').off('click', closeSortSelect);
+    }
+  });
+
   $('#product-autobet-settings-trigger').click(function () {
     $(this).parent().siblings('.settings').slideToggle(300);
   });

@@ -433,7 +433,7 @@ $c: #fff // burger color
           margin: 0 auto
       .slide-main-welcome-block
         padding: 80px 50px
-        background-image: url(/images/default/painted_bg.png)
+        background-image: url(../img/painted_bg.png)
         background-size: contain
         background-repeat: no-repeat
         background-position: center center
@@ -523,7 +523,7 @@ $c: #fff // burger color
     position: absolute
     top: -30px
     left: 0
-    background-image: url(/images/default/bg1_torned_border_top.png)
+    background-image: url(../img/bg1_torned_border_top.png)
     width: 100%
     height: 44px
   &::after
@@ -531,7 +531,7 @@ $c: #fff // burger color
     position: absolute
     bottom: -47px
     left: 0
-    background-image: url(/images/default/bg1_torned_border_bottom.png)
+    background-image: url(../img/bg1_torned_border_bottom.png)
     width: 100%
     height: 47px
 
@@ -540,30 +540,6 @@ $c: #fff // burger color
     display: flex
     align-items: center
     justify-content: space-between
-    .product-offers-sort-select
-      position: relative
-      padding-left: 10px
-      padding-right: 20px
-      appearance: none
-      border: none
-      outline: none
-      background-color: darken($sky-blue, 1%)
-      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAMAAABrrFhUAAAA4VBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+sqgLzAAAASnRSTlMAAQIDBAYHCQ0OEBESFBUWFxgaHCIlJiowMTU2ODlHSUtMTVteY2tsb3F0dXd8iYuSlJq1t7m8w8fIyszOz9fi5Obt7/P19/n7/X3aZyAAAANjSURBVBgZ7cGHYlVVFATQSQgRBcGNBVFULKAmg2LDFlTCWDL//0ECKhJ4SV655ZS9FlJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaXUpK3LNz7+dK9tn9/64M3zWOjVO7+7E9+9t4XnvfS1e/LrdRz3zh/uzFfn8Ixb7s9Pu3jqtnv0y3n863336fstPHH5yJ26gyd+cLdexyPvul/38MjP7thV4JJ7RuBD9+w34K67tosDdy3w0F17C3+5a9fwwF17A9+6axdBd20b192ze8DOkTt2E8CX7tfRLoCL7tceHtt3rw538Nj2fXfqGv7x8qG79An+c0Xu0D7+F3J3iGeF3BniuJC7Qjwv5I4QLwq5G8QiIXeCWCzkLhAnCbkDxMlCbh5xmpAbR5wu5KYRZwm5YcTZQm4WsYyQG0UsJ+QmEcsKuUHE8kJuDrGKkBtDrCbkphCrCrkhxOpCbgaxjpAbQawn5CYQ6wq5AcT6Qq4esYmQK0dsJuSqEZsKuWLE5kKuFjGEkCtFDCPkKhFDCblCxHBCrg4xpJArQwwr5KoQQwu5IsTwQq4GMYaQK0GMI+QqEGMJuQLEeEIuHjGmkAtHjCvkohFjC7lgxPhCLhYxhZALRUwj5CIRUwm5QMR0Qi4OMaWQC0NMK+SiEFMLuSDE9EIuBjGHkAtBzCPkIhBzCbkAxHxCnh0xp5BnRswr5FkRcwt5RsT8Qp4NUYKQZ0KUIeRZEKUIeQZEOUKeHFGSkCdGlCXkSRGlCXlCRHlCngxRopAnQpQp5EkQpQp5AkS5Qh4dUbKQR0aULeRREaULeURE+UIeDVGDkEdC1CHkURC1CHkERD1CHhxRk5AHRtQl5EERtQl5QER9Qh4MUaOQB0LUKeRBELUKeQBEvULeGFGzkDdE1C3kjRC1C3kDRP1CXhvRgpDXRLQh5LUQrQh5DUQ7Ql4Z0ZKQV0S0JeSVEK0JeQVEe0JeGtGikJdEtCnkpRCtCnkJRLtCPhPRspDPQLQt5FMRrQv5FET7Qj4R0YOQT0D0IeSFiF5cOfQCn6EfF+77BTfRk+09H/fja+jMK18c+amDG+jQztv73zz48+HB3Y8uIaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkppc38Dkv+iItb6i+YAAAAASUVORK5CYII=')
-      background-size: 8px 8px
-      background-repeat: no-repeat
-      background-position: right 6px center
-      font-weight: 700
-      text-transform: uppercase
-      color: #fff
-      cursor: pointer
-      &::after
-        content: '\f0d7'
-        position: absolute
-        top: 0
-        right: 0
-        width: 20px
-        height: 20px
-        font-family: 'FontAwesome'
     .user-balance-wrap
       color: #fff
   .product-offers-list
@@ -595,6 +571,65 @@ $c: #fff // burger color
         pointer-events: none
       &.prev
         margin-right: 40px
+
+.product-offers-sort-select-wrap
+  position: relative
+  .select-text
+    position: relative
+    padding-right: 30px
+    font-size: 16px
+    color: #fff
+    text-transform: uppercase
+    font-weight: 700
+    cursor: pointer
+    &::after
+      content: '\f0d7'
+      position: absolute
+      top: 0
+      right: 0
+      width: 20px
+      height: 20px
+      font-family: 'FontAwesome'
+      font-size: 25px
+      +mt(.2s)
+  .select-dropdown
+    display: none
+    position: absolute
+    top: calc(100% + 10px)
+    left: 0
+    width: 640px
+    padding: 25px 30px 10px
+    background-color: #fff
+    border: 1px solid $red
+    border-radius: 10px
+    z-index: 999
+    .select-cols
+      display: flex
+      .select-col
+        &:not(:last-child)
+          margin-right: 35px
+        .col-title
+          margin-bottom: 20px
+    .sort-btn-wrap
+      margin-top: 10px
+      text-align: center
+  .backdrop
+    display: none
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    z-index: 998
+  &.active
+    .select-text
+      &::after
+        color: $red
+    .select-dropdown
+      display: block
+    .backdrop
+      display: block
+
 
 .user-balance-wrap
   font-weight: 700
@@ -666,6 +701,7 @@ $c: #fff // burger color
     top: 15px
     display: flex
     justify-content: center
+    z-index: 1
     .bttn
       font-weight: 700
       &:not(:last-child)
@@ -692,20 +728,20 @@ $c: #fff // burger color
     top: 50%
     left: 15px
     transform: translateY(-50%)
-    background-image: url(/images/default/coins_icon.png)
+    background-image: url(../img/coins_icon.png)
 .offer-time-to-end-box
   &::before
     content: ''
     top: 50%
     left: 15px
     transform: translateY(-50%)
-    background-image: url(/images/default/time_icon.png)
+    background-image: url(../img/time_icon.png)      
   &::after
     content: ''
     top: 50%
     right: 15px
     transform: translateY(-50%)
-    background-image: url(/images/default/time_limit_icon.png)
+    background-image: url(../img/time_limit_icon.png)
 // --------------------------------- //
 
 
@@ -955,7 +991,7 @@ $c: #fff // burger color
     .block-bg
       width: 100%
       height: 100%
-      background-image: url(/images/default/store_package.png)
+      background-image: url(../img/store_package.png)
       background-size: contain
       background-repeat: no-repeat
       background-position: center center
@@ -1008,16 +1044,16 @@ $c: #fff // burger color
       border: 1px solid $red
   #payment-visa-mscard
     .payment-logo
-      background-image: url(/images/default/visa-mastercard-logo.png)
+      background-image: url(../img/visa-mastercard-logo.png)
   #payment-qiwi
     .payment-logo
-      background-image: url(/images/default/qiwi-logo.png)
+      background-image: url(../img/qiwi-logo.png)
   #payment-ipay
     .payment-logo
-      background-image: url(/images/default/ipay-logo.png)
+      background-image: url(../img/ipay-logo.png)
   #payment-ydmoney
     .payment-logo
-      background-image: url(/images/default/ydmoney-logo.png)
+      background-image: url(../img/ydmoney-logo.png)
   .payment-way
     height: 100px
     padding: 15px
@@ -1252,7 +1288,7 @@ $c: #fff // burger color
     .block-bg
       width: 100%
       height: 100%
-      background-image: url(/images/default/store_package.png)
+      background-image: url(../img/store_package.png)
       background-size: contain
       background-repeat: no-repeat
       background-position: center center
@@ -1336,7 +1372,7 @@ $c: #fff // burger color
 
 .how-it-works-steps-block
   margin-top: 35px
-  background-image: url(/images/default/step_arrows.png)
+  background-image: url(../img/step_arrows.png)
   background-repeat: no-repeat
   background-position: 50% 35%
   background-size: 60%
@@ -1397,7 +1433,7 @@ $c: #fff // burger color
     display: inline-block
     width: 110px
     height: 110px
-    background-image: url(/images/default/testimonial_photo.png)
+    background-image: url(../img/testimonial_photo.png)
     background-size: cover
     background-position: top center
   .testimonial-descr
@@ -1512,7 +1548,7 @@ $c: #fff // burger color
     position: absolute
     top: -30px
     left: 0
-    background-image: url(/images/default/footer_torned_border_top.png)
+    background-image: url(../img/footer_torned_border_top.png)
     width: 100%
     height: 44px
   .footer-logo-subscr
