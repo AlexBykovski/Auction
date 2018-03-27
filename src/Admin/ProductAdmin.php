@@ -63,7 +63,7 @@ class ProductAdmin extends AbstractAdmin
         $formMapper->add('conditions', CKEditorType::class, ['label' => 'Условия ', 'required' => true]);
         $formMapper->add('categories', ChoiceType::class, [
             'label' => 'Категории',
-            "choices" => $this->getCategoryChoices(),
+            "choices" => Product::$allCategories,
             'expanded' => true,
             'multiple' => true,
             'required' => true,
@@ -89,19 +89,6 @@ class ProductAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper->addIdentifier('name', TextType::class, ['label' => 'Название', 'sortable' => false]);
-    }
-
-    protected function getCategoryChoices (){
-        return [
-            'apple' => 'apple',
-            'детские товары' => 'child',
-            'игровые приставки и аксессуары' => 'gaming_сonsoles_accessories',
-            'ноутбуки, планшеты и аксессуары' => 'laptop_tablet_accessories',
-            'подарочные карты и сертификаты' => 'present_cards_sertificates',
-            'телефоны и аксессуары' => 'phones_accessories',
-            'товары для дома' => 'home',
-            'фото- и видеотехника' => 'photo_video',
-        ];
     }
 
     protected function uploadFiles(Form $form, Product $product){
