@@ -5,6 +5,7 @@ namespace App\Repository;
 use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 class ProductRepository extends EntityRepository
 {
@@ -30,7 +31,7 @@ class ProductRepository extends EntityRepository
      *
      * @return mixed
      */
-    public function findCurrectAuctions($limit = 9, $offset = 0)
+    public function findCurrectAuctions($filterParams, $limit = 9, $offset = 0)
     {
 //        return $this->createQueryBuilder('p')
 //            ->select('p')
@@ -41,9 +42,13 @@ class ProductRepository extends EntityRepository
 //            ->setMaxResults($limit)
 //            ->getQuery()
 //            ->getResult();
-        return $this->createQueryBuilder('p')
+        $query = $this->createQueryBuilder('p')
             ->select('p')
-            ->where("p.endAt IS NULL")
+            ->where("p.endAt IS NULL");
+
+        $query = $this->getSearchByFilterParams($query, $filterParams);
+
+        return $query
             ->orderBy("p.startAt", "ASC")
             ->setFirstResult( $offset )
             ->setMaxResults($limit)
@@ -56,11 +61,15 @@ class ProductRepository extends EntityRepository
      *
      * @return mixed
      */
-    public function findCountNotFinishedAuctions()
+    public function findCountNotFinishedAuctions($filterParams)
     {
-        return $this->createQueryBuilder('p')
+        $query = $this->createQueryBuilder('p')
             ->select('count(p.id)')
-            ->where("p.endAt IS NULL")
+            ->where("p.endAt IS NULL");
+
+        $query = $this->getSearchByFilterParams($query, $filterParams);
+
+        return $query
             ->getQuery()
             ->getSingleScalarResult();
     }
@@ -89,5 +98,36 @@ class ProductRepository extends EntityRepository
             ->setParameter("checkTimer", $nowMinus10Sec)
             ->getQuery()
             ->getResult();
+    }
+
+    protected function getSearchByFilterParams(QueryBuilder $query, $filterParams)
+    {
+        $orXCategories = null;
+
+        foreach($filterParams["categories"] as $category){
+            if(!$orXCategories){
+                $orXCategories = $query->expr()->orX();
+            }
+
+            $orXCategories->add($query->expr()->like('p.categories', "'%" . $category . "%'"));
+        }
+
+        if($orXCategories){
+            $query = $query->andWhere($orXCategories);
+        }
+
+        if(count($filterParams["times"])){
+            if(in_array("active", $filterParams["times"])){
+                $query = $query->andWhere("p.startAt <= :now");
+            }
+
+            if(in_array("soon", $filterParams["times"])){
+                $query = $query->andWhere("p.startAt > :now");
+            }
+
+            $query = $query->setParameter("now", new DateTime());
+        }
+
+        return $query;
     }
 }
