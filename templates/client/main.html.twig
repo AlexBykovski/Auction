@@ -50,122 +50,88 @@
 
                                     <div class="backdrop"></div>
 
-                                    <div class="select-dropdown">
-                                        <div class="select-cols">
-                                            <div class="select-col">
-                                                <h6 class="col-title">Категория товара:</h6>
+                                    {% set queryParams = app.request.query.all %}
+                                    {% set categories = queryParams["categories"] is defined ? queryParams["categories"] : [] %}
+                                    {% set times = queryParams["times"] is defined ? queryParams["times"] : [] %}
 
-                                                <fieldset class="form-group">
-                                                    <label class="custom-checkbox input-filled input-highlight">
-                                                        все категории
-                                                        <input type="checkbox" name="categories" value="all" checked>
-                                                        <span class="checkmark"></span>
-                                                    </label>
+                                    <form  id="filter-form-main-page" method="GET" action="{{ path("list_products", {"page" : page }) }}" novalidate enctype="multipart/form-data">
+                                        <div class="select-dropdown">
+                                            <div class="select-cols">
+                                                <div class="select-col">
+                                                    <h6 class="col-title">Категория товара:</h6>
 
-                                                    <label class="custom-checkbox input-filled input-highlight">
-                                                        apple
-                                                        <input type="checkbox" name="categories" value="apple">
-                                                        <span class="checkmark"></span>
-                                                    </label>
+                                                    <fieldset class="form-group">
+                                                        <label class="custom-checkbox input-filled input-highlight">
+                                                            все категории
+                                                            <input type="checkbox" name="categories[]" value="all" {{ categories|length == 0 or 'all' in categories ? 'checked' : ''}}>
+                                                            <span class="checkmark"></span>
+                                                        </label>
 
-                                                    <label class="custom-checkbox input-filled input-highlight">
-                                                        детские товары
-                                                        <input type="checkbox" name="categories" value="child">
-                                                        <span class="checkmark"></span>
-                                                    </label>
+                                                        {% for key, item in allCategories %}
+                                                            <label class="custom-checkbox input-filled input-highlight">
+                                                                {{ key }}
+                                                                <input type="checkbox" name="categories[]" value="{{ item }}" {{ item in categories ? 'checked' : ''}}>
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        {% endfor %}
 
-                                                    <label class="custom-checkbox input-filled input-highlight">
-                                                        игровые приставки и аксессуары
-                                                        <input type="checkbox" name="categories" value="gaming_сonsoles_accessories">
-                                                        <span class="checkmark"></span>
-                                                    </label>
+                                                    </fieldset>
+                                                </div>
 
-                                                    <label class="custom-checkbox input-filled input-highlight">
-                                                        ноутбуки, планшеты и аксессуары
-                                                        <input type="checkbox" name="categories" value="laptop_tablet_accessories">
-                                                        <span class="checkmark"></span>
-                                                    </label>
+                                                <div class="select-col">
+                                                    <h6 class="col-title">Время начала:</h6>
 
-                                                    <label class="custom-checkbox input-filled input-highlight">
-                                                        подарочные карты и сертификаты
-                                                        <input type="checkbox" name="categories" value="present_cards_sertificates">
-                                                        <span class="checkmark"></span>
-                                                    </label>
+                                                    <fieldset class="form-group">
+                                                        <label class="custom-checkbox input-filled input-highlight">
+                                                            все аукционы
+                                                            <input type="checkbox" name="times[]" value="all" {{ times|length == 0 or 'all' in times ? 'checked' : ''}}>
+                                                            <span class="checkmark"></span>
+                                                        </label>
 
-                                                    <label class="custom-checkbox input-filled input-highlight">
-                                                        телефоны и аксессуары
-                                                        <input type="checkbox" name="categories" value="phones_accessories">
-                                                        <span class="checkmark"></span>
-                                                    </label>
+                                                        <label class="custom-checkbox input-filled input-highlight">
+                                                            активные аукционы
+                                                            <input type="checkbox" name="times[]" value="active" {{ 'active' in times ? 'checked' : ''}}>
+                                                            <span class="checkmark"></span>
+                                                        </label>
 
-                                                    <label class="custom-checkbox input-filled input-highlight">
-                                                        товары для дома
-                                                        <input type="checkbox" name="categories" value="home">
-                                                        <span class="checkmark"></span>
-                                                    </label>
+                                                        <label class="custom-checkbox input-filled input-highlight">
+                                                            будущие аукционы
+                                                            <input type="checkbox" name="times[]" value="soon" {{ 'soon' in times ? 'checked' : ''}}>
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </fieldset>
+                                                </div>
 
-                                                    <label class="custom-checkbox input-filled input-highlight">
-                                                        фото- и видеотехника
-                                                        <input type="checkbox" name="categories" value="photo_video">
-                                                        <span class="checkmark"></span>
-                                                    </label>
+                                                {#<div class="select-col">#}
+                                                    {#<h6 class="col-title">Тип аукциона:</h6>#}
 
-                                                </fieldset>
+                                                    {#<fieldset class="form-group">#}
+                                                        {#<label class="custom-checkbox input-filled input-highlight">#}
+                                                            {#все типы#}
+                                                            {#<input type="checkbox">#}
+                                                            {#<span class="checkmark"></span>#}
+                                                        {#</label>#}
+
+                                                        {#<label class="custom-checkbox input-filled input-highlight">#}
+                                                            {#простые аукционы#}
+                                                            {#<input type="checkbox" checked>#}
+                                                            {#<span class="checkmark"></span>#}
+                                                        {#</label>#}
+
+                                                        {#<label class="custom-checkbox input-filled input-highlight">#}
+                                                            {#хиты продаж#}
+                                                            {#<input type="checkbox">#}
+                                                            {#<span class="checkmark"></span>#}
+                                                        {#</label>#}
+                                                    {#</fieldset>#}
+                                                {#</div>#}
                                             </div>
 
-                                            <div class="select-col">
-                                                <h6 class="col-title">Время начала:</h6>
-
-                                                <fieldset class="form-group">
-                                                    <label class="custom-checkbox input-filled input-highlight">
-                                                        все аукционы
-                                                        <input type="checkbox" name="time" value="all" checked>
-                                                        <span class="checkmark"></span>
-                                                    </label>
-
-                                                    <label class="custom-checkbox input-filled input-highlight">
-                                                        активные аукционы
-                                                        <input type="checkbox" name="time" value="active">
-                                                        <span class="checkmark"></span>
-                                                    </label>
-
-                                                    <label class="custom-checkbox input-filled input-highlight">
-                                                        будущие аукционы
-                                                        <input type="checkbox" name="time" value="soon">
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </fieldset>
+                                            <div class="sort-btn-wrap">
+                                                <button id="filter-apply-btn" type="submit" class="bttn bttn-sm bttn-rounded bttn-green">Применить</button>
                                             </div>
-
-                                            {#<div class="select-col">#}
-                                                {#<h6 class="col-title">Тип аукциона:</h6>#}
-
-                                                {#<fieldset class="form-group">#}
-                                                    {#<label class="custom-checkbox input-filled input-highlight">#}
-                                                        {#все типы#}
-                                                        {#<input type="checkbox">#}
-                                                        {#<span class="checkmark"></span>#}
-                                                    {#</label>#}
-
-                                                    {#<label class="custom-checkbox input-filled input-highlight">#}
-                                                        {#простые аукционы#}
-                                                        {#<input type="checkbox" checked>#}
-                                                        {#<span class="checkmark"></span>#}
-                                                    {#</label>#}
-
-                                                    {#<label class="custom-checkbox input-filled input-highlight">#}
-                                                        {#хиты продаж#}
-                                                        {#<input type="checkbox">#}
-                                                        {#<span class="checkmark"></span>#}
-                                                    {#</label>#}
-                                                {#</fieldset>#}
-                                            {#</div>#}
                                         </div>
-
-                                        <div class="sort-btn-wrap">
-                                            <button id="filter-apply-btn" class="bttn bttn-sm bttn-rounded bttn-green">Применить</button>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
 
                                 <div class="user-balance-wrap" ng-show="app.isUserLoggedIn()">ВАШ БАЛАНС: <span id="bet-count" ng-bind="app.getCurrentUser().stakes"></span> ставок</div>
@@ -211,8 +177,8 @@
                             <div class="product-offers-list-navi-wrapper">
                                 <div class="offers-navi-controls">
                                     {% set canBackAuctions = page > 1 %}
-                                    <a href="{{ path("list_products", {"page" : page - 1 }) }}" class="offer-nav-btn prev {{ canBackAuctions ? "" : "disabled" }}"><i class="fa fa-long-arrow-left"></i></a>
-                                    <a href="{{ path("list_products", {"page" : page + 1 }) }}" class="offer-nav-btn next {{ leftCount > 0 ? "" : "disabled" }}"><i class="fa fa-long-arrow-right"></i></a>
+                                    <a href="{{ path("list_products", {"page" : page - 1 }) ~ query }}" class="offer-nav-btn prev {{ canBackAuctions ? "" : "disabled" }}"><i class="fa fa-long-arrow-left"></i></a>
+                                    <a href="{{ path("list_products", {"page" : page + 1 }) ~ query }}" class="offer-nav-btn next {{ leftCount > 0 ? "" : "disabled" }}"><i class="fa fa-long-arrow-right"></i></a>
                                 </div>
                             </div>
 
