@@ -26,8 +26,9 @@
 
                             <div class="card-box">
                                 <div class="box-body">
-                                    <div class="row">
-                                        {{ delivery.information }}
+                                    {#<div class="row">#}
+                                    <div>
+                                        {{ delivery.information | raw }}
                                     </div>
                                 </div>
                             </div>

@@ -10,9 +10,6 @@ use App\Entity\FAQ;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @Route("/test-dev")
- */
 class StaticController extends BaseController
 {
     /**
