@@ -1,0 +1,180 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <main class="main">
+
+        <section id="lk-user-my-auctions-sect">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="sect-title">
+                            <h4>Активные аукционы</h4>
+                        </div>
+
+                        <div class="user-balance-wrap">ВАШ БАЛАНС: <span id="bet-count">100</span> ставок</div>
+
+                        <div class="user-my-auctions-list">
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-4">
+
+                                    <div class="product-offer card-box">
+                                        <div class="box-body">
+                                            <span class="offer-new-label"><img src="{{ image_url("default/new_label.png") }}" alt=""></span>
+
+                                            <div class="offer-img-wrap">
+                                                <a href="#" class="offer-img" style="background-image: url({{ image_url("default/product_offer_img1.png") }});"></a>
+                                            </div>
+
+                                            <h4 class="offer-title"><a href="#">IPhone 8 64GB</a></h4>
+
+                                            <div class="offer-rate-sum-box">12.50 руб.</div>
+                                            <div class="offer-time-to-end-box">0:00:48</div>
+
+                                            <div class="offer-controls">
+                                                <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-red">Подробнее</a>
+                                                <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-green">Ставка</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+
+                                    <div class="product-offer card-box">
+                                        <div class="box-body">
+                                            <span class="offer-new-label"><img src="{{ image_url("default/new_label.png") }}" alt=""></span>
+
+                                            <div class="offer-img-wrap">
+                                                <a href="#" class="offer-img" style="background-image: url({{ image_url("default/product_offer_img1.png") }});"></a>
+                                            </div>
+
+                                            <h4 class="offer-title"><a href="#">IPhone 8 64GB</a></h4>
+
+                                            <div class="offer-rate-sum-box">12.50 руб.</div>
+                                            <div class="offer-time-to-end-box">0:00:48</div>
+
+                                            <div class="offer-controls">
+                                                <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-red">Подробнее</a>
+                                                <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-green">Ставка</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+
+                                    <div class="product-offer card-box">
+                                        <div class="box-body">
+                                            <span class="offer-new-label"><img src="{{ image_url("default/new_label.png") }}" alt=""></span>
+
+                                            <div class="offer-img-wrap">
+                                                <a href="#" class="offer-img" style="background-image: url({{ image_url("default/product_offer_img1.png") }});"></a>
+                                            </div>
+
+                                            <h4 class="offer-title"><a href="#">IPhone 8 64GB</a></h4>
+
+                                            <div class="offer-rate-sum-box">12.50 руб.</div>
+                                            <div class="offer-time-to-end-box">0:00:48</div>
+
+                                            <div class="offer-controls">
+                                                <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-red">Подробнее</a>
+                                                <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-green">Ставка</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="recommended-offers-sect">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+
+                        <hr>
+
+                        <div class="sect-title">
+                            <h4>Рекомендуем</h4>
+                        </div>
+
+                        <div class="product-offers-carousel owl-carousel">
+
+                            <div class="product-offer card-box">
+                                <div class="box-body">
+                                    <span class="offer-present-label"><img src="{{ image_url("default/present_small.png") }}" alt=""></span>
+                                    <span class="offer-new-label"><img src="{{ image_url("default/new_label.png") }}" alt=""></span>
+
+                                    <div class="offer-img-wrap">
+                                        <a href="#" class="offer-img" style="background-image: url({{ image_url("default/product_offer_img1.png") }});"></a>
+                                    </div>
+
+                                    <h4 class="offer-title"><a href="#">IPhone 8 64GB</a></h4>
+
+                                    <div class="offer-rate-sum-box">12.50 руб.</div>
+                                    <div class="offer-time-to-end-box">0:00:48</div>
+
+                                    <div class="offer-controls">
+                                        <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-red">Подробнее</a>
+                                        <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-green">Ставка</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="product-offer card-box">
+                                <div class="box-body">
+                                    <span class="offer-new-label"><img src="{{ image_url("default/new_label.png") }}" alt=""></span>
+
+                                    <div class="offer-img-wrap">
+                                        <a href="#" class="offer-img" style="background-image: url({{ image_url("default/product_offer_img1.png") }});"></a>
+                                    </div>
+
+                                    <h4 class="offer-title"><a href="#">IPhone 8 64GB</a></h4>
+
+                                    <div class="offer-rate-sum-box">12.50 руб.</div>
+                                    <div class="offer-time-to-end-box">0:00:48</div>
+
+                                    <div class="offer-controls">
+                                        <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-red">Подробнее</a>
+                                        <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-green">Ставка</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="product-offer card-box">
+                                <div class="box-body">
+                                    <span class="offer-new-label"><img src="{{ image_url("default/new_label.png") }}" alt=""></span>
+
+                                    <div class="offer-img-wrap">
+                                        <a href="#" class="offer-img" style="background-image: url({{ image_url("default/product_offer_img1.png") }});"></a>
+                                    </div>
+
+                                    <h4 class="offer-title"><a href="#">IPhone 8 64GB</a></h4>
+
+                                    <div class="offer-rate-sum-box">12.50 руб.</div>
+                                    <div class="offer-time-to-end-box">0:00:48</div>
+
+                                    <div class="offer-controls">
+                                        <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-red">Подробнее</a>
+                                        <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-green">Ставка</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+{% endblock %}

@@ -17,7 +17,7 @@ class StaticController extends BaseController
      */
     public function howItWorksPageShowAction(Request $request)
     {
-        return $this->render('client/how-it-works.html.twig', []);
+        return $this->render('client/static/how-it-works.html.twig', []);
     }
 
     /**
@@ -28,7 +28,7 @@ class StaticController extends BaseController
         /** @var DeliveryPage $deliveryPage */
         $deliveryPage = $this->getDoctrine()->getRepository(DeliveryPage::class)->findAll()[0];
 
-        return $this->render('client/delivery-help.html.twig', [
+        return $this->render('client/static/delivery-help.html.twig', [
             "delivery" => $deliveryPage
         ]);
     }
@@ -40,7 +40,7 @@ class StaticController extends BaseController
     {
         $faqs = $this->getDoctrine()->getRepository(FAQ::class)->findAll();
 
-        return $this->render('client/faq.html.twig', [
+        return $this->render('client/static/faq.html.twig', [
             "faqs" => $faqs
         ]);
     }
@@ -53,7 +53,7 @@ class StaticController extends BaseController
         /** @var BonusPage $bonusPage */
         $bonusPage = $this->getDoctrine()->getRepository(BonusPage::class)->findAll()[0];
 
-        return $this->render('client/bonus.html.twig', [
+        return $this->render('client/static/bonus.html.twig', [
             "bonusPage" => $bonusPage
         ]);
     }
@@ -66,7 +66,7 @@ class StaticController extends BaseController
         /** @var AboutUsPage $aboutUsPage */
         $aboutUsPage = $this->getDoctrine()->getRepository(AboutUsPage::class)->findAll()[0];
 
-        return $this->render('client/about-us.html.twig', [
+        return $this->render('client/static/about-us.html.twig', [
             "aboutUsPage" => $aboutUsPage
         ]);
     }
