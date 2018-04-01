@@ -68,6 +68,7 @@ gulp.task('client-js', function () {
             projectDir + '/js/client/common.js',
             projectDir + '/js/client/app.js',
             projectDir + '/js/client/service/current-user-service.js',
+            projectDir + '/js/client/service/stake-service.js',
             projectDir + '/js/client/app-controller.js',
             projectDir + '/js/client/bonus-controller.js',
             projectDir + '/js/client/main-controller.js',
@@ -75,6 +76,7 @@ gulp.task('client-js', function () {
             projectDir + '/js/client/login-controller.js',
             projectDir + '/js/client/registration-controller.js',
             projectDir + '/js/client/service/update-service.js',
+            projectDir + '/js/client/recommend-auctions-controller.js',
             //projectDir + '/js/client/service/web-socket-service.js'
         ])
         .pipe(concat('client.min.js'))
