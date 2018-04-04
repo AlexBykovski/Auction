@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use Doctrine\DBAL\Types\TextType;
+use Hillrange\CKEditor\Form\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -14,7 +15,7 @@ class FAQAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('question', TextareaType::class, ['label' => 'Вопрос', 'required' => false]);
-        $formMapper->add('answer', TextareaType::class, ['label' => 'Ответ', 'required' => false]);
+        $formMapper->add('answer', CKEditorType::class, ['label' => 'Ответ', 'required' => false]);
     }
 
     protected function configureListFields(ListMapper $listMapper)

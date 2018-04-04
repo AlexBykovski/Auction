@@ -4,6 +4,7 @@ namespace App\Admin;
 
 use App\Entity\AboutUsPage;
 use App\Upload\FileUpload;
+use Hillrange\CKEditor\Form\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -40,7 +41,7 @@ class AboutUsPageAdmin extends AbstractAdmin
             ['label' => 'Изображение', 'required' => false, 'mapped' => false],
             ["help" => $image ? $this->getImageHelp($image) : ""]
         );
-        $formMapper->add('information', TextAreaType::class, ['label' => 'Информация', 'required' => false]);
+        $formMapper->add('information', CKEditorType::class, ['label' => 'Информация', 'required' => false]);
         $formMapper->add('assortment', IntegerType::class, ['label' => 'Ассортимент', 'required' => false]);
         $formMapper->add('countries', IntegerType::class, ['label' => 'География', 'required' => false]);
         $formMapper->add(

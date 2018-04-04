@@ -1,0 +1,60 @@
+<section id="recommended-offers-sect" ng-controller="RecommendAuctionsController as recommend"
+         ng-init="image_directory = '{{ image_directory }}'; default_image_directory = '{{ default_image_directory }}'; recommend.init('{{ recommendAuctions | json_encode }}')">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+
+                <hr>
+
+                <div class="sect-title">
+                    <h4>Рекомендуем</h4>
+                </div>
+
+                <div class="product-offers-list product-offers-list-recommend">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4" ng-repeat="auction in recommend.auctions">
+
+                            {#@@todo product block#}
+                            <div class="product-offer card-box">
+                                <div class="box-body">
+                                    <span class="offer-present-label"><img ng-src="{{'{{ default_image_directory }}'}}/present_small.png" alt=""></span>
+                                    <span class="offer-new-label"><img ng-src="{{'{{ default_image_directory }}'}}/new_label.png" alt=""></span>
+
+                                    <div class="offer-img-wrap">
+                                        <a href="#" class="offer-img" style="background-image: url({{ '{{ image_directory + auction.mainPhoto}}' }});"></a>
+                                    </div>
+
+                                    <h4 class="offer-title"><a href="#">{{ '{{ auction.name }}' }}</a></h4>
+
+                                    <div ng-show="auction.isSoon">
+                                        <p><b>Скоро</b></p>
+                                    </div>
+                                    <div ng-show="auction.isProcessing">
+                                        <div class="offer-rate-sum-box">{{ '{{ auction.cost }}' }} руб.</div>
+                                        <div class="offer-time-to-end-box"><div id="time-countdown-{{ '{{ auction.id }}' }}" element-key="{{ '{{ auction.id }}' }}" class="time-countdown"></div></div>
+                                    </div>
+                                    <div ng-show="auction.isFinish">
+                                        <div class="offer-end-date">{{ '{{ auction.endAt }}' }}</div>
+
+                                        <div class="offer-winner-name">{{ '{{ auction.winner }}' }}</div>
+
+                                        <div class="offer-controls">
+                                            <a href="#" class="bttn bttn-sm bttn-silver bttn-rounded">Завершено</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="offer-controls" ng-show="auction.isProcessing">
+                                        <a href="#" class="bttn bttn-sm bttn-block bttn-rounded bttn-red">Подробнее</a>
+                                        <a nohref ng-click="recommend.makeStake( auction.id )" class="bttn bttn-sm bttn-block bttn-rounded bttn-green">Ставка</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {#end of product block#}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
