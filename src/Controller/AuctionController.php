@@ -8,6 +8,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AuctionController extends BaseController
 {
+    static $defaultFilter = [
+        "categories" => [],
+        "times" => [],
+    ];
+
     const COUNT_RECOMMEND_AUCTIONS = 3;
 
     /**
@@ -27,15 +32,10 @@ class AuctionController extends BaseController
      */
     public function showRecommendAuctionsAction(Request $request, ProductParser $productParser)
     {
-        $filterParams = [
-            "categories" => [],
-            "times" => [],
-        ];
-
-        $myAuctions = $productParser->parserProducts($this->getProductRepository()->findCurrectAuctions($filterParams, self::COUNT_RECOMMEND_AUCTIONS));
+        $myAuctions = $productParser->parserProducts($this->getProductRepository()->findCurrectAuctions(self::$defaultFilter, self::COUNT_RECOMMEND_AUCTIONS));
 
         return $this->render('client/auction/recommend.html.twig', [
-            "myAuctions" => $myAuctions,
+            "recommendAuctions" => $myAuctions,
         ]);
     }
 }

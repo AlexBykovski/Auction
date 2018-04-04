@@ -1,11 +1,12 @@
 (function(appAuction) {
     'use strict';
 
-    appAuction.controller('RecommendAuctionsController', ['StakeService',
+    appAuction.controller('MyAuctionsController', ['StakeService',
         function(StakeService) {
             var self = this;
+            var mainSelector = ".user-my-auctions-list";
+
             this.auctions = [];
-            var mainSelector = ".product-offers-list-recommend";
 
             function init(auctions){
                 self.auctions = angular.fromJson(auctions);

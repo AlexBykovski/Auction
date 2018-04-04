@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityRepository;
@@ -96,6 +97,20 @@ class ProductRepository extends EntityRepository
             ->where("t.updatedAt < :checkTimer")
             ->andWhere("p.endAt IS NULL")
             ->setParameter("checkTimer", $nowMinus10Sec)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findCurrentAuctionsByUser(User $user)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->innerJoin('p.stakeExpenses', 'se')
+            ->where("p.endAt IS NULL")
+            ->andWhere("se.stakeDetail = :stakeDetail")
+            ->setParameter("stakeDetail", $user->getStakeDetail())
+            ->orderBy("p.startAt", "ASC")
+            ->distinct()
             ->getQuery()
             ->getResult();
     }
