@@ -4,7 +4,7 @@
     appAuction.factory('StakeService', ['$http', '$rootScope', '$interval', 'UpdateService',
         function($http, $rootScope, $interval, UpdateService) {
             return {
-                updateAuctions: function(auctions, callback){
+                updateAuctions: function(mainSelector, auctions, callback){
                     var self = this;
 
                     var stop = $interval(function() {
@@ -17,15 +17,15 @@
                                 $rootScope.$broadcast('update-user', {user: response.user});
                             }
 
-                            self.updateTimeCountDown(response.auctions);
+                            self.updateTimeCountDown(mainSelector, response.auctions);
 
                             callback(response.auctions);
                         });
                     }, 1000);
                 },
-                updateTimeCountDown: function(auctions){
-                    $(".time-countdown").each(function(index, el){
-                        if(auctions[$(el).attr("element-key")].isProcessing) {
+                updateTimeCountDown: function(mainSelector, auctions){
+                    $(mainSelector + " .time-countdown").each(function(index, el){
+                        if(auctions[$(el).attr("element-key")] && auctions[$(el).attr("element-key")].isProcessing) {
                             $(this).countdown(auctions[$(el).attr("element-key")].timeEnd, function (event) {
                                 $(this).text(
                                     event.strftime('%H:%M:%S')
