@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<main class="main">
+
+    <section id="lk-user-success-auctions-sect">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="sect-title">
+                        <h4>Успешные аукционы</h4>
+                    </div>
+
+                    <div class="user-balance-wrap">ВАШ БАЛАНС: <span id="bet-count" ng-bind="app.getCurrentUser().stakes"></span> ставок</div>
+
+                    <div class="user-success-auctions-list">
+                        <div class="row">
+                            {% for auction in successAuctions%}
+                                <div class="col-sm-6 col-lg-4">
+                                    {% include('client/auction/single-auction-finished-template.html.twig') with {'auction' : auction } %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{ render(controller('App\\Controller\\AuctionController::showRecommendAuctionsAction')) }}
+
+</main>
+
+{% endblock %}
