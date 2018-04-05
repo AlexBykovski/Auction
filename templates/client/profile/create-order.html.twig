@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <main class="main">
+
+        {% if goodOrder is defined and goodOrder %}
+            <div notify-message message="Спасибо за оформление, наш менеджер выйдет с вами на связь в ближайшем времени для повторной проверки адреса отправки"></div>
+        {% endif %}
+
+        <section id="order-form-sect">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-10 offset-xs-1 col-md-8 offset-md-2">
+
+                        <div class="sect-title">
+                            <h4>Оформление заказа</h4>
+                        </div>
+
+                        <div class="order-form-box card-box">
+                            <div class="box-body">
+                                <form id="create-order-form" method="post" action="{{ path("profile_create_order", {id: auction.id}) }}" novalidate enctype="multipart/form-data">
+                                    {{ form_widget(form._token) }}
+
+                                    <div class="order-form-data-set">
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.name) }}
+                                            {{ form_widget(form.name, {attr: {class: 'fg-input input-block ' ~ (form.name.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for error in form.name.vars.errors%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.postIndex) }}
+                                            {{ form_widget(form.postIndex, {attr: {class: 'fg-input input-block ' ~ (form.postIndex.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.postIndex.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.country) }}
+                                            {{ form_widget(form.country, {attr: {class: 'fg-input input-block ' ~ (form.country.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.country.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.city) }}
+                                            {{ form_widget(form.city, {attr: {class: 'fg-input input-block ' ~ (form.city.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.city.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.address) }}
+                                            {{ form_widget(form.address, {attr: {class: 'fg-input input-block ' ~ (form.address.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.address.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.phone) }}
+                                            {{ form_widget(form.phone, {attr: {class: 'fg-input input-block ' ~ (form.phone.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.phone.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.note) }}
+                                            {{ form_widget(form.note, {attr: {class: 'fg-input input-block ' ~ (form.note.vars.errors | length ? 'is-invalid' : ''), 'rows': 2}} ) }}
+                                            {% for key, error in form.note.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="order-form-controls">
+                                        {{ form_widget(form.submit, {attr: {class: 'bttn bttn-md bttn-rounded bttn-luminous-red'}, label: 'Отправить'}) }}
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{ render(controller('App\\Controller\\AuctionController::showRecommendAuctionsAction')) }}
+
+    </main>
+
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -19,36 +20,50 @@ class ProductDeliveryDetail
 
     /**
      * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"create_order"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"create_order"})
      */
     private $postIndex;
 
     /**
      * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"create_order"})
      */
     private $country;
 
     /**
      * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"create_order"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"create_order"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"create_order"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="text")
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"create_order"})
      */
     private $note;
 
@@ -178,5 +193,16 @@ class ProductDeliveryDetail
     public function setNote($note)
     {
         $this->note = $note;
+    }
+
+    public function setUserDeliveryDetail(UserDeliveryDetail $deliveryDetail)
+    {
+        $this->address = $deliveryDetail->getAddress();
+        $this->city = $deliveryDetail->getCity();
+        $this->country = $deliveryDetail->getCountry();
+        $this->name = $deliveryDetail->getName();
+        $this->phone = $deliveryDetail->getPhone();
+        $this->postIndex = $deliveryDetail->getPostIndex();
+        $this->note = $deliveryDetail->getNote();
     }
 }
