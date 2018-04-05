@@ -6,7 +6,6 @@
             restrict: 'A',
             link: function(scope, element, attrs)
             {
-                console.log("here");
                 var message = attrs.message;
                 var delay = attrs.delay ? attrs.delay : 3000;
 
