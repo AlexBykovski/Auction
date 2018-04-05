@@ -2,12 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
+use App\Entity\ProductDeliveryDetail;
+use App\Entity\UserDeliveryDetail;
+use App\Form\Type\ProductDeliveryType;
 use App\Form\Type\UserSupportType;
 use App\Helper\UserSupportHelper;
 use App\Parser\ProductParser;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class UserController extends BaseController
 {
@@ -81,6 +86,54 @@ class UserController extends BaseController
 
         return $this->render('client/profile/history.html.twig', [
             "successAuctions" => $successAuctions
+        ]);
+    }
+
+    /**
+     * @Route("/create-order/{id}", name="profile_create_order")
+     *
+     * @ParamConverter("auction", class="App:Product", options={"id" = "id"})
+     */
+    public function createOrderAction(Request $request, Product $auction)
+    {
+        if($this->isGranted("ROLE_SUPER_ADMIN") || !$this->isGranted("ROLE_USER")){
+            return $this->redirectToRoute("list_products");
+        }
+
+        $isCreateAction = !($auction->getDeliveryDetail() instanceof ProductDeliveryDetail);
+        $deliveryDetail = $isCreateAction ? new ProductDeliveryDetail() : $auction->getDeliveryDetail();
+        $userDeliveryDetail = $this->getUser()->getDeliveryDetail();
+
+        if($isCreateAction && $userDeliveryDetail instanceof UserDeliveryDetail) {
+            $deliveryDetail->setUserDeliveryDetail($userDeliveryDetail);
+        }
+
+        $form = $this->createForm(ProductDeliveryType::class, $deliveryDetail);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            if($isCreateAction) {
+                $em->persist($deliveryDetail);
+                $auction->setDeliveryDetail($deliveryDetail);
+            }
+
+            $em->flush();
+
+            return $this->render('client/profile/create-order.html.twig', [
+                "form" => $form->createView(),
+                "auction" => $auction,
+                "goodOrder" => true,
+            ]);
+        }
+        if($form->isSubmitted() && !$form->isValid()){
+            //var_dump((string)$form->getErrors(true));die;
+        }
+
+        return $this->render('client/profile/create-order.html.twig', [
+            "form" => $form->createView(),
+            "auction" => $auction,
         ]);
     }
 }
