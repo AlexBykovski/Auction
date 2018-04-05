@@ -56,7 +56,9 @@ gulp.task('bower-components', function () {
     return gulp.src([
             projectDir + '/bower-components/angular/angular.min.js',
             projectDir + '/bower-components/angular-sanitize/angular-sanitize.min.js',
-            projectDir + '/bower-components/jquery.countdown/dist/jquery.countdown.min.js'
+            projectDir + '/bower-components/jquery.countdown/dist/jquery.countdown.min.js',
+            projectDir + '/bower-components/bootstrap/dist/js/bootstrap.min.js',
+            projectDir + '/bower-components/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js'
         ])
         .pipe(concat('bower_components.min.js'))
         .pipe(uglify())
@@ -78,6 +80,7 @@ gulp.task('client-js', function () {
             projectDir + '/js/client/service/update-service.js',
             projectDir + '/js/client/recommend-auctions-controller.js',
             projectDir + '/js/client/my-auctions-controller.js',
+            projectDir + '/js/client/directive/notify-directive.js',
             //projectDir + '/js/client/service/web-socket-service.js'
         ])
         .pipe(concat('client.min.js'))
@@ -114,6 +117,14 @@ gulp.task('simple-move-css', function () {
         .pipe(gulp.dest(projectDistDir + '/css/admin'));
 });
 
+gulp.task('bower-components-css', function () {
+    return gulp.src([
+            projectDir + '/bower-components/bootstrap/dist/css/bootstrap.min.css'
+        ])
+        .pipe(concat('bower_components.min.css'))
+        .pipe(gulp.dest(projectDistDir + '/css'));
+});
+
 gulp.task('simple-move-fonts', function () {
     return gulp.src([
             projectDir + '/fonts/**/*'
@@ -121,7 +132,7 @@ gulp.task('simple-move-fonts', function () {
         .pipe(gulp.dest(projectDistDir + '/fonts'));
 });
 
-gulp.task('build', ['removedist', 'imagemin', 'sass', 'simple-move-css', 'js-libs', 'bower-components', 'client-js', 'simple-move-fonts'], function () {
+gulp.task('build', ['removedist', 'imagemin', 'sass', 'simple-move-css', 'js-libs', 'bower-components', 'client-js', 'simple-move-fonts', 'bower-components-css'], function () {
     runSequence('cleanDist', function () {});
 });
 
