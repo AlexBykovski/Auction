@@ -127,9 +127,6 @@ class UserController extends BaseController
                 "goodOrder" => true,
             ]);
         }
-        if($form->isSubmitted() && !$form->isValid()){
-            //var_dump((string)$form->getErrors(true));die;
-        }
 
         return $this->render('client/profile/create-order.html.twig', [
             "form" => $form->createView(),

@@ -410,10 +410,11 @@ class Product
         ];
 
         if($parameters["isFinish"]){
+            $parameters["endAt"] = $this->endAt->getTimestamp() * 1000;
             $parameters["winner"] = $this->winner ? $this->winner->getUsername() : null;
         }
         elseif($parameters["isSoon"]){
-            $parameters["startAt"] = $this->startAt;
+            $parameters["startAt"] = $this->startAt->getTimestamp() * 1000;
         }
         else{
             $parameters["timeEnd"] = $this->getTimer()->getEndTimeInMS();
