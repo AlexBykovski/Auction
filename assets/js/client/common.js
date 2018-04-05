@@ -92,7 +92,7 @@ $(document).ready(function () {
   });
 
   // Input file  
-  $('.input-file-container .input-file').each(function (index) {
+  $('.input-file-container .input-file:not([file-upload-cancel])').each(function (index) {
     $(this).change(function (e) {
       var files = '';
 

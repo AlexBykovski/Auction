@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if gotMessage is defined and gotMessage %}
+    <div notify-message message="Ваше сообщение принято"></div>
+    {% endif %}
+
+    <main class="main">
+        <section id="lk-user-help-sect">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-lg-5 offset-lg-1 order-md-2">
+
+                        <h4 class="contact-info-title">Контактная инфомация</h4>
+
+                        <ul class="contact-info-items-list">
+                            <li class="info-item">
+                                <span id="address-icon" class="icon"><i class="fa fa-map-marker"></i></span>
+
+                                <div class="info">
+                                    <h6 class="title">Адрес</h6>
+                                    <span>Минск, ул. Первая 1</span>
+                                </div>
+                            </li>
+
+                            <li class="info-item">
+                                <span id="phone-icon" class="icon"><i class="fa fa-phone"></i></span>
+
+                                <div class="info">
+                                    <h6 class="title">Телефон</h6>
+                                    <span>80(29) 344-44-22</span>
+                                </div>
+                            </li>
+
+                            <li class="info-item">
+                                <span id="email-icon" class="icon"><i class="fa fa-at"></i></span>
+
+                                <div class="info">
+                                    <h6 class="title">E-mail</h6>
+                                    <span>newauction@mail.ru</span>
+                                </div>
+                            </li>
+
+                            <li class="info-item">
+                                <span id="skype-icon" class="icon"><i class="fa fa-skype"></i></span>
+
+                                <div class="info">
+                                    <h6 class="title">Skype</h6>
+                                    <span>newauction</span>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div class="col-md-6 order-md-1 mt-5 mt-md-0">
+                        <form id="login-form" method="post" action="{{ path("profile_user_support") }}" novalidate enctype="multipart/form-data">
+                            {{ form_widget(form._token) }}
+                            <h4 class="contact-info-title">Обратная связь</h4>
+                            <p>Для связи с нами заполните форму ниже</p>
+
+                            <div class="contact-form-wrap">
+                                <div id="contact-form-box" class="card-box">
+                                    <div class="box-title">Текст сообщения</div>
+
+                                    <div class="box-body">
+                                        {{ form_widget(form.message, {attr: {class: 'fg-input input-block', rows: "10", placeholder: 'Ваше сообщение...'}} ) }}
+                                        {% for key, error in form.message.vars.errors.form.getErrors(true)%}
+                                            <p style="color: red">{{ error.message }}</p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <div class="contact-form-controls">
+                                    <div id="avatar-upload-btn-container" class="input-file-container">
+                                        <label class="input-file-trigger">
+                                            {{ form_widget(form.file, {attr: {class: 'input-file', 'file-upload-cancel': '', 'name-container': 'name-file-support'}} ) }}
+                                            <span class="bttn bttn-sm bttn-rounded bttn-red">Загрузить &nbsp; <i class="fa fa-arrow-circle-down"></i></span>
+                                        </label>
+
+                                        <p id="name-file-support" class="input-file-return"></p>
+                                    </div>
+
+                                    {{ form_widget(form.submit, {attr: {class: 'bttn bttn-sm bttn-rounded bttn-lime-green'}, label: 'Отправить'}) }}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+{% endblock %}
