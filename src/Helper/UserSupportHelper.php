@@ -66,18 +66,7 @@ class UserSupportHelper
             ->setTo('bykovski.free@gmail.com')
             ->setBody(
                 $question->getQuestion()
-            )
-            /*
-             * If you also want to include a plaintext version of the message
-            ->addPart(
-                $this->renderView(
-                    'emails/registration.txt.twig',
-                    array('name' => $name)
-                ),
-                'text/plain'
-            )
-            */
-        ;
+            );
 
         $this->mailer->send($message);
     }
