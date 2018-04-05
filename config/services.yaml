@@ -45,7 +45,7 @@ services:
 
     app.helper.user_support_helper:
         class:  App\Helper\UserSupportHelper
-        arguments: ['@doctrine.orm.entity_manager', '@app.file_upload']
+        arguments: ['@doctrine.orm.entity_manager', '@app.file_upload', '@mailer']
         public: true
 
     app.socket.helper:
