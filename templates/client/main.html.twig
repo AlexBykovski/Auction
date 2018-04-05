@@ -137,7 +137,7 @@
                                 <div class="user-balance-wrap" ng-show="app.isUserLoggedIn()">ВАШ БАЛАНС: <span id="bet-count" ng-bind="app.getCurrentUser().stakes"></span> ставок</div>
                             </div>
 
-                            <div class="product-offers-list">
+                            <div class="product-offers-list product-offers-list-main">
                                 <div class="row">
                                     <div class="col-sm-6 col-md-4" ng-repeat="auction in main.currentAuctions">
 
@@ -154,14 +154,21 @@
                                                 <h4 class="offer-title"><a href="#">{{ '{{ auction.name }}' }}</a></h4>
 
                                                 <div ng-show="auction.isSoon">
-                                                    <p><b>Скоро</b></p>
+                                                    <div class="offer-time-to-end-box"><div id="time-countdown-{{ '{{ auction.id }}' }}" element-key="{{ '{{ auction.id }}' }}" class="time-countdown"></div></div><br />
+                                                    <div style="text-align: center; font-size: 16px; font-weight: 700;">Скоро начало</div>
                                                 </div>
                                                 <div ng-show="auction.isProcessing">
                                                     <div class="offer-rate-sum-box">{{ '{{ auction.cost }}' }} руб.</div>
                                                     <div class="offer-time-to-end-box"><div id="time-countdown-{{ '{{ auction.id }}' }}" element-key="{{ '{{ auction.id }}' }}" class="time-countdown"></div></div>
                                                 </div>
                                                 <div ng-show="auction.isFinish">
-                                                    <p><b>Завершён</b></p>
+                                                    <div class="offer-end-date">{{ '{{ auction.endAt | date: \'dd.MM.yyyy HH:mm:ss\' }}' }}</div>
+
+                                                    <div class="offer-winner-name">{{ '{{ auction.winner }}' }}</div>
+
+                                                    <div class="offer-controls">
+                                                        <a href="" class="bttn bttn-sm bttn-silver bttn-rounded">Завершено</a>
+                                                    </div>
                                                 </div>
 
                                                 <div class="offer-controls" ng-show="auction.isProcessing">
