@@ -1,0 +1,25 @@
+<div class="product-offer card-box">
+    <div class="box-body">
+        <span class="offer-new-label"><img src="{{ image_url('default/new_label.png')}}" alt=""></span>
+
+        <div class="offer-img-wrap">
+            <a href="#" class="offer-img" style="background-image: url({{ image_url(auction.mainPhoto)}});"></a>
+        </div>
+
+        <h4 class="offer-title"><a href="#">{{ auction.name }}</a></h4>
+
+        <div class="offer-rate-sum-box">{{ auction.cost }} руб.</div>
+
+        <div class="offer-end-date">{{ auction.endAt | date("d.m.Y H:i") }}</div>
+
+        <div class="offer-winner-name">{{ auction.winner ?  auction.winner.username : "" }}</div>
+
+        <div class="offer-controls">
+            {% if auction.deliveryDetail %}
+                <a href="" class="bttn bttn-sm bttn-silver bttn-rounded">Завершено</a>
+            {% else %}
+                <a href="" class="bttn bttn-sm bttn-green bttn-rounded">Оформить</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
