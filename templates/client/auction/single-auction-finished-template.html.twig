@@ -18,7 +18,7 @@
             {% if auction.deliveryDetail %}
                 <a href="" class="bttn bttn-sm bttn-silver bttn-rounded">Завершено</a>
             {% else %}
-                <a href="" class="bttn bttn-sm bttn-green bttn-rounded">Оформить</a>
+                <a href="{{ path("profile_create_order", {id: auction.id}) }}" class="bttn bttn-sm bttn-green bttn-rounded">Оформить</a>
             {% endif %}
         </div>
     </div>
