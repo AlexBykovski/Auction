@@ -32,6 +32,15 @@
                                 );
                             });
                         }
+                        if(auctions[$(el).attr("element-key")] && auctions[$(el).attr("element-key")].isSoon) {
+                            $(this).countdown(auctions[$(el).attr("element-key")].startAt, function (event) {
+                                var totalHours = event.offset.totalDays * 24 + event.offset.hours;
+
+                                $(this).text(
+                                    event.strftime(totalHours + ':%M:%S')
+                                );
+                            });
+                        }
                     });
                 },
                 makeStake: function(productId){
