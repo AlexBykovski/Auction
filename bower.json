@@ -18,6 +18,7 @@
   "dependencies": {
     "angular": "1.6.9",
     "angular-sanitize": "^1.6.9",
-    "jquery.countdown": "^2.2.0"
+    "jquery.countdown": "^2.2.0",
+    "remarkable-bootstrap-notify": "^3.1.3"
   }
 }
