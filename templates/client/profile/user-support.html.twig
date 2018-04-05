@@ -73,11 +73,11 @@
                                 <div class="contact-form-controls">
                                     <div id="avatar-upload-btn-container" class="input-file-container">
                                         <label class="input-file-trigger">
-                                            {{ form_widget(form.file, {attr: {class: 'input-file'}} ) }}
+                                            {{ form_widget(form.file, {attr: {class: 'input-file', 'file-upload-cancel': '', 'name-container': 'name-file-support'}} ) }}
                                             <span class="bttn bttn-sm bttn-rounded bttn-red">Загрузить &nbsp; <i class="fa fa-arrow-circle-down"></i></span>
                                         </label>
 
-                                        <p class="input-file-return"></p>
+                                        <p id="name-file-support" class="input-file-return"></p>
                                     </div>
 
                                     {{ form_widget(form.submit, {attr: {class: 'bttn bttn-sm bttn-rounded bttn-lime-green'}, label: 'Отправить'}) }}
