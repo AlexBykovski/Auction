@@ -67,4 +67,20 @@ class UserController extends BaseController
 
         return $response;
     }
+
+    /**
+     * @Route("/history", name="profile_history")
+     */
+    public function profileHistoryShowAction(Request $request)
+    {
+        if($this->isGranted("ROLE_SUPER_ADMIN") || !$this->isGranted("ROLE_USER")){
+            return $this->redirectToRoute("list_products");
+        }
+
+        $successAuctions = $this->getProductRepository()->findSuccessAuctionsByUser($this->getUser());
+
+        return $this->render('client/profile/history.html.twig', [
+            "successAuctions" => $successAuctions
+        ]);
+    }
 }

@@ -115,6 +115,18 @@ class ProductRepository extends EntityRepository
             ->getResult();
     }
 
+    public function findSuccessAuctionsByUser(User $user)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->where("p.endAt IS NOT NULL")
+            ->andWhere("p.winner = :user")
+            ->setParameter("user", $user)
+            ->orderBy("p.endAt", "DESC")
+            ->getQuery()
+            ->getResult();
+    }
+
     protected function getSearchByFilterParams(QueryBuilder $query, $filterParams)
     {
         $orXCategories = null;
