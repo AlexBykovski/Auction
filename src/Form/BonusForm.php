@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Bonus;
+use App\Helper\AdminHelper;
 use Hillrange\CKEditor\Form\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -15,6 +16,8 @@ class BonusForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $helper = new AdminHelper('/images/');
+
         $builder
             ->add('imageFile', FileType::class, [
                 'label_attr' => ['class' => 'control-label'],
@@ -29,14 +32,14 @@ class BonusForm extends AbstractType
             ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
+            function (FormEvent $event) use ($helper) {
                 $bonus = $event->getData();
                 $form = $event->getForm();
 
                 if($bonus instanceof Bonus){
                     $config = $form->get('imageFile')->getConfig();
                     $options = $config->getOptions();
-                    $options["sonata_help"] = $bonus->getImage() ? $this->getImageHelp($bonus->getImage()) : "";
+                    $options["sonata_help"] = $bonus->getImage() ? $helper->getImagesHelp([$bonus->getImage()]) : "";
 
                     $form->add('imageFile', FileType::class, $options);
                 }
@@ -49,9 +52,5 @@ class BonusForm extends AbstractType
             'data_class' => Bonus::class,
             'validation_groups' => [],
         ]);
-    }
-
-    protected function getImageHelp($image){
-        return "<img style='max-height: 100px;' src='"  . '/images/' . $image . "' />";
     }
 }

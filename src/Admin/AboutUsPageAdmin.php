@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Entity\AboutUsPage;
+use App\Helper\AdminHelper;
 use App\Upload\FileUpload;
 use Hillrange\CKEditor\Form\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -17,15 +18,14 @@ use Symfony\Component\Form\Form;
 class AboutUsPageAdmin extends AbstractAdmin
 {
     protected $uploader = null;
-    protected $uploadDirectory = null;
 
     public function __construct(string $code, string $class, string $baseControllerName, FileUpload $uploader, $uploadDirectory)
     {
         parent::__construct($code, $class, $baseControllerName);
         $this->uploader = $uploader;
-        $this->uploadDirectory = $uploadDirectory;
 
         $this->uploader->setFolder(FileUpload::ABOUT_US_PAGE);
+        $this->helper = new AdminHelper($uploadDirectory);
     }
 
     protected function configureFormFields(FormMapper $formMapper)
@@ -39,7 +39,7 @@ class AboutUsPageAdmin extends AbstractAdmin
             'imageFile',
             FileType::class,
             ['label' => 'Изображение', 'required' => false, 'mapped' => false],
-            ["help" => $image ? $this->getImageHelp($image) : ""]
+            ["help" => $image ? $this->helper->getImagesHelp([$image]) : ""]
         );
         $formMapper->add('information', CKEditorType::class, ['label' => 'Информация', 'required' => false]);
         $formMapper->add('assortment', IntegerType::class, ['label' => 'Ассортимент', 'required' => false]);
@@ -48,7 +48,7 @@ class AboutUsPageAdmin extends AbstractAdmin
             'achievementImageFile',
             FileType::class,
             ['label' => 'Достижения', 'required' => false, 'mapped' => false],
-            ["help" => $achievement ? $this->getImageHelp($achievement) : ""]
+            ["help" => $achievement ? $this->helper->getImagesHelp([$achievement]) : ""]
         );
         $formMapper->add('experience', IntegerType::class, ['label' => 'Стаж работы', 'required' => false]);
     }
@@ -93,9 +93,5 @@ class AboutUsPageAdmin extends AbstractAdmin
 
             $aboutUs->setAchievementImage($path);
         }
-    }
-
-    protected function getImageHelp($image){
-        return "<img style='max-height: 100px;' src='"  . $this->uploadDirectory . $image . "' />";
     }
 }

@@ -16,7 +16,7 @@ class WonProductAdmin extends AbstractAdmin
     {
         $listMapper->addIdentifier('name', 'text', ['label' => 'Аукцион', 'sortable' => false]);
         $listMapper->addIdentifier('winner.id', 'integer', ['label' => 'ID пользователя', 'sortable' => false]);
-        $listMapper->addIdentifier('isProcessed', 'boolean', ['label' => 'Обработан ли?', 'sortable' => false]);
+        $listMapper->addIdentifier('deliveryDetail', 'boolean', ['label' => 'Обработан ли?', 'sortable' => false]);
     }
 
     public function createQuery($context = 'list')

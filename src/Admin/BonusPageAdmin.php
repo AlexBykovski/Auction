@@ -20,13 +20,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class BonusPageAdmin extends AbstractAdmin
 {
     protected $uploader = null;
-    protected $uploadDirectory = null;
 
-    public function __construct(string $code, string $class, string $baseControllerName, FileUpload $uploader, $uploadDirectory)
+    public function __construct(string $code, string $class, string $baseControllerName, FileUpload $uploader)
     {
         parent::__construct($code, $class, $baseControllerName);
         $this->uploader = $uploader;
-        $this->uploadDirectory = $uploadDirectory;
 
         $this->uploader->setFolder(FileUpload::BONUS);
     }
