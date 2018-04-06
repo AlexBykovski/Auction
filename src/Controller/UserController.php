@@ -4,12 +4,19 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Entity\ProductDeliveryDetail;
+use App\Entity\User;
 use App\Entity\UserDeliveryDetail;
 use App\Form\Type\ProductDeliveryType;
+use App\Form\Type\UserProfileType;
 use App\Form\Type\UserSupportType;
+use App\Helper\ResizeImageHelper;
 use App\Helper\UserSupportHelper;
 use App\Parser\ProductParser;
+use App\Upload\FileUpload;
+use Imagick;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -132,5 +139,58 @@ class UserController extends BaseController
             "form" => $form->createView(),
             "auction" => $auction,
         ]);
+    }
+
+    /**
+     * @Route("/private-data", name="profile_private_data")
+     */
+    public function privateDataAction(Request $request)
+    {
+        if($this->isGranted("ROLE_SUPER_ADMIN") || !$this->isGranted("ROLE_USER")){
+            return $this->redirectToRoute("list_products");
+        }
+        /** @var ResizeImageHelper $resizeImageHelper */
+        $resizeImageHelper = $this->get("app.helper.resize_image_helper");
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $form = $this->createForm(UserProfileType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get("photoFile")->getData();
+
+            if($file instanceof UploadedFile){
+                $imageBlob = $resizeImageHelper->getBlobUserProfileResizeImage($file);
+                $pathImage = $resizeImageHelper->uploadBlobFile($file, $imageBlob, FileUpload::USER_PHOTO);
+
+                $user->setPhoto($pathImage);
+            }
+            $this->getDoctrine()->getManager()->flush();
+        }
+
+        return $this->render('client/profile/private-data.html.twig', [
+            "form" => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/cut-image", name="profile_cut_image")
+     */
+    public function cutImageAction(Request $request)
+    {
+        if($this->isGranted("ROLE_SUPER_ADMIN") || !$this->isGranted("ROLE_USER")){
+            return $this->redirectToRoute("list_products");
+        }
+
+        /** @var ResizeImageHelper $resizeImageHelper */
+        $resizeImageHelper = $this->get("app.helper.resize_image_helper");
+        /** @var UploadedFile $image */
+        $image = $request->files->get("image");
+
+        return new JsonResponse([
+            'result' => base64_encode($resizeImageHelper->getBlobUserProfileResizeImage($image)),
+        ], 200);
     }
 }

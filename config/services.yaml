@@ -38,6 +38,7 @@ services:
     app.file_upload:
         class:  App\Upload\FileUpload
         arguments: ['@images_filesystem']
+        public: true
 
     app.helper.login_helper:
         class:  App\Helper\LoginHelper
@@ -46,6 +47,11 @@ services:
     app.helper.user_support_helper:
         class:  App\Helper\UserSupportHelper
         arguments: ['@doctrine.orm.entity_manager', '@app.file_upload', '@mailer']
+        public: true
+
+    app.helper.resize_image_helper:
+        class:  App\Helper\ResizeImageHelper
+        arguments: ['@app.file_upload', '%upload_directory%']
         public: true
 
     app.socket.helper:
