@@ -9,7 +9,7 @@
             <form id="create-order-form" method="post" action="{{ path("profile_private_data") }}" novalidate enctype="multipart/form-data">
                 {{ form_widget(form._token) }}
                 {% set isPrivateDataHasError = form.username.vars.errors | length or form.email.vars.errors | length or form.firstName.vars.errors | length or form.lastName.vars.errors | length or form.sex.vars.errors | length or form.age.vars.errors | length%}
-                {% set isPasswordHasError = form.oldPassword.vars.errors | length or form.newPassword.vars.errors | length%}
+                {% set isPasswordHasError = form.oldPassword.vars.errors | length or form.newPassword.first.vars.errors | length or form.newPassword.second.vars.errors | length%}
                 <div class="row">
                     <div class="col-md-5">
                         <div class="lk-profile-avatar-upload-wrap">
