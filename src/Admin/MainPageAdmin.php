@@ -4,6 +4,7 @@ namespace App\Admin;
 
 use App\Entity\MainPage;
 use App\Entity\SoonProduct;
+use App\Helper\AdminHelper;
 use App\Upload\FileUpload;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -18,15 +19,15 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class MainPageAdmin extends AbstractAdmin
 {
     protected $uploader = null;
-    protected $uploadDirectory = null;
+    private $helper;
 
     public function __construct(string $code, string $class, string $baseControllerName, FileUpload $uploader, $uploadDirectory)
     {
         parent::__construct($code, $class, $baseControllerName);
         $this->uploader = $uploader;
-        $this->uploadDirectory = $uploadDirectory;
 
         $this->uploader->setFolder(FileUpload::MAIN_PAGE);
+        $this->helper = new AdminHelper($uploadDirectory);
     }
 
     protected function configureFormFields(FormMapper $formMapper)
@@ -43,14 +44,14 @@ class MainPageAdmin extends AbstractAdmin
                         'sliderImagesFiles',
                         FileType::class,
                         ['label' => 'Слайдер', "multiple" => true, 'mapped' => false, 'required' => false],
-                        ["help" => count($sliderImages) ? $this->getMultipleImagesHelp($sliderImages) : ""])
+                        ["help" => count($sliderImages) ? $this->helper->getImagesHelp($sliderImages) : ""])
                 ->end()
                 ->with("Скоро на аукционе")
                     ->add(
                         'soonProductImageFile',
                         FileType::class,
                         ['label' => 'Изображение', 'required' => false, 'mapped' => false],
-                        ["help" => $soonProductImage ? $this->getImageHelp($soonProductImage) : ""]
+                        ["help" => $soonProductImage ? $this->helper->getImagesHelp([$soonProductImage]) : ""]
                     )
                     ->add('soonProduct.name', TextType::class, ['label' => 'Название', 'required' => false])
                     ->add('soonProduct.description', TextAreaType::class, ['label' => 'Описание', 'required' => false])
@@ -104,19 +105,5 @@ class MainPageAdmin extends AbstractAdmin
 
             $main->setSliderImages($photos);
         }
-    }
-
-    protected function getImageHelp($image){
-        return "<img style='max-height: 100px;' src='"  . $this->uploadDirectory . $image . "' />";
-    }
-
-    protected function getMultipleImagesHelp($images){
-        $help = "";
-
-        foreach($images as $image){
-            $help .= $this->getImageHelp($image) . "<br />";
-        }
-
-        return $help;
     }
 }

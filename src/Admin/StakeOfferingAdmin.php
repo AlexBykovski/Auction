@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Entity\StakeOffering;
+use App\Helper\AdminHelper;
 use App\Upload\FileUpload;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -16,15 +17,16 @@ use Symfony\Component\Form\Form;
 class StakeOfferingAdmin extends AbstractAdmin
 {
     protected $uploader = null;
-    protected $uploadDirectory = null;
+
+    private $helper;
 
     public function __construct(string $code, string $class, string $baseControllerName, FileUpload $uploader, $uploadDirectory)
     {
         parent::__construct($code, $class, $baseControllerName);
         $this->uploader = $uploader;
-        $this->uploadDirectory = $uploadDirectory;
 
         $this->uploader->setFolder(FileUpload::STAKE_OFFERING);
+        $this->helper = new AdminHelper($uploadDirectory);
     }
 
     protected function configureFormFields(FormMapper $formMapper)
@@ -40,7 +42,7 @@ class StakeOfferingAdmin extends AbstractAdmin
             'imageFile',
             FileType::class,
             ['label' => 'Изображение', 'required' => !$stakeOffering->getImage(), 'mapped' => false],
-            ["help" => $isEditAction ? $this->getImageHelp($stakeOffering->getImage()) : ""]);
+            ["help" => $isEditAction ? $this->helper->getImagesHelp([$stakeOffering->getImage()]) : ""]);
         $formMapper->add('percent', PercentType::class, ['label' => 'Процент', 'required' => true, 'type' => 'integer']);
     }
 
@@ -71,9 +73,5 @@ class StakeOfferingAdmin extends AbstractAdmin
 
             $stakeOffering->setImage($path);
         }
-    }
-
-    protected function getImageHelp($image){
-        return "<img style='max-height: 100px;' src='"  . $this->uploadDirectory . $image . "' />";
     }
 }
