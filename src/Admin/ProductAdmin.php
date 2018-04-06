@@ -4,6 +4,7 @@ namespace App\Admin;
 
 use App\Entity\Product;
 use App\Entity\ProductTimer;
+use App\Helper\AdminHelper;
 use App\Upload\FileUpload;
 use Hillrange\CKEditor\Form\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -20,18 +21,19 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class ProductAdmin extends AbstractAdmin
 {
     protected $uploader = null;
-    protected $uploadDirectory = null;
 
     protected $baseRouteName = 'admin_app_product';
     protected $baseRoutePattern = 'product';
+
+    private $helper;
 
     public function __construct(string $code, string $class, string $baseControllerName, FileUpload $uploader, $uploadDirectory)
     {
         parent::__construct($code, $class, $baseControllerName);
         $this->uploader = $uploader;
-        $this->uploadDirectory = $uploadDirectory;
 
         $this->uploader->setFolder(FileUpload::PRODUCT);
+        $this->helper = new AdminHelper($uploadDirectory);
     }
 
     protected function configureFormFields(FormMapper $formMapper)
@@ -45,13 +47,13 @@ class ProductAdmin extends AbstractAdmin
             'mainPhotoFile',
             FileType::class,
             ['label' => 'Главное фото', 'required' => !$goods->getMainPhoto(), 'mapped' => false],
-            ["help" => $isEditAction ? $this->getImageHelp($goods->getMainPhoto()) : ""]
+            ["help" => $isEditAction ? $this->helper->getImagesHelp([$goods->getMainPhoto()]) : ""]
         );
         $formMapper->add(
             'photosFiles',
             FileType::class,
             ['label' => 'Фотографии', "multiple" => true, 'mapped' => false, 'required' => false],
-            ["help" => $isEditAction ? $this->getMultipleImagesHelp($goods->getPhotos()) : ""]);
+            ["help" => $isEditAction ? $this->helper->getImagesHelp($goods->getPhotos()) : ""]);
         $formMapper->add('cost', IntegerType::class, ['label' => 'Стоимость', 'required' => true]);
         $formMapper->add('characteristics', CKEditorType::class, ['label' => 'Характеристики', 'required' => true]);
         $formMapper->add('startAt', DateTimeType::class, [
@@ -112,19 +114,5 @@ class ProductAdmin extends AbstractAdmin
 
             $product->setPhotos($photos);
         }
-    }
-
-    protected function getImageHelp($image){
-        return "<img style='max-height: 100px;' src='"  . $this->uploadDirectory . $image . "' />";
-    }
-
-    protected function getMultipleImagesHelp($images){
-        $help = "";
-
-        foreach($images as $image){
-            $help .= $this->getImageHelp($image) . "<br />";
-        }
-
-        return $help;
     }
 }

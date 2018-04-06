@@ -64,7 +64,7 @@ services:
 
     admin.general.bonus_page:
         class: App\Admin\BonusPageAdmin
-        arguments: [~, App\Entity\BonusPage, ~, "@app.file_upload", '%upload_image_directory%']
+        arguments: [~, App\Entity\BonusPage, ~, "@app.file_upload"]
         tags:
             - { name: sonata.admin, group: Общее, manager_type: orm, label: Бонусы }
         public: true
