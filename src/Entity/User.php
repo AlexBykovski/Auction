@@ -11,8 +11,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity
  * @ORM\Table(name="`user`")
- * @UniqueEntity("username", message="Пользователь с таким ником уже существует")
- * @UniqueEntity("email", message="Пользователь с таким email уже существует")
+ * @UniqueEntity("username", message="Пользователь с таким ником уже существует", groups={"edit_profile"})
+ * @UniqueEntity("email", message="Пользователь с таким email уже существует", groups={"edit_profile"})
  */
 class User extends BaseUser
 {
@@ -26,12 +26,30 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @var string
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"edit_profile"})
+     */
+    protected $username;
+
+    /**
+     * @var string
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"edit_profile"})
+     */
+    protected $email;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"edit_profile"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"edit_profile"})
      */
     private $lastName;
 
@@ -46,6 +64,9 @@ class User extends BaseUser
      * @Assert\GreaterThan(
      *     value = 0
      * )
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"edit_profile"})
+     * @Assert\GreaterThan(value = 0, message = "Значение должно быть целым и положительным", groups={"edit_profile"})
      */
     private $age;
 
@@ -87,6 +108,11 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="SupportQuestion", mappedBy="user")
      */
     private $questions;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photo;
 
     public function __construct()
     {
@@ -240,6 +266,38 @@ class User extends BaseUser
         $this->questions = $questions;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPotentialProducts()
+    {
+        return $this->potentialProducts;
+    }
+
+    /**
+     * @param mixed $potentialProducts
+     */
+    public function setPotentialProducts($potentialProducts)
+    {
+        $this->potentialProducts = $potentialProducts;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param mixed $photo
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+    }
+
     public function toArray()
     {
         $stakeDetail = $this->getStakeDetail();
@@ -247,7 +305,7 @@ class User extends BaseUser
         return [
             "username" => $this->getUsername(),
             "stakes" => $stakeDetail instanceof StakeDetail ? $stakeDetail->getCount() : 0,
-            "photo" => self::DEFAULT_PHOTO
+            "photo" => $this->photo ?: self::DEFAULT_PHOTO
         ];
     }
 }

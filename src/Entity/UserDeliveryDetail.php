@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -19,36 +20,50 @@ class UserDeliveryDetail
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"edit_delivery"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"edit_delivery"})
      */
     private $postIndex;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"edit_delivery"})
      */
     private $country;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"edit_delivery"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"edit_delivery"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"edit_delivery"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"edit_delivery"})
      */
     private $note;
 
