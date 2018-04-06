@@ -9,17 +9,20 @@ use App\Entity\UserDeliveryDetail;
 use App\Form\Type\ProductDeliveryType;
 use App\Form\Type\UserProfileType;
 use App\Form\Type\UserSupportType;
+use App\Helper\LoginHelper;
 use App\Helper\ResizeImageHelper;
 use App\Helper\UserSupportHelper;
 use App\Parser\ProductParser;
 use App\Upload\FileUpload;
 use Imagick;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends BaseController
 {
@@ -144,7 +147,7 @@ class UserController extends BaseController
     /**
      * @Route("/private-data", name="profile_private_data")
      */
-    public function privateDataAction(Request $request)
+    public function privateDataAction(Request $request, UserPasswordEncoderInterface $encoder, LoginHelper $loginHelper)
     {
         if($this->isGranted("ROLE_SUPER_ADMIN") || !$this->isGranted("ROLE_USER")){
             return $this->redirectToRoute("list_products");
@@ -160,6 +163,8 @@ class UserController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get("photoFile")->getData();
+            $oldPassword = $form->get("oldPassword")->getData();
+            $newPassword = $form->get("newPassword")->getData();
 
             if($file instanceof UploadedFile){
                 $imageBlob = $resizeImageHelper->getBlobUserProfileResizeImage($file);
@@ -167,6 +172,23 @@ class UserController extends BaseController
 
                 $user->setPhoto($pathImage);
             }
+
+            if($oldPassword){
+                $userFind = $loginHelper->isValidCredential($encoder, $user->getUsername(), $oldPassword);
+
+                if(!($userFind instanceof User)){
+                    $form->get("oldPassword")->addError(new FormError("Неверный старый пароль"));
+                }
+                else{
+                    if(!$newPassword){
+                        $form->get("newPassword")->get("first")->addError(new FormError("Новый пароль не должен быть пустым"));
+                    }
+                    else{
+                        $user->setPassword($encoder->encodePassword($user, $newPassword));
+                    }
+                }
+            }
+
             $this->getDoctrine()->getManager()->flush();
         }
 

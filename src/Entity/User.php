@@ -305,7 +305,7 @@ class User extends BaseUser
         return [
             "username" => $this->getUsername(),
             "stakes" => $stakeDetail instanceof StakeDetail ? $stakeDetail->getCount() : 0,
-            "photo" => self::DEFAULT_PHOTO
+            "photo" => $this->photo ?: self::DEFAULT_PHOTO
         ];
     }
 }
