@@ -1,0 +1,236 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% set user = app.user %}
+<main class="main">
+
+    <section>
+        <div class="container">
+            <form id="create-order-form" method="post" action="{{ path("profile_private_data") }}" novalidate enctype="multipart/form-data">
+                {{ form_widget(form._token) }}
+                {% set isPrivateDataHasError = form.username.vars.errors | length or form.email.vars.errors | length or form.firstName.vars.errors | length or form.lastName.vars.errors | length or form.sex.vars.errors | length or form.age.vars.errors | length%}
+                {% set isPasswordHasError = form.oldPassword.vars.errors | length or form.newPassword.vars.errors | length%}
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="lk-profile-avatar-upload-wrap">
+                            <div class="avatar-wrap">
+                                <div class="current-avatar-img-wrap">
+                                    <img id="show-user-image" src="{{ image_url(user.photo | default('default/avatar_default.png'))}}" alt="">
+                                </div>
+                            </div>
+
+                            <div id="avatar-upload-btn-container" class="input-file-container">
+                                <label class="input-file-trigger">
+                                    {{ form_widget(form.photoFile, {attr: {class: 'input-file', 'show-cut-image': '', 'target-img': 'show-user-image'}} ) }}
+                                    <span class="bttn bttn-sm bttn-rounded bttn-red">Прикрепите файл</span>
+                                </label>
+
+                                <p class="input-file-return"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 mt-4 mt-md-0">
+
+                        <div class="lk-profile-info-wrap card-box">
+                            <div class="box-body">
+                                <div class="profile-data-block {{ isPrivateDataHasError ? 'active' : "" }}">
+                                    <div class="block-title">
+                                        Личные данные
+                                        <span class="title-icon"><i class="fa fa-angle-down"></i></span>
+                                    </div>
+
+                                    <div class="profile-data-set" style="{{ isPrivateDataHasError ? 'display: block' : "" }}">
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.username) }}
+                                            {{ form_widget(form.username, {attr: {placeholder: 'Ник...', class: 'fg-input input-block ' ~ (form.username.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.username.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.email) }}
+                                            {{ form_widget(form.email, {attr: {placeholder: 'Ваш e-mail...', class: 'fg-input input-block ' ~ (form.email.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.email.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.firstName) }}
+                                            {{ form_widget(form.firstName, {attr: {placeholder: 'Имя...', class: 'fg-input input-block ' ~ (form.firstName.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.firstName.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.lastName) }}
+                                            {{ form_widget(form.lastName, {attr: {placeholder: 'Фамилия...', class: 'fg-input input-block ' ~ (form.lastName.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.lastName.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.sex) }}
+                                            {{ form_widget(form.sex, {attr: {class: 'fg-input input-block ' ~ (form.sex.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.sex.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.age) }}
+                                            {{ form_widget(form.age, {attr: {placeholder: 'Возраст...', class: 'fg-input input-block ' ~ (form.age.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.age.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+
+                                <div class="profile-data-block {{ isPasswordHasError ? 'active' : "" }}">
+                                    <div class="block-title">
+                                        Изменить пароль
+                                        <span class="title-icon"><i class="fa fa-angle-down"></i></span>
+                                    </div>
+
+                                    <div class="profile-data-set" style="{{ isPasswordHasError ? 'display: block' : "" }}">
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.oldPassword) }}
+                                            {{ form_widget(form.oldPassword, {attr: {placeholder: 'Старый пароль', class: 'fg-input input-block ' ~ (form.oldPassword.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.oldPassword.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.newPassword.first) }}
+                                            {{ form_widget(form.newPassword.first, {attr: {placeholder: 'Новый пароль', class: 'fg-input input-block ' ~ (form.newPassword.first.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.newPassword.first.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.newPassword.second) }}
+                                            {{ form_widget(form.newPassword.second, {attr: {placeholder: 'Подтверждение пароля', class: 'fg-input input-block ' ~ (form.newPassword.second.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.newPassword.second.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+
+                                <div class="profile-data-block">
+                                    <div class="block-title">
+                                        Мой адрес доставки
+                                        <span class="title-icon"><i class="fa fa-angle-down"></i></span>
+                                    </div>
+
+                                    <div class="profile-data-set">
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.deliveryDetail.name) }}
+                                            {{ form_widget(form.deliveryDetail.name, {attr: {placeholder: 'Получатель ФИО', class: 'fg-input input-block ' ~ (form.deliveryDetail.name.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.deliveryDetail.name.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.deliveryDetail.postIndex) }}
+                                            {{ form_widget(form.deliveryDetail.postIndex, {attr: {placeholder: 'Почтовый индекс', class: 'fg-input input-block ' ~ (form.deliveryDetail.postIndex.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.deliveryDetail.postIndex.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.deliveryDetail.country) }}
+                                            {{ form_widget(form.deliveryDetail.country, {attr: {placeholder: 'Страна', class: 'fg-input input-block ' ~ (form.deliveryDetail.country.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.deliveryDetail.country.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.deliveryDetail.city) }}
+                                            {{ form_widget(form.deliveryDetail.city, {attr: {placeholder: 'Город', class: 'fg-input input-block ' ~ (form.deliveryDetail.city.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.deliveryDetail.city.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.deliveryDetail.address) }}
+                                            {{ form_widget(form.deliveryDetail.address, {attr: {placeholder: 'Адрес', class: 'fg-input input-block ' ~ (form.deliveryDetail.address.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.deliveryDetail.address.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.deliveryDetail.phone) }}
+                                            {{ form_widget(form.deliveryDetail.phone, {attr: {placeholder: 'Телефон для связи', class: 'fg-input input-block ' ~ (form.deliveryDetail.phone.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.deliveryDetail.phone.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            {{ form_label(form.deliveryDetail.note) }}
+                                            {{ form_widget(form.deliveryDetail.note, {attr: {class: 'fg-input input-block ' ~ (form.deliveryDetail.note.vars.errors | length ? 'is-invalid' : '')}} ) }}
+                                            {% for key, error in form.deliveryDetail.note.vars.errors.form.getErrors(true)%}
+                                                <div class="fg-invalid-msg">{{ error.message }}</div>
+                                            {% endfor %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+
+                                <div class="profile-data-block">
+                                    <div class="block-title">
+                                        Настройка уведомлений
+                                        <span class="title-icon"><i class="fa fa-angle-down"></i></span>
+                                    </div>
+
+                                    <div class="profile-data-set">
+                                        <fieldset class="form-group">
+                                            <label class="custom-checkbox input-highlight">
+                                                {{ form.notificationDetail.news.vars.label }}
+                                                {{ form_widget(form.notificationDetail.news) }}
+                                                {% for key, error in form.notificationDetail.news.vars.errors.form.getErrors(true)%}
+                                                    <div class="fg-invalid-msg">{{ error.message }}</div>
+                                                {% endfor %}
+                                                <span class="checkmark"></span>
+                                            </label>
+
+                                            <label class="custom-checkbox input-highlight">
+                                                {{ form.notificationDetail.noveltyAppearance.vars.label }}
+                                                {{ form_widget(form.notificationDetail.noveltyAppearance) }}
+                                                {% for key, error in form.notificationDetail.noveltyAppearance.vars.errors.form.getErrors(true)%}
+                                                    <div class="fg-invalid-msg">{{ error.message }}</div>
+                                                {% endfor %}
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </fieldset>
+                                    </div>
+                                </div>
+
+                                <div id="lk-profile-info-save-btn-wrap">
+                                    {{ form_widget(form.submit, {attr: {class: 'bttn bttn-sm bttn-rounded bttn-red'}, label: 'Сохранить'}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    {#{{ render(controller('App\\Controller\\AuctionController::showRecommendAuctionsAction')) }}#}
+
+</main>
+
+{% endblock %}

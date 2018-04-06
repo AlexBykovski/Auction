@@ -82,6 +82,7 @@ gulp.task('client-js', function () {
             projectDir + '/js/client/my-auctions-controller.js',
             projectDir + '/js/client/directive/notify-directive.js',
             projectDir + '/js/client/directive/file-upload-cancel-directive.js',
+            projectDir + '/js/client/directive/show-cut-image-directive.js',
             //projectDir + '/js/client/service/web-socket-service.js'
         ])
         .pipe(concat('client.min.js'))
