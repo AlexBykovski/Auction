@@ -24,12 +24,15 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * @Route("/office")
+ */
 class UserController extends BaseController
 {
     const DEFAULT_COUNT_MY_AUCTIONS = 50;
 
     /**
-     * @Route("/my-auctions", name="profile_my_auctions")
+     * @Route("/auctions", name="profile_my_auctions")
      */
     public function myAuctionsShowAction(Request $request, ProductParser $productParser)
     {
@@ -46,7 +49,7 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/user-support", name="profile_user_support")
+     * @Route("/support", name="profile_user_support")
      */
     public function userSupportAction(Request $request)
     {
