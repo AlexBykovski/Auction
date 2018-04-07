@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <main class="main">
+
+        <form id="buy-stakes-form" method="post" action="{{ path("buy_stakes") }}" novalidate enctype="multipart/form-data">
+            {{ form_widget(form._token) }}
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <h4 class="bet-packages-title">Доступные пакеты ставок</h4>
+
+                            <div class="bet-packages-list">
+                                <div class="row">
+                                    {% for simpleStake in form.simpleStakes.children %}
+                                        {% set stake = simpleStakes[simpleStake.vars.value] %}
+                                        <div class="col-6 col-xs-4 col-md-3">
+
+                                            <label class="bet-package-wrap">
+                                                {{ form_widget(simpleStake, {attr: {class: 'bet-package-input'}} ) }}
+
+                                                <div class="bet-package card-box">
+                                                    <div class="block-bg" style="background-image: url({{ image_url(stake.image) }});"></div>
+                                                </div>
+
+                                                <div class="bet-package-price"><span id="bet-count">{{ stake.count }}</span> ставок за <span id="bet-count">{{ stake.cost }}</span></div>
+                                            </label>
+
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <hr class="mb-0">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <h4 class="bet-packages-title">Специальные пакеты ставок</h4>
+
+                            <div class="bet-packages-list">
+                                <div class="row">
+                                {% for specialStake in form.specialStakes.children %}
+                                    {% set stake = specialStakes[specialStake.vars.value] %}
+                                    <div class="col-6 col-xs-4 col-md-3">
+
+                                        <label class="bet-package-wrap">
+                                            {{ form_widget(specialStake, {attr: {class: 'bet-package-input'}} ) }}
+
+                                            <div class="bet-package card-box">
+                                                <div class="bet-discount-label">-{{ stake.percent }}%</div>
+
+                                                <div class="block-bg" style="background-image: url({{ image_url(stake.image) }});"></div>
+                                            </div>
+
+                                            <div class="bet-package-price"><span id="bet-count">{{ stake.count }}</span> ставок за <span id="bet-count">{{ stake.cost }}</span></div>
+                                        </label>
+
+                                    </div>
+                                {% endfor %}
+                                </div>
+                            </div>
+                            {% for key, error in form.specialStakes.vars.errors.form.getErrors(true)%}
+                                <div style="display: block" class="fg-invalid-msg">{{ error.message }}</div>
+                            {% endfor %}
+                            <hr class="mb-0">
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <h4 class="bet-packages-title">Выберите платёжную систему</h4>
+
+                            <div class="payment-ways-list">
+                                <div class="row">
+                                    {% for key,payment in form.payment.children %}
+                                    <div class="col-6 col-md-3">
+                                        <label class="payment-way-wrap">
+                                            {{ form_widget(payment, {attr: {class: 'payment-way-input'}} ) }}
+                                            <input type="radio" name="packages-purchase-payment-way-input" class="payment-way-input">
+
+                                            <div id="{{ payment.vars.label }}" class="payment-way">
+                                                <div class="payment-logo"></div>
+                                            </div>
+                                        </label>
+
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% for key, error in form.payment.vars.errors.form.getErrors(true)%}
+                                    <div style="display: block" class="fg-invalid-msg">{{ error.message }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <div id="bet-packages-purchase-btn-wrap">
+                                <button class="bttn bttn-md bttn-rounded bttn-luminous-red text-uppercase">Продолжить</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </main>
+
+{% endblock %}
