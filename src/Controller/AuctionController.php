@@ -2,10 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\Parser\ProductParser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+/**
+ * @Route("/auction")
+ */
 class AuctionController extends BaseController
 {
     static $defaultFilter = [
@@ -16,7 +21,7 @@ class AuctionController extends BaseController
     const COUNT_RECOMMEND_AUCTIONS = 3;
 
     /**
-     * @Route("/show-last-finished-auctions", name="last_finished_auctions_show")
+     * @Route("/show-last-finished", name="last_finished_auctions_show")
      */
     public function showLastFinishedAuctionsAction(Request $request)
     {
@@ -28,7 +33,7 @@ class AuctionController extends BaseController
     }
 
     /**
-     * @Route("/show-recommend-auctions", name="recommend_auctions_show")
+     * @Route("/show-recommend", name="recommend_auctions_show")
      */
     public function showRecommendAuctionsAction(Request $request, ProductParser $productParser)
     {
@@ -36,6 +41,18 @@ class AuctionController extends BaseController
 
         return $this->render('client/auction/recommend.html.twig', [
             "recommendAuctions" => $myAuctions,
+        ]);
+    }
+
+    /**
+     * @Route("/details/{id}", name="show_auction_details")
+     *
+     * @ParamConverter("auction", class="App:Product", options={"id" = "id"})
+     */
+    public function showAuctionDetailsAction(Request $request, Product $auction)
+    {
+        return $this->render('client/auction/details.html.twig', [
+            "auction" => $auction,
         ]);
     }
 }
