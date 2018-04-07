@@ -197,13 +197,13 @@
                             <div class="col-xs-4 col-lg-3 col-xl-2 offset-xl-1 order-lg-2">
 
                                 <div class="footer-column footer-nav-col">
-                                    <div class="footer-nav-list-title">newAuction</div>
+                                    <div class="footer-nav-list-title">Auction</div>
 
                                     <ul class="footer-nav-list">
-                                        <li class="nav-item"><a href="#">Все аукционы</a></li>
-                                        <li class="nav-item"><a href="#">Мои аукционы</a></li>
-                                        <li class="nav-item"><a href="#">Личный кабинет</a></li>
-                                        <li class="nav-item"><a href="#">Купить ставки</a></li>
+                                        <li class="nav-item"><a href="{{ app.user ? path("list_products") : "" }}">Все аукционы</a></li>
+                                        <li class="nav-item"><a href="{{ app.user ? path("profile_my_auctions") : "" }}">Мои аукционы</a></li>
+                                        <li class="nav-item"><a href="{{ app.user ? path("profile_private_data") : "" }}">Личный кабинет</a></li>
+                                        <li class="nav-item"><a href="{{ app.user ? path("buy_stakes") : "" }}">Купить ставки</a></li>
                                     </ul>
                                 </div>
 
@@ -214,10 +214,10 @@
                                     <div class="footer-nav-list-title">Важная информация</div>
 
                                     <ul class="footer-nav-list">
-                                        <li class="nav-item"><a href="#">Пользовательское соглашение</a></li>
-                                        <li class="nav-item"><a href="#">Условия купли-продажи</a></li>
-                                        <li class="nav-item"><a href="#">ООбработка персональных данных</a></li>
-                                        <li class="nav-item"><a href="#">Партнерская программа</a></li>
+                                        <li class="nav-item"><a href="">Пользовательское соглашение</a></li>
+                                        <li class="nav-item"><a href="">Условия купли-продажи</a></li>
+                                        <li class="nav-item"><a href="">Обработка персональных данных</a></li>
+                                        <li class="nav-item"><a href="">Партнерская программа</a></li>
                                     </ul>
                                 </div>
 
@@ -228,10 +228,10 @@
                                     <div class="footer-nav-list-title">Полезные ссылки</div>
 
                                     <ul class="footer-nav-list">
-                                        <li class="nav-item"><a href="#">Как это работает</a></li>
-                                        <li class="nav-item"><a href="#">Секреты успеха</a></li>
-                                        <li class="nav-item"><a href="#">Вопросы-ответы</a></li>
-                                        <li class="nav-item"><a href="#">Доставка</a></li>
+                                        <li class="nav-item"><a href="{{ path("how_it_works") }}">Как это работает</a></li>
+                                        <li class="nav-item"><a href="">Секреты успеха</a></li>
+                                        <li class="nav-item"><a href="{{ path("faq") }}">Вопросы-ответы</a></li>
+                                        <li class="nav-item"><a href="{{ path("delivery_help") }}">Доставка</a></li>
                                     </ul>
                                 </div>
 
