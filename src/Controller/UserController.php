@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Entity\ProductDeliveryDetail;
+use App\Entity\StakeDetail;
 use App\Entity\User;
 use App\Entity\UserDeliveryDetail;
 use App\Form\Type\ProductDeliveryType;
@@ -24,12 +25,17 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * @Route("/profile")
+ */
 class UserController extends BaseController
 {
     const DEFAULT_COUNT_MY_AUCTIONS = 50;
+    const LIMIT_SHOW_EXPENSES = 50;
+    const LIMIT_SHOW_PURCHASES = 50;
 
     /**
-     * @Route("/my-auctions", name="profile_my_auctions")
+     * @Route("/auctions", name="profile_my_auctions")
      */
     public function myAuctionsShowAction(Request $request, ProductParser $productParser)
     {
@@ -46,7 +52,7 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/user-support", name="profile_user_support")
+     * @Route("/support", name="profile_user_support")
      */
     public function userSupportAction(Request $request)
     {
@@ -194,6 +200,27 @@ class UserController extends BaseController
 
         return $this->render('client/profile/private-data.html.twig', [
             "form" => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/stakes", name="profile_stakes")
+     */
+    public function stakesShowAction(Request $request)
+    {
+        if($this->isGranted("ROLE_SUPER_ADMIN") || !$this->isGranted("ROLE_USER")){
+            return $this->redirectToRoute("list_products");
+        }
+
+        /** @var StakeDetail $stakeDetail */
+        $stakeDetail = $this->getUser()->getStakeDetail();
+
+        $expenses = $this->getStakeExpenseRepository()->findBy(["stakeDetail" => $stakeDetail], ["createdAt" => "DESC"], self::LIMIT_SHOW_EXPENSES);
+        $purchases = $this->getStakePurchaseRepository()->findBy(["stakeDetail" => $stakeDetail], ["createdAt" => "DESC"], self::LIMIT_SHOW_PURCHASES);
+
+        return $this->render('client/profile/stakes.html.twig', [
+            "expenses" => $expenses,
+            "purchases" => $purchases,
         ]);
     }
 
