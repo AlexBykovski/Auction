@@ -59,7 +59,7 @@ class StakeOffering
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getCost()
     {
@@ -67,7 +67,7 @@ class StakeOffering
     }
 
     /**
-     * @param mixed $cost
+     * @param integer $cost
      */
     public function setCost($cost)
     {
@@ -75,7 +75,7 @@ class StakeOffering
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getCount()
     {
@@ -83,7 +83,7 @@ class StakeOffering
     }
 
     /**
-     * @param mixed $count
+     * @param integer $count
      */
     public function setCount($count)
     {
