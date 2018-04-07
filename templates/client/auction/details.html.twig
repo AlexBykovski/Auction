@@ -1,0 +1,147 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <main class="main">
+
+        <section id="product-offer-inner-sect">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="product-offer-inner-wrapper">
+                            <div class="product-main">
+                                <div class="row">
+                                    <div class="col-md-7">
+
+                                        <div class="product-image-gallery-wrap card-box">
+                                            <div class="box-body">
+
+                                                <div class="product-image-gallery owl-carousel">
+                                                {% for image in auction.photos %}
+                                                    <div class="gallery-slide">
+                                                        <div class="product-img-wrap">
+                                                            <img src="{{ image_url(image) }}" alt="">
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                                </div>
+
+                                                <h5 class="product-title">{{ auction.name }}</h5>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div id="product-auction-bet-col" class="col-md-5 mt-4 mt-md-0">
+
+                                        <div class="product-auction-bet-form card-box">
+                                            <div class="bet-form-main">
+                                                <div class="user-balance-wrap">Ваш баланс: <span id="bet-count">0</span> ставок</div>
+
+                                                <div class="offer-rate-sum-box">12.50 руб.</div>
+                                                <div class="offer-time-to-end-box">0:00:48</div>
+
+                                                <button id="product-offer-bet-btn" class="bttn bttn-sm bttn-block bttn-rounded bttn-green">Сделать ставку</button>
+
+                                                <div class="user-profile-info-wrap">
+                                                    <div class="user-profile-info">
+                                                        <div class="profile-img"><img src="{{ image_url('default/profile_avatar.png') }}" alt=""></div>
+
+                                                        <div class="profile-user-descr">
+                                                            <div class="name">Ivan766</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="bet-form-footer">
+                                                <div class="betting-settings-wrap">
+                                                    <div class="settings-title">
+                                                        Автоставки
+
+                                                        <label id="autobet-switch-input" class="switch-pill">
+                                                            <input type="checkbox">
+                                                            <span class="switch-label"></span>
+                                                            <span class="switch-handle"></span>
+                                                        </label>
+
+                                                        <span id="product-autobet-settings-trigger"><i class="fa fa-caret-down"></i></span>
+                                                    </div>
+
+                                                    <div class="settings">
+                                                        <div class="settings-categories-wrap">
+                                                            <div class="bet-period-settings">
+                                                                <p>Играть:</p>
+
+                                                                <fieldset id="bet-period-fieldset" class="form-group">
+                                                                    <label class="custom-radio input-highlight">
+                                                                        до победы
+                                                                        <input name="bet-period-radio" type="radio" checked>
+                                                                        <span class="radiomark"></span>
+                                                                    </label>
+
+                                                                    <label class="custom-radio input-highlight">
+                                                                        до
+                                                                        <input name="bet-period-radio" type="radio">
+                                                                        <span class="radiomark"></span>
+                                                                    </label>
+                                                                </fieldset>
+
+                                                                <div class="bet-until-time-block">22:01 22.02.18</div>
+                                                            </div>
+
+                                                            <div class="bet-parameters-settings">
+                                                                <p>Параметры:</p>
+                                                                <p>ставка: < 2 сек</p>
+                                                                <p>количество</p>
+                                                                <span>ставок</span>
+
+                                                                <select id="bet-count-select" class="fg-input">
+                                                                    <option>0</option>
+                                                                    <option>5</option>
+                                                                    <option>10</option>
+                                                                    <option>15</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="bet-btn-wrap">
+                                                            <button class="bttn bttn-xs bttn-rounded bttn-luminous-red">Сделать ставку</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="product-footer">
+                                <h4 class="text-center">Технические характеристики</h4>
+
+                                {{ auction.characteristics | raw }}
+
+                                <h4 class="text-center">Условия аукциона</h4>
+
+                                {{ auction.conditions | raw }}
+
+                                <div class="text-right mt-4">
+                                    <a href="#" class="bttn bttn-sm bttn-rounded bttn-luminous-red">Задать вопрос</a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{ render(controller('App\\Controller\\AuctionController::showLastFinishedAuctionsAction')) }}
+
+    </main>
+
+{% endblock %}
