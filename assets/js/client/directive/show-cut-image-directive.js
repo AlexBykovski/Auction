@@ -24,7 +24,7 @@
                     $http({
                         method: 'POST',
                         data: formdata,
-                        url: "/office/cut-image",
+                        url: "/profile/cut-image",
                         transformRequest: angular.identity,
                         headers: {'Content-Type': undefined}
                     }).then(

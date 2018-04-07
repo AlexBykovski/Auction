@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <main class="main">
+
+        <section id="lk-user-bets-balance-sect">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="sect-title">
+                            <h4>Ваш баланс ставок</h4>
+                        </div>
+
+                        <div class="lk-bets-charge-off-wrap">
+                            <h4 class="block-title">Списание ставок</h4>
+
+                            <div class="table-wrap">
+                                <table class="table card-box">
+                                    <thead class="box-title">
+                                    <tr>
+                                        <th>Дата</th>
+                                        <th>Ставки</th>
+                                        <th>Товар</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody class="box-body">
+                                    {% for expense in expenses %}
+                                        <tr>
+                                            <td>{{ expense.createdAt | date('d.m.Y H:i') }}</td>
+                                            <td>-{{ expense.count }}</td>
+                                            <td>{{ expense.product.name }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="lk-bets-charge-wrap">
+                            <h4 class="block-title">Начисление ставок</h4>
+
+                            <div class="table-wrap">
+                                <table class="table card-box">
+                                    <thead class="box-title">
+                                    <tr>
+                                        <th>Дата</th>
+                                        <th>Ставки</th>
+                                        <th>Стоимость</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody class="box-body">
+                                    {% for purchase in purchases %}
+                                        <tr>
+                                            <td>{{ purchase.createdAt | date('d.m.Y H:i') }}</td>
+                                            <td>{{ purchase.count }}</td>
+                                            <td>{{ purchase.cost }} руб.</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="lk-buy-bets-btn-wrap">
+                            <a href="#" class="bttn bttn-sm bttn-rounded bttn-luminous-red">Купить ставки</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{ render(controller('App\\Controller\\AuctionController::showRecommendAuctionsAction')) }}
+
+    </main>
+
+{% endblock %}
