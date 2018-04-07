@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Entity\StakeExpense;
-use App\Entity\StakeOffering;
 use App\Entity\StakePurchase;
 use App\Entity\User;
 use App\Form\Type\BuyStakesType;
