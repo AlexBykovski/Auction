@@ -27,12 +27,15 @@ class ProductRepository extends EntityRepository
     }
 
     /**
+     * @param array $filterParams
      * @param integer $limit
      * @param integer $offset
+     * @param User $user
+     * @param boolean $forUser
      *
      * @return mixed
      */
-    public function findCurrectAuctions($filterParams, $limit = 9, $offset = 0)
+    public function findCurrectAuctions($filterParams, $limit = 9, $offset = 0, User $user = null, $forUser = false)
     {
 //        return $this->createQueryBuilder('p')
 //            ->select('p')
@@ -49,10 +52,15 @@ class ProductRepository extends EntityRepository
 
         $query = $this->getSearchByFilterParams($query, $filterParams);
 
+        if($user instanceof User) {
+            $query = $this->getSearchUsingUser($query, $user, $forUser);
+        }
+
         return $query
             ->orderBy("p.startAt", "ASC")
             ->setFirstResult( $offset )
             ->setMaxResults($limit)
+            ->distinct()
             ->getQuery()
             ->getResult();
     }
@@ -153,6 +161,20 @@ class ProductRepository extends EntityRepository
             }
 
             $query = $query->setParameter("now", new DateTime());
+        }
+
+        return $query;
+    }
+
+    protected function getSearchUsingUser(QueryBuilder $query, User $user, $isForUser)
+    {
+        if($isForUser){
+            $query = $query->innerJoin('p.stakeExpenses', 'se')
+                ->andWhere("se.stakeDetail = :stakeDetail")
+                ->setParameter("stakeDetail", $user->getStakeDetail());
+        }
+        else{
+            $query = $query->andWhere('p.stakeExpenses is empty');
         }
 
         return $query;

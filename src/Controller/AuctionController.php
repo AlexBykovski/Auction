@@ -37,7 +37,7 @@ class AuctionController extends BaseController
      */
     public function showRecommendAuctionsAction(Request $request, ProductParser $productParser)
     {
-        $myAuctions = $productParser->parserProducts($this->getProductRepository()->findCurrectAuctions(self::$defaultFilter, self::COUNT_RECOMMEND_AUCTIONS));
+        $myAuctions = $productParser->parserProducts($this->getProductRepository()->findCurrectAuctions(self::$defaultFilter, self::COUNT_RECOMMEND_AUCTIONS, 0, $this->getUser()));
 
         return $this->render('client/auction/recommend.html.twig', [
             "recommendAuctions" => $myAuctions,
