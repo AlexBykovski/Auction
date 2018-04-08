@@ -42,6 +42,12 @@ class StakeDetail
     private $autoStakes;
 
     /**
+     * One StakeDetail has One User.
+     * @ORM\OneToOne(targetEntity="User", mappedBy="stakeDetail")
+     */
+    private $user;
+
+    /**
      * StakeDetail constructor.
      */
     public function __construct()
@@ -129,5 +135,21 @@ class StakeDetail
     public function setAutoStakes($autoStakes)
     {
         $this->autoStakes = $autoStakes;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
     }
 }

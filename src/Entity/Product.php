@@ -31,7 +31,7 @@ class Product
     private $photos;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 100}, nullable=false)
+     * @ORM\Column(type="float", options={"default" : 100}, nullable=false)
      */
     private $cost = 100;
 
@@ -395,7 +395,7 @@ class Product
         $this->potentialWinner = $potentialWinner;
     }
 
-    public function toArrayMainPage()
+    public function toArrayMainPage($withAutoStake = false)
     {
         $now = new DateTime();
 
@@ -418,6 +418,30 @@ class Product
         }
         else{
             $parameters["timeEnd"] = $this->getTimer()->getEndTimeInMS();
+        }
+
+        if($withAutoStake){
+            $parameters["stakes"] = [];
+
+            $expenses = $this->stakeExpenses->getValues();
+
+            usort($expenses, function(StakeExpense $a, StakeExpense $b){
+                return $a->getCreatedAt() > $b->getCreatedAt();
+            });
+
+            $expenses =  array_slice($expenses, 0, 5);
+            $index = 0;
+
+            /** @var StakeExpense $stakeExpense */
+            foreach($expenses as $stakeExpense){
+                $parameters["stakes"][] = [
+                    "time" => $stakeExpense->getCreatedAt()->format("H:i:s"),
+                    "username" => $stakeExpense->getStakeDetail()->getUser()->getUsername(),
+                    "cost" => number_format($this->cost - ($index * 0.1), 2, '.', ''),
+                ];
+
+                ++$index;
+            }
         }
 
         return $parameters;
