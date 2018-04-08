@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <main class="main">
+    <main class="main" ng-controller="AuctionDetailController as auctionDetail" ng-init="auctionDetail.init('{{ auction | json_encode }}')">
 
         <section id="product-offer-inner-sect">
             <div class="container">
@@ -18,7 +18,7 @@
                                             <div class="box-body">
 
                                                 <div class="product-image-gallery owl-carousel">
-                                                {% for image in auction.photos %}
+                                                {% for image in auctionObject.photos %}
                                                     <div class="gallery-slide">
                                                         <div class="product-img-wrap">
                                                             <img src="{{ image_url(image) }}" alt="">
@@ -27,7 +27,7 @@
                                                 {% endfor %}
                                                 </div>
 
-                                                <h5 class="product-title">{{ auction.name }}</h5>
+                                                <h5 class="product-title">{{ auctionObject.name }}</h5>
 
                                             </div>
                                         </div>
@@ -35,21 +35,35 @@
                                     </div>
                                     <div id="product-auction-bet-col" class="col-md-5 mt-4 mt-md-0">
 
-                                        <div class="product-auction-bet-form card-box">
+                                        <div class="product-auction-bet-form product-auction-bet-form-with-autostake card-box">
                                             <div class="bet-form-main">
-                                                <div class="user-balance-wrap">Ваш баланс: <span id="bet-count">0</span> ставок</div>
+                                                <div class="user-balance-wrap">Ваш баланс: <span id="bet-count" ng-bind="app.getCurrentUser().stakes"></span> ставок</div>
 
-                                                <div class="offer-rate-sum-box">12.50 руб.</div>
-                                                <div class="offer-time-to-end-box">0:00:48</div>
+                                                <div ng-show="auctionDetail.auction.isSoon">
+                                                    <div class="offer-time-to-end-box"><div id="time-countdown-{{ '{{ auctionDetail.auction.id }}' }}" element-key="{{ '{{ auctionDetail.auction.id }}' }}" class="time-countdown"></div></div><br />
+                                                    <div style="text-align: center; font-size: 16px; font-weight: 700;">Скоро начало</div>
+                                                </div>
+                                                <div ng-show="auctionDetail.auction.isProcessing">
+                                                    <div class="offer-rate-sum-box">{{ '{{ auctionDetail.auction.cost }}' }} руб.</div>
+                                                    <div class="offer-time-to-end-box"><div id="time-countdown-{{ '{{ auctionDetail.auction.id }}' }}" element-key="{{ '{{ auctionDetail.auction.id }}' }}" class="time-countdown"></div></div>
+                                                    <button id="product-offer-bet-btn" ng-click="auctionDetail.makeStake( auctionDetail.auction.id )" class="bttn bttn-sm bttn-block bttn-rounded bttn-green">Сделать ставку</button>
+                                                </div>
+                                                <div ng-show="auctionDetail.auction.isFinish">
+                                                    <div class="offer-end-date">{{ '{{ auctionDetail.auction.endAt | date: \'dd.MM.yyyy HH:mm:ss\' }}' }}</div>
 
-                                                <button id="product-offer-bet-btn" class="bttn bttn-sm bttn-block bttn-rounded bttn-green">Сделать ставку</button>
+                                                    <div class="offer-winner-name">{{ '{{ auctionDetail.auction.winner }}' }}</div>
 
-                                                <div class="user-profile-info-wrap">
+                                                    <div class="offer-controls">
+                                                        <a href="" class="bttn bttn-sm bttn-silver bttn-rounded">Завершено</a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="user-profile-info-wrap" ng-show="app.isUserLoggedIn()">
                                                     <div class="user-profile-info">
-                                                        <div class="profile-img"><img src="{{ image_url('default/profile_avatar.png') }}" alt=""></div>
+                                                        <div class="profile-img"><img ng-src="/images/{{ '{{ app.getCurrentUser().photo }}' }}" alt=""></div>
 
                                                         <div class="profile-user-descr">
-                                                            <div class="name">Ivan766</div>
+                                                            <div class="name" ng-bind="app.getCurrentUser().username"></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -113,6 +127,19 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <ul style="list-style-type: none;">
+                                                <li ng-repeat="stake in auctionDetail.auction.stakes">
+                                                    <table style="margin: 0; border-collapse: collapse; width: 100%;">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td style="text-align:left;padding:0;color:#222B35;width:22%;" ng-bind="stake.time"></td>
+                                                            <td style="text-align:left;padding:0;" ng-bind="stake.username"></td>
+                                                            <td style="text-align:right;padding:0;color:#222B35; width:30%;" ng-bind="stake.cost. + 'руб.'"></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </li>
+                                            </ul>
                                         </div>
 
                                     </div>
@@ -122,11 +149,11 @@
                             <div class="product-footer">
                                 <h4 class="text-center">Технические характеристики</h4>
 
-                                {{ auction.characteristics | raw }}
+                                {{ auctionObject.characteristics | raw }}
 
                                 <h4 class="text-center">Условия аукциона</h4>
 
-                                {{ auction.conditions | raw }}
+                                {{ auctionObject.conditions | raw }}
 
                                 <div class="text-right mt-4">
                                     <a href="#" class="bttn bttn-sm bttn-rounded bttn-luminous-red">Задать вопрос</a>

@@ -80,6 +80,7 @@ gulp.task('client-js', function () {
             projectDir + '/js/client/service/update-service.js',
             projectDir + '/js/client/recommend-auctions-controller.js',
             projectDir + '/js/client/my-auctions-controller.js',
+            projectDir + '/js/client/auction-detail-controller.js',
             projectDir + '/js/client/directive/notify-directive.js',
             projectDir + '/js/client/directive/file-upload-cancel-directive.js',
             projectDir + '/js/client/directive/show-cut-image-directive.js',

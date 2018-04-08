@@ -36,4 +36,31 @@ class UpdateController extends BaseController
 
         return new JsonResponse($parameters);
     }
+
+    /**
+     * @Route("/get-update-single-product", name="get_update_single_product")
+     */
+    public function getUpdateProductAction(Request $request)
+    {
+        $user = $this->getUser();
+        $productId = json_decode($request->getContent());
+
+        if(!$productId){
+            $auction = [];
+        }
+        else{
+            $auction = $this->getProductRepository()->find($productId)->toArrayMainPage(true);
+        }
+
+        $parameters = [
+            "success" => true,
+            "auction" => $auction,
+        ];
+
+        if($user instanceof User){
+            $parameters["user"] = $user->toArray();
+        }
+
+        return new JsonResponse($parameters);
+    }
 }
