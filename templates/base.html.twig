@@ -54,10 +54,10 @@
 
                     <div class="sidebar-profile-nav" ng-show="app.isUserLoggedIn()">
                       <a href="#" class="profile-bar">
-                        <div class="profile-img"><img src="/images/{{ '{{ app.getCurrentUser().photo }}' }}" alt=""></div>
+                        <div class="profile-img"><img ng-src="/images/{{ '{{ app.getCurrentUser().photo }}' }}" alt=""></div>
 
                         <div class="profile-name-wrap">
-                          <div class="name">Ivan007</div>
+                          <div class="name" ng-bind="app.getCurrentUser().username"></div>
                           <div class="profile-nav-text">Личный кабинет</div>
                         </div>
                       </a>
@@ -108,7 +108,7 @@
                                 <div class="header-main-col col-3 d-none d-md-flex" ng-show="app.isUserLoggedIn()">
 
                                   <div class="header-profile-nav">
-                                    <a href="#" class="profile-img"><img src="/images/{{ '{{ app.getCurrentUser().photo }}' }}" alt=""></a>
+                                    <a href="#" class="profile-img"><img ng-src="/images/{{ '{{ app.getCurrentUser().photo }}' }}" alt=""></a>
 
                                     <div class="profile-name-wrap">
                                       <div class="name"><a nohref ng-bind="app.getCurrentUser().username"></a></div>

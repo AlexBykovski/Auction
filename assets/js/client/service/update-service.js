@@ -14,6 +14,18 @@
                 }, function (response) {
                     console.error("error");
                 });
+            },
+            updateSingleProduct: function(product, callback) {
+                $http({
+                    method: 'POST',
+                    url: "/get-update-single-product",
+                    data: angular.toJson(product)
+                }).then(function (response) {
+                    console.log("OK");
+                    callback(response.data);
+                }, function (response) {
+                    console.error("error");
+                });
             }
         };
     }]);

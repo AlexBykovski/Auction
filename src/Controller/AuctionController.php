@@ -52,7 +52,8 @@ class AuctionController extends BaseController
     public function showAuctionDetailsAction(Request $request, Product $auction)
     {
         return $this->render('client/auction/details.html.twig', [
-            "auction" => $auction,
+            "auction" => $auction->toArrayMainPage(true),
+            "auctionObject" => $auction,
         ]);
     }
 }

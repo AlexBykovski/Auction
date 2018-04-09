@@ -23,6 +23,28 @@
                         });
                     }, 1000);
                 },
+                updateSingleAuction: function(mainSelector, auction, callback){
+                    var self = this;
+
+                    var stop = $interval(function() {
+                        UpdateService.updateSingleProduct(auction.id, function(response){
+                            if(!response.success){
+                                return console.error("Wrong response");
+                            }
+
+                            if(response.user){
+                                $rootScope.$broadcast('update-user', {user: response.user});
+                            }
+
+                            var arrayToUpdate = [];
+                            arrayToUpdate[response.auction.id] = response.auction;
+
+                            self.updateTimeCountDown(mainSelector, arrayToUpdate);
+
+                            callback(response.auction);
+                        });
+                    }, 1000);
+                },
                 updateTimeCountDown: function(mainSelector, auctions){
                     $(mainSelector + " .time-countdown").each(function(index, el){
                         if(auctions[$(el).attr("element-key")] && auctions[$(el).attr("element-key")].isProcessing) {
