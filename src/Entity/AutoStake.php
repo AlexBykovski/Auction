@@ -50,6 +50,13 @@ class AutoStake
     private $stakeDetail;
 
     /**
+     * Many AutoStakes have One Product.
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="autoStakes")
+     * @ORM\JoinColumn(name="auction_id", referencedColumnName="id")
+     */
+    private $auction;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -130,7 +137,7 @@ class AutoStake
     }
 
     /**
-     * @return mixed
+     * @return StakeDetail
      */
     public function getStakeDetail()
     {
@@ -138,10 +145,26 @@ class AutoStake
     }
 
     /**
-     * @param mixed $stakeDetail
+     * @param StakeDetail $stakeDetail
      */
     public function setStakeDetail($stakeDetail)
     {
         $this->stakeDetail = $stakeDetail;
+    }
+
+    /**
+     * @return Product
+     */
+    public function getAuction()
+    {
+        return $this->auction;
+    }
+
+    /**
+     * @param Product $auction
+     */
+    public function setAuction($auction)
+    {
+        $this->auction = $auction;
     }
 }
