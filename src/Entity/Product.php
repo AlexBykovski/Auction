@@ -104,6 +104,12 @@ class Product
      */
     private $endAt;
 
+    /**
+     * One Product has Many AutoStakes.
+     * @ORM\OneToMany(targetEntity="AutoStake", mappedBy="auction")
+     */
+    private $autoStakes;
+
     static $allCategories = [
         'apple' => 'apple',
         'детские товары' => 'child',
@@ -434,6 +440,10 @@ class Product
 
             /** @var StakeExpense $stakeExpense */
             foreach($expenses as $stakeExpense){
+                if(($cost = $this->cost - ($index * 0.1)) < 100){
+                    break;
+                }
+
                 $parameters["stakes"][] = [
                     "time" => $stakeExpense->getCreatedAt()->format("H:i:s"),
                     "username" => $stakeExpense->getStakeDetail()->getUser()->getUsername(),
@@ -445,6 +455,22 @@ class Product
         }
 
         return $parameters;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAutoStakes()
+    {
+        return $this->autoStakes;
+    }
+
+    /**
+     * @param mixed $autoStakes
+     */
+    public function setAutoStakes($autoStakes)
+    {
+        $this->autoStakes = $autoStakes;
     }
 
     public function getAllCategories()
