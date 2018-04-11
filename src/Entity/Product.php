@@ -432,7 +432,7 @@ class Product
             $expenses = $this->stakeExpenses->getValues();
 
             usort($expenses, function(StakeExpense $a, StakeExpense $b){
-                return $a->getCreatedAt() > $b->getCreatedAt();
+                return $a->getCreatedAt() < $b->getCreatedAt();
             });
 
             $expenses =  array_slice($expenses, 0, 5);
