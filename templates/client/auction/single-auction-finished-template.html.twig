@@ -3,10 +3,10 @@
         <span class="offer-new-label"><img src="{{ image_url('default/new_label.png')}}" alt=""></span>
 
         <div class="offer-img-wrap">
-            <a href="#" class="offer-img" style="background-image: url({{ image_url(auction.mainPhoto)}});"></a>
+            <a href="{{ path("show_auction_details", {id: auction.id}) }}" class="offer-img" style="background-image: url({{ image_url(auction.mainPhoto)}});"></a>
         </div>
 
-        <h4 class="offer-title"><a href="#">{{ auction.name }}</a></h4>
+        <h4 class="offer-title"><a href="{{ path("show_auction_details", {id: auction.id}) }}">{{ auction.name }}</a></h4>
 
         <div class="offer-rate-sum-box">{{ auction.cost }} руб.</div>
 
