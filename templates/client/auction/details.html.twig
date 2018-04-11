@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <main class="main" ng-controller="AuctionDetailController as auctionDetail" ng-init="auctionDetail.init('{{ auction | json_encode }}')">
+    <main class="main" ng-controller="AuctionDetailController as auctionDetail" ng-init="auctionDetail.init('{{ auction | json_encode }}', {{ isHasAutoStake ? 'true' : 'false' }})">
 
         <section id="product-offer-inner-sect">
             <div class="container">
@@ -70,63 +70,8 @@
 
                                             </div>
 
-                                            <div class="bet-form-footer">
-                                                <div class="betting-settings-wrap">
-                                                    <div class="settings-title">
-                                                        Автоставки
+                                            {% include('client/stake/create_autostake.html.twig') with {'form' : form, 'isHasAutoStake': isHasAutoStake, 'auction': auction } %}
 
-                                                        <label id="autobet-switch-input" class="switch-pill">
-                                                            <input type="checkbox">
-                                                            <span class="switch-label"></span>
-                                                            <span class="switch-handle"></span>
-                                                        </label>
-
-                                                        <span id="product-autobet-settings-trigger"><i class="fa fa-caret-down"></i></span>
-                                                    </div>
-
-                                                    <div class="settings">
-                                                        <div class="settings-categories-wrap">
-                                                            <div class="bet-period-settings">
-                                                                <p>Играть:</p>
-
-                                                                <fieldset id="bet-period-fieldset" class="form-group">
-                                                                    <label class="custom-radio input-highlight">
-                                                                        до победы
-                                                                        <input name="bet-period-radio" type="radio" checked>
-                                                                        <span class="radiomark"></span>
-                                                                    </label>
-
-                                                                    <label class="custom-radio input-highlight">
-                                                                        до
-                                                                        <input name="bet-period-radio" type="radio">
-                                                                        <span class="radiomark"></span>
-                                                                    </label>
-                                                                </fieldset>
-
-                                                                <div class="bet-until-time-block">22:01 22.02.18</div>
-                                                            </div>
-
-                                                            <div class="bet-parameters-settings">
-                                                                <p>Параметры:</p>
-                                                                <p>ставка: < 2 сек</p>
-                                                                <p>количество</p>
-                                                                <span>ставок</span>
-
-                                                                <select id="bet-count-select" class="fg-input">
-                                                                    <option>0</option>
-                                                                    <option>5</option>
-                                                                    <option>10</option>
-                                                                    <option>15</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div id="bet-btn-wrap">
-                                                            <button class="bttn bttn-xs bttn-rounded bttn-luminous-red">Сделать ставку</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <ul style="list-style-type: none;">
                                                 <li ng-repeat="stake in auctionDetail.auction.stakes">
                                                     <table style="margin: 0; border-collapse: collapse; width: 100%;">

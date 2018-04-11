@@ -45,6 +45,8 @@ class CheckFinishProductCommand extends ContainerAwareCommand
 
     protected function processAutoStakes()
     {
+        $now = new DateTime();
+
         $em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
 
         $autoStakes = $em->getRepository(AutoStake::class)->findAll();
@@ -54,6 +56,12 @@ class CheckFinishProductCommand extends ContainerAwareCommand
             if($this->needRemoveAutoStake($autoStake)){
                 $em->remove($autoStake);
 
+                continue;
+            }
+
+            $auctionEndTime = $autoStake->getAuction()->getTimer()->getEndTimeInMS() / 1000;
+
+            if(($auctionEndTime - $now->getTimestamp()) >= 2){
                 continue;
             }
 
@@ -107,7 +115,5 @@ class CheckFinishProductCommand extends ContainerAwareCommand
         $em->persist($stakeExpense);
 
         $product->getTimer()->restartTimer();
-
-        $em->flush();
     }
 }

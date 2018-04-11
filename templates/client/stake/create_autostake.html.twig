@@ -1,0 +1,57 @@
+<div class="bet-form-footer">
+    <div class="betting-settings-wrap">
+        <div class="settings-title">
+            Автоставки
+
+            <label id="autobet-switch-input" class="switch-pill">
+                <input type="checkbox" {{ isHasAutoStake ? 'checked="checked"' : '' }} ng-click="auctionDetail.createOrCancelAutostake()">
+                <span class="switch-label"></span>
+                <span class="switch-handle"></span>
+            </label>
+
+            <span id="product-autobet-settings-trigger"><i class="fa fa-caret-down"></i></span>
+        </div>
+
+        <div class="settings autostake-settings" style="display: {{ form.count.vars.errors | length ? 'block' : 'none' }}">
+            <form id="create-order-form" method="post" action="{{ path("show_auction_details", {id: auction["id"]}) }}" novalidate enctype="multipart/form-data">
+                {{ form_widget(form._token) }}
+                <div class="settings-categories-wrap">
+                    <div class="bet-period-settings">
+                        <p>Играть:</p>
+
+                        <fieldset id="bet-period-fieldset" class="form-group">
+                            {% for key,item in form.isWinEnd.children %}
+                            <label class="custom-radio input-highlight">
+                                {{ item.vars.label }}
+                                {{ form_widget(item, {attr: {class: 'bet-period-radio'}} ) }}
+                                <span class="radiomark"></span>
+                            </label>
+                            {% endfor %}
+                        </fieldset>
+
+                        {#<div class="bet-until-time-block">22:01 22.02.18</div>#}
+                        {{ form_widget(form.endAt, {attr: {class: 'fg-input bootstrap-datetimepicker-autostake', 'style': 'width: 125px; padding-left: 4px; padding-right: 4px;'}}) }}
+                    </div>
+
+                    <div class="bet-parameters-settings">
+                        <p>Параметры:</p>
+                        <p>ставка: < 2 сек</p>
+                        <p>количество</p>
+                        <span>ставок</span>
+
+                        {{ form_widget(form.count, {attr: {class: 'fg-input count-stakes-autostake', 'style': 'margin-top: 6px; padding: 8px 15px; width: 100px;'}}) }}
+                    </div>
+                </div>
+
+                {% for key, error in form.count.vars.errors%}
+                    <div class="fg-invalid-msg" style="display: block;">{{ error.message }}</div>
+                {% endfor %}
+                {% if not isHasAutoStake and auction["isProcessing"] %}
+                <div id="bet-btn-wrap">
+                    {{ form_widget(form.submit, {attr: {class: 'bttn bttn-xs bttn-rounded bttn-luminous-red'}, label: 'Сделать ставку'}) }}
+                </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>

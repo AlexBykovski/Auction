@@ -75,6 +75,16 @@
                     }, function (response) {
                         console.error("error");
                     });
+                },
+                removeAutoStake: function(productId){
+                    $http({
+                        method: 'POST',
+                        url: "/remove-auto-stake/" + productId
+                    }).then(function (response) {
+                        location.href = location.href;
+                    }, function (response) {
+                        console.error("error");
+                    });
                 }
             };
     }]);
