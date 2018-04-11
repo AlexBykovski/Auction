@@ -57,7 +57,11 @@ gulp.task('bower-components', function () {
             projectDir + '/bower-components/angular/angular.min.js',
             projectDir + '/bower-components/angular-sanitize/angular-sanitize.min.js',
             projectDir + '/bower-components/jquery.countdown/dist/jquery.countdown.min.js',
+            projectDir + '/bower-components/moment/min/moment.min.js',
+            projectDir + '/bower-components/moment/min/moment-with-locales.min.js',
+            projectDir + '/bower-components/moment/min/locales.min.js',
             projectDir + '/bower-components/bootstrap/dist/js/bootstrap.min.js',
+            projectDir + '/bower-components/jquery.filthypillow/jquery.filthypillow.min.js',
             projectDir + '/bower-components/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js'
         ])
         .pipe(concat('bower_components.min.js'))
@@ -122,7 +126,8 @@ gulp.task('simple-move-css', function () {
 
 gulp.task('bower-components-css', function () {
     return gulp.src([
-            projectDir + '/bower-components/bootstrap/dist/css/bootstrap.min.css'
+            projectDir + '/bower-components/bootstrap/dist/css/bootstrap.min.css',
+            projectDir + '/bower-components/jquery.filthypillow/jquery.filthypillow.css',
         ])
         .pipe(concat('bower_components.min.css'))
         .pipe(gulp.dest(projectDistDir + '/css'));

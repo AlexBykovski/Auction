@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\AutoStake;
 use App\Entity\Product;
 use App\Entity\StakeExpense;
 use App\Entity\StakePurchase;
@@ -52,6 +53,33 @@ class StakeController extends BaseController
 
         $product->getTimer()->restartTimer();
 
+        $em->flush();
+
+        return new JsonResponse([
+            "success" => true,
+        ]);
+    }
+
+    /**
+     * @Route("/remove-auto-stake/{auction_id}", name="remove_auto_stake_auction")
+     *
+     * @ParamConverter("product", class="App:Product", options={"id" = "auction_id"})
+     *
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function removeAutoStakeAction(Request $request, Product $product)
+    {
+        /** @var EntityManagerInterface $em */
+        $em = $this->getDoctrine()->getManager();
+        /** @var User $user */
+        $user = $this->getUser();
+        $stakeDetail = $user->getStakeDetail();
+
+        /** @var AutoStake $autoStake */
+        $autoStake = $this->getAutoStakeRepository()->findOneBy(["stakeDetail" => $stakeDetail, "auction" => $product]);
+        $stakeDetail->setCount($stakeDetail->getCount() + $autoStake->getCount());
+
+        $em->remove($autoStake);
         $em->flush();
 
         return new JsonResponse([

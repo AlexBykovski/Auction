@@ -29,7 +29,7 @@ class AutoStake
     private $isWinEnd;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $endAt;
 
@@ -37,7 +37,8 @@ class AutoStake
      * @ORM\Column(type="integer")
      *
      * @Assert\GreaterThan(
-     *     value = 0
+     *     value = 0,
+     *     groups={"create_autostake"}
      * )
      */
     private $count;
