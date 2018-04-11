@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\AutoStake;
 use App\Entity\Product;
 use App\Entity\StakeExpense;
 use App\Entity\StakePurchase;
@@ -34,5 +35,13 @@ class BaseController extends Controller
     public function getStakeExpenseRepository()
     {
         return $this->getDoctrine()->getRepository(StakeExpense::class);
+    }
+
+    /**
+     * @return AutoStakeRepository
+     */
+    public function getAutoStakeRepository()
+    {
+        return $this->getDoctrine()->getRepository(AutoStake::class);
     }
 }
