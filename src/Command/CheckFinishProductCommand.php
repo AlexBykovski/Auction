@@ -7,6 +7,7 @@ ini_set('max_execution_time', 60);
 use App\Entity\AutoStake;
 use App\Entity\Product;
 use App\Entity\StakeExpense;
+use App\Entity\User;
 use DateInterval;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -29,6 +30,7 @@ class CheckFinishProductCommand extends ContainerAwareCommand
         $stopwatch->start('eventName');
 
         $time = new DateTime();
+
         $time->add(new DateInterval("PT1M"));
 
         while($time > (new DateTime())){
@@ -37,7 +39,7 @@ class CheckFinishProductCommand extends ContainerAwareCommand
         }
 
         $event = $stopwatch->stop('eventName');
-        var_dump($event->getDuration());
+        //var_dump($event->getDuration());
 
 
         //$output->writeln("<info>Done!</info>");
@@ -49,23 +51,46 @@ class CheckFinishProductCommand extends ContainerAwareCommand
 
         $em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
 
-        $autoStakes = $em->getRepository(AutoStake::class)->findAll();
+        $unGroupedAutoStakes = $em->getRepository(AutoStake::class)->findAll();
+        $groupedAutoStakes = $this->groupAutostakesByAuction($unGroupedAutoStakes);
 
-        /** @var AutoStake $autoStake */
-        foreach($autoStakes as $autoStake){
-            if($this->needRemoveAutoStake($autoStake)){
-                $em->remove($autoStake);
+        foreach($groupedAutoStakes as $autoStakes) {
+            $isHasStake = false;
+            /** @var Product $auction */
+            $auction = $autoStakes[0]->getAuction();
 
-                continue;
+            /** @var AutoStake $autoStake */
+            foreach ($autoStakes as $autoStake) {
+                $stakeDetail = $autoStake->getStakeDetail();
+
+                if ($this->needRemoveAutoStake($autoStake)) {
+                    $stakeDetail->setCount($stakeDetail->getCount() + $autoStake->getCount());
+                    $em->remove(
+
+                        $autoStake);
+
+                    continue;
+                }
+
+                $potentialWinner = $auction->getPotentialWinner();
+                $user = $stakeDetail->getUser();
+
+
+                if (!($potentialWinner instanceof User) || $potentialWinner instanceof User && $potentialWinner->getId() !== $user->getId()) {
+                    $auctionEndTime = $autoStake->getAuction()->getTimer()->getEndTimeInMS() / 1000;
+
+                    if (($auctionEndTime - $now->getTimestamp()) >= 2) {
+                        continue;
+                    }
+
+                    $this->addStakeByAutoStake($autoStake);
+                    $isHasStake = true;
+                }
             }
 
-            $auctionEndTime = $autoStake->getAuction()->getTimer()->getEndTimeInMS() / 1000;
-
-            if(($auctionEndTime - $now->getTimestamp()) >= 2){
-                continue;
+            if($isHasStake){
+                $auction->getTimer()->restartTimer();
             }
-
-            $this->addStakeByAutoStake($autoStake);
         }
 
         $em->flush();
@@ -113,7 +138,23 @@ class CheckFinishProductCommand extends ContainerAwareCommand
         $product->setCost($product->getCost() + 0.1);
 
         $em->persist($stakeExpense);
+    }
 
-        $product->getTimer()->restartTimer();
+    protected function groupAutostakesByAuction($unGroupedAutoStakes)
+    {
+        $groupedAutoStakes = [];
+
+        /** @var AutoStake $autoStake */
+        foreach($unGroupedAutoStakes as $autoStake){
+            $auctionId = $autoStake->getAuction()->getId();
+
+            if(!array_key_exists($auctionId, $groupedAutoStakes)){
+                $groupedAutoStakes[$auctionId] = [];
+            }
+
+            $groupedAutoStakes[$auctionId][] = $autoStake;
+        }
+
+        return $groupedAutoStakes;
     }
 }

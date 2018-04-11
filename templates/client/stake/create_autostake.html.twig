@@ -46,11 +46,10 @@
                 {% for key, error in form.count.vars.errors%}
                     <div class="fg-invalid-msg" style="display: block;">{{ error.message }}</div>
                 {% endfor %}
-                {% if not isHasAutoStake and auction["isProcessing"] %}
-                <div id="bet-btn-wrap">
+
+                <div id="bet-btn-wrap" ng-show="!auctionDetail.isHasAutoStake && auctionDetail.auction['isProcessing']">
                     {{ form_widget(form.submit, {attr: {class: 'bttn bttn-xs bttn-rounded bttn-luminous-red'}, label: 'Сделать ставку'}) }}
                 </div>
-                {% endif %}
             </form>
         </div>
     </div>

@@ -122,7 +122,7 @@ class ProductTimer
 
     public function getEndTimeInMS()
     {
-        $endAt = $this->updatedAt;
+        $endAt = clone $this->updatedAt;
         $endAt->add(new DateInterval("PT" . $this->time . "S"));
 
         return $endAt->getTimestamp() * 1000;

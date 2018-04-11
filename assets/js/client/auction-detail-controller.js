@@ -7,7 +7,7 @@
             var mainSelector = ".product-auction-bet-form-with-autostake";
             var now = moment().subtract( "seconds", 1 );
             var $fp = $( ".bootstrap-datetimepicker-autostake" );
-            var isHasAutoStake = false;
+            this.isHasAutoStake = false;
 
             moment.locale('ru');
             $fp.filthypillow( {
@@ -29,14 +29,18 @@
 
             function init(auction, isHasAutoStakeFromServer){
                 self.auction = angular.fromJson(auction);
-                isHasAutoStake = isHasAutoStakeFromServer;
+                self.isHasAutoStake = isHasAutoStakeFromServer;
 
                 $(mainSelector).ready(function(){
                     StakeService.updateSingleAuction(mainSelector, self.auction, function(auction){
+                        if(self.auction['isProcessing'] && auction["isFinish"] && self.isHasAutoStake){
+                            location.href = location.href;
+                        }
+
                         self.auction = auction;
 
                         if(auction["hasAutoStake"]){
-                            if(isHasAutoStake){
+                            if(self.isHasAutoStake){
                                 $(".count-stakes-autostake").val(auction["autoStakeStakes"]);
                             }
                             else{
@@ -48,7 +52,7 @@
             }
 
             function createOrCancelAutostake(){
-                if(isHasAutoStake){
+                if(self.isHasAutoStake){
                     StakeService.removeAutoStake(self.auction["id"]);
                 }
                 else{
