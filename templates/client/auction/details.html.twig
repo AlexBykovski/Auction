@@ -100,8 +100,8 @@
 
                                 {{ auctionObject.conditions | raw }}
 
-                                <div class="text-right mt-4">
-                                    <a href="#" class="bttn bttn-sm bttn-rounded bttn-luminous-red">Задать вопрос</a>
+                                <div class="text-right mt-4" ng-show="app.isUserLoggedIn()">
+                                    <a href="{{ path('profile_user_support') }}" class="bttn bttn-sm bttn-rounded bttn-luminous-red">Задать вопрос</a>
                                 </div>
 
                             </div>
