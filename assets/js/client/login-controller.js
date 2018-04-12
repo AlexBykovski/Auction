@@ -33,45 +33,48 @@
                     openPopup();
                 }
 
+                handleLogin();
+            });
+        }
 
-                $(loginSelector).ready(function(){
+        function handleLogin(){
+            $(loginSelector).ready(function(){
 
-                    var formEvents = $.data($(this).get(0), 'events');
-                    var isExistSubmitHandler = !!(formEvents && formEvents.submit);
+                var formEvents = $.data($(this).get(0), 'events');
+                var isExistSubmitHandler = !!(formEvents && formEvents.submit);
 
-                    if(!isExistSubmitHandler){
-                        $(loginSelector).submit(function(e) {
-                            e.preventDefault();
-                            var data = $(loginSelector).serialize();
+                if(!isExistSubmitHandler){
+                    $(loginSelector).off().on("submit", function(e) {
+                        e.preventDefault();
+                        var data = $(loginSelector).serialize();
 
-                            angular.element(loginSelector).find("button[type=submit]").prop("disabled", true);
+                        angular.element(loginSelector).find("button[type=submit]").prop("disabled", true);
 
-                            request("/login-user", data, function (response) {
-                                if(response.data.success){
-                                    if(response.data.redirect){
-                                        location.href = response.data.redirect;
-
-                                        return true;
-                                    }
-
-                                    $rootScope.$broadcast('user-logged-in', {user: response.data.user});
-                                    closePopup();
-                                    self.loginForm = "";
+                        request("/login-user", data, function (response) {
+                            if(response.data.success){
+                                if(response.data.redirect){
+                                    location.href = response.data.redirect;
 
                                     return true;
                                 }
-                                else{
-                                    setForm(response.data);
-                                }
 
-                                $(loginSelector).find("button[type=submit]").prop("disabled", false);
-                            });
+                                $rootScope.$broadcast('user-logged-in', {user: response.data.user});
+                                closePopup();
+                                self.loginForm = "";
 
-                            return false;
+                                return true;
+                            }
+                            else{
+                                setForm(response.data);
+                            }
+
+                            $(loginSelector).find("button[type=submit]").prop("disabled", false);
+                            handleLogin();
                         });
-                    }
-                });
 
+                        return false;
+                    });
+                }
             });
         }
 

@@ -21,40 +21,47 @@
 
         function showRegisterPopup() {
             openPopup();
+
             request("/registration", null, function (response) {
                 self.registrationForm = $sce.trustAsHtml(response.data);
 
-                $(registrationSelector).ready(function(){
+                handleRegistration();
 
-                    var formEvents = $.data($(this).get(0), 'events');
-                    var isExistSubmitHandler = !!(formEvents && formEvents.submit);
+            });
+        }
 
-                    if(!isExistSubmitHandler){
-                        $(registrationSelector).submit(function(e) {
-                            e.preventDefault();
-                            var data = $(registrationSelector).serialize();
+        function handleRegistration(){
+            $(registrationSelector).ready(function(){
 
-                            angular.element(registrationSelector).find("button[type=submit]").prop("disabled", true);
+                var formEvents = $.data($(this).get(0), 'events');
+                var isExistSubmitHandler = !!(formEvents && formEvents.submit);
 
-                            request("/registration", data, function (response) {
-                                if(response.data.success){
-                                    $rootScope.$broadcast('user-logged-in', {user: response.data.user});
-                                    closePopup();
+                if(!isExistSubmitHandler){
+                    $(registrationSelector).off().on("submit", function(e) {
+                        e.preventDefault();
+                        var data = $(registrationSelector).serialize();
 
-                                    return true;
-                                }
-                                else{
-                                    self.registrationForm = $sce.trustAsHtml(response.data);
-                                }
+                        angular.element(registrationSelector).find("button[type=submit]").prop("disabled", true);
 
-                                $(registrationSelector).find("button[type=submit]").prop("disabled", false);
-                            });
+                        request("/registration", data, function (response) {
+                            if(response.data.success){
+                                $rootScope.$broadcast('user-logged-in', {user: response.data.user});
+                                closePopup();
 
-                            return false;
+                                return true;
+                            }
+                            else{
+                                self.registrationForm = $sce.trustAsHtml(response.data);
+                            }
+
+                            $(registrationSelector).find("button[type=submit]").prop("disabled", false);
+
+                            handleRegistration();
                         });
-                    }
-                });
 
+                        return false;
+                    });
+                }
             });
         }
 
