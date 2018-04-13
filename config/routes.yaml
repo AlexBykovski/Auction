@@ -7,3 +7,7 @@ index:
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+_errors:
+    resource: '@TwigBundle/Resources/config/routing/errors.xml'
+    prefix:   /_error
