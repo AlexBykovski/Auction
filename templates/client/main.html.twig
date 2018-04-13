@@ -6,9 +6,18 @@
         {#<p>{{ auction.name }}</p>#}
         {#<img src="{{ image_url(auction.mainPhoto) }}" style="max-height: 100px"/><br />#}
     {#{% endfor %}#}
+    {% set queryParams = app.request.query.all %}
+    {% set categories = queryParams["categories"] is defined ? queryParams["categories"] : [] %}
+    {% set times = queryParams["times"] is defined ? queryParams["times"] : [] %}
+    {% set allTimesArray = ["active", "soon"] %}
+    {% set allCategoriesArray = [] %}
+    {% for key, item in allCategories %}
+        {% set allCategoriesArray = allCategoriesArray|merge([item]) %}
+    {% endfor %}
+
     <main class="main" ng-init="default_image_directory = '{{ default_image_directory }}';
     image_directory = '{{ image_directory }}';
-    main.init('{{ currentAuctions | json_encode }}')" ng-controller="MainController as main">
+    main.init('{{ currentAuctions | json_encode }}', '{{ categories | json_encode }}', '{{ times | json_encode }}', '{{ allCategoriesArray | json_encode }}', '{{ allTimesArray | json_encode }}')" ng-controller="MainController as main">
 
         <section id="header-main-slider-sect">
             <div class="container">
@@ -50,10 +59,6 @@
 
                                     <div class="backdrop"></div>
 
-                                    {% set queryParams = app.request.query.all %}
-                                    {% set categories = queryParams["categories"] is defined ? queryParams["categories"] : [] %}
-                                    {% set times = queryParams["times"] is defined ? queryParams["times"] : [] %}
-
                                     <form  id="filter-form-main-page" method="GET" action="{{ path("list_products", {"page" : page }) }}" novalidate enctype="multipart/form-data">
                                         <div class="select-dropdown">
                                             <div class="select-cols">
@@ -61,16 +66,16 @@
                                                     <h6 class="col-title">Категория товара:</h6>
 
                                                     <fieldset class="form-group">
-                                                        <label class="custom-checkbox input-filled input-highlight">
+                                                        <label class="custom-checkbox input-filled input-highlight" >
                                                             все категории
-                                                            <input type="checkbox" name="categories[]" value="all" {{ categories|length == 0 or 'all' in categories ? 'checked' : ''}}>
+                                                            <input type="checkbox" name="categories[]" value="all" ng-click="main.checkCategory('all')" ng-checked="main.isCheckedCategory('all')">
                                                             <span class="checkmark"></span>
                                                         </label>
 
                                                         {% for key, item in allCategories %}
                                                             <label class="custom-checkbox input-filled input-highlight">
                                                                 {{ key }}
-                                                                <input type="checkbox" name="categories[]" value="{{ item }}" {{ item in categories ? 'checked' : ''}}>
+                                                                <input type="checkbox" name="categories[]" value="{{ item }}" ng-click="main.checkCategory('{{ item }}')" ng-checked="main.isCheckedCategory('{{ item }}')">
                                                                 <span class="checkmark"></span>
                                                             </label>
                                                         {% endfor %}
@@ -84,19 +89,19 @@
                                                     <fieldset class="form-group">
                                                         <label class="custom-checkbox input-filled input-highlight">
                                                             все аукционы
-                                                            <input type="checkbox" name="times[]" value="all" {{ times|length == 0 or 'all' in times ? 'checked' : ''}}>
+                                                            <input type="checkbox" name="times[]" value="all" ng-click="main.checkTime('all')" ng-checked="main.isCheckedTime('all')">
                                                             <span class="checkmark"></span>
                                                         </label>
 
                                                         <label class="custom-checkbox input-filled input-highlight">
                                                             активные аукционы
-                                                            <input type="checkbox" name="times[]" value="active" {{ 'active' in times ? 'checked' : ''}}>
+                                                            <input type="checkbox" name="times[]" value="active" ng-click="main.checkTime('active')" ng-checked="main.isCheckedTime('active')">
                                                             <span class="checkmark"></span>
                                                         </label>
 
                                                         <label class="custom-checkbox input-filled input-highlight">
                                                             будущие аукционы
-                                                            <input type="checkbox" name="times[]" value="soon" {{ 'soon' in times ? 'checked' : ''}}>
+                                                            <input type="checkbox" name="times[]" value="soon" ng-click="main.checkTime('soon')" ng-checked="main.isCheckedTime('soon')">
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </fieldset>

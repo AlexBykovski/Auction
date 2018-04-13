@@ -5,3 +5,4 @@ twig:
     globals:
         default_image_directory: '/images/default/'
         image_directory: '/images/'
+#    exception_controller: App\Controller\ExceptionController::showException
