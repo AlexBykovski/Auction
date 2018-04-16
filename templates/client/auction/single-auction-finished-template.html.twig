@@ -12,7 +12,12 @@
 
         <div class="offer-end-date">{{ auction.endAt | date("d.m.Y H:i") }}</div>
 
-        <div class="offer-winner-name">{{ auction.winner ?  auction.winner.username : "" }}</div>
+        <div class="offer-winner-name">
+            {% if auction.winner %}
+                <span class="simple-text-winner">Выиграл пользователь с ником</span>
+            {% endif %}
+            {{ auction.winner ?  auction.winner.username : "" }}
+        </div>
 
         <div class="offer-controls">
             {% if not auction.winner %}
