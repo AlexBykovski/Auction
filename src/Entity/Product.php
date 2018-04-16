@@ -112,7 +112,7 @@ class Product
 
     static $allCategories = [
         'apple' => 'apple',
-        'детские товары' => 'child',
+        //'детские товары' => 'child',
         'игровые приставки и аксессуары' => 'gaming_сonsoles_accessories',
         'ноутбуки, планшеты и аксессуары' => 'laptop_tablet_accessories',
         'подарочные карты и сертификаты' => 'present_cards_sertificates',

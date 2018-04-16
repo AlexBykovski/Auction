@@ -51,10 +51,14 @@
                                                 <div ng-show="auctionDetail.auction.isFinish">
                                                     <div class="offer-end-date">{{ '{{ auctionDetail.auction.endAt | date: \'dd.MM.yyyy HH:mm:ss\' }}' }}</div>
 
-                                                    <div class="offer-winner-name">{{ '{{ auctionDetail.auction.winner }}' }}</div>
+                                                    <div class="offer-winner-name">Выиграл пользователь с ником <b style="color: red;">{{ '{{ auctionDetail.auction.winner }}' }}</b></div>
 
-                                                    <div class="offer-controls">
-                                                        <a href="" class="bttn bttn-sm bttn-silver bttn-rounded">Завершено</a>
+                                                    <div class="offer-controls" ng-show="auctionDetail.auction.winner">
+                                                        <a ng-show="app.isCurrentUserByUserName(auctionDetail.auction.winner)" href="{{ path("profile_create_order", {id: auctionObject.id}) }}" class="bttn bttn-sm bttn-green bttn-rounded">Оформить</a>
+                                                        <a ng-hide="app.isCurrentUserByUserName(auctionDetail.auction.winner)" href="" class="bttn bttn-sm bttn-silver bttn-rounded">Завершено</a>
+                                                    </div>
+                                                    <div class="offer-controls" ng-hide="auctionDetail.auction.winner">
+                                                        <a href="" class="bttn bttn-sm bttn-silver bttn-rounded">Не состоялся</a>
                                                     </div>
                                                 </div>
 
