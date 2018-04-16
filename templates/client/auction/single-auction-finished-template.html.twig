@@ -15,7 +15,9 @@
         <div class="offer-winner-name">{{ auction.winner ?  auction.winner.username : "" }}</div>
 
         <div class="offer-controls">
-            {% if auction.deliveryDetail or not app.user or auction.winner and auction.winner.id != app.user.id %}
+            {% if not auction.winner %}
+                <a href="" class="bttn bttn-sm bttn-silver bttn-rounded">Не состоялся</a>
+            {% elseif auction.deliveryDetail or not app.user or auction.winner.id != app.user.id %}
                 <a href="" class="bttn bttn-sm bttn-silver bttn-rounded">Завершено</a>
             {% else %}
                 <a href="{{ path("profile_create_order", {id: auction.id}) }}" class="bttn bttn-sm bttn-green bttn-rounded">Оформить</a>
