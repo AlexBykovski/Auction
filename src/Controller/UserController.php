@@ -112,7 +112,7 @@ class UserController extends BaseController
      */
     public function createOrderAction(Request $request, Product $auction)
     {
-        if($this->isGranted("ROLE_SUPER_ADMIN") || !$this->isGranted("ROLE_USER")){
+        if($this->isGranted("ROLE_SUPER_ADMIN") || !$this->isGranted("ROLE_USER") || $this->getUser()->getId() !== $auction->getWinner()->getId()){
             return $this->redirectToRoute("list_products");
         }
 
