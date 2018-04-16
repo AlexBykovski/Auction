@@ -172,7 +172,8 @@
                                                     <div class="offer-winner-name"><span class="simple-text-winner">Выиграл пользователь с ником</span> {{ '{{ auction.winner }}' }}</div>
 
                                                     <div class="offer-controls" ng-show="auction.winner">
-                                                        <a href="" class="bttn bttn-sm bttn-silver bttn-rounded">Завершено</a>
+                                                        <a ng-show="app.isCurrentUserByUserName(auction.winner)" ng-href="/profile/create-order/{{ '{{ auction.id }}' }}" class="bttn bttn-sm bttn-green bttn-rounded">Оформить</a>
+                                                        <a ng-hide="app.isCurrentUserByUserName(auction.winner)" href="" class="bttn bttn-sm bttn-silver bttn-rounded">Завершено</a>
                                                     </div>
                                                     <div class="offer-controls" ng-hide="auction.winner">
                                                         <a href="" class="bttn bttn-sm bttn-silver bttn-rounded">Не состоялся</a>
