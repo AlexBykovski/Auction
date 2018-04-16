@@ -53,8 +53,11 @@
 
                                                     <div class="offer-winner-name">{{ '{{ auctionDetail.auction.winner }}' }}</div>
 
-                                                    <div class="offer-controls">
+                                                    <div class="offer-controls" ng-show="auctionDetail.auction.winner">
                                                         <a href="" class="bttn bttn-sm bttn-silver bttn-rounded">Завершено</a>
+                                                    </div>
+                                                    <div class="offer-controls" ng-hide="auctionDetail.auction.winner">
+                                                        <a href="" class="bttn bttn-sm bttn-silver bttn-rounded">Не состоялся</a>
                                                     </div>
                                                 </div>
 
