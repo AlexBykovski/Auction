@@ -21,6 +21,10 @@
             return CurrentUserService.getUser();
         };
 
+        this.isCurrentUserByUserName = function(username){
+            return self.isUserLoggedIn() && self.getCurrentUser().username === username;
+        };
+
         $rootScope.$on('user-logged-in', function(event, args){
             CurrentUserService.setUser(args.user);
         });

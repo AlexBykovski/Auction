@@ -61,9 +61,7 @@ class ProductDeliveryDetail
     private $phone;
 
     /**
-     * @ORM\Column(type="text")
-     *
-     * @Assert\NotBlank(message = "Проверьте корректность ввода", groups={"create_order"})
+     * @ORM\Column(type="text", nullable=true)
      */
     private $note;
 
