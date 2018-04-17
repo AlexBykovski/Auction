@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <main class="main" ng-controller="AuctionDetailController as auctionDetail" ng-init="auctionDetail.init('{{ auction | json_encode }}', {{ isHasAutoStake ? 'true' : 'false' }})">
+    <main class="main" ng-controller="AuctionDetailController as auctionDetail" ng-init="auctionDetail.init('{{ auction | json_encode }}')">
 
         <section id="product-offer-inner-sect">
             <div class="container">
@@ -74,7 +74,7 @@
 
                                             </div>
 
-                                            {% include('client/stake/create_autostake.html.twig') with {'form' : form, 'isHasAutoStake': isHasAutoStake, 'auction': auction } %}
+                                            {% include('client/stake/create_autostake.html.twig') with {'isHasAutoStake': isHasAutoStake, 'auction': auction } %}
 
                                             <ul style="list-style-type: none;">
                                                 <li ng-repeat="stake in auctionDetail.auction.stakes">
