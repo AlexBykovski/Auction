@@ -59,15 +59,15 @@ class CheckFinishProductCommand extends ContainerAwareCommand
             /** @var Product $auction */
             $auction = $autoStakes[0]->getAuction();
 
+            shuffle($autoStakes);
+
             /** @var AutoStake $autoStake */
             foreach ($autoStakes as $autoStake) {
                 $stakeDetail = $autoStake->getStakeDetail();
 
                 if ($this->needRemoveAutoStake($autoStake)) {
                     $stakeDetail->setCount($stakeDetail->getCount() + $autoStake->getCount());
-                    $em->remove(
-
-                        $autoStake);
+                    $em->remove($autoStake);
 
                     continue;
                 }

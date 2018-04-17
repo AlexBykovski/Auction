@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <main class="main" ng-controller="AuctionDetailController as auctionDetail" ng-init="auctionDetail.init('{{ auction | json_encode }}', {{ isHasAutoStake ? 'true' : 'false' }})">
+    <main class="main" ng-controller="AuctionDetailController as auctionDetail" ng-init="auctionDetail.init('{{ auction | json_encode }}')">
 
         <section id="product-offer-inner-sect">
             <div class="container">
@@ -37,7 +37,7 @@
 
                                         <div class="product-auction-bet-form product-auction-bet-form-with-autostake card-box">
                                             <div class="bet-form-main">
-                                                <div class="user-balance-wrap">Ваш баланс: <span id="bet-count" ng-bind="app.getCurrentUser().stakes"></span> ставок</div>
+                                                <div class="user-balance-wrap" ng-show="app.isUserLoggedIn()">Ваш баланс: <span id="bet-count" ng-bind="app.getCurrentUser().stakes"></span> ставок</div>
 
                                                 <div ng-show="auctionDetail.auction.isSoon">
                                                     <div class="offer-time-to-end-box"><div id="time-countdown-{{ '{{ auctionDetail.auction.id }}' }}" element-key="{{ '{{ auctionDetail.auction.id }}' }}" class="time-countdown"></div></div><br />
@@ -74,7 +74,7 @@
 
                                             </div>
 
-                                            {% include('client/stake/create_autostake.html.twig') with {'form' : form, 'isHasAutoStake': isHasAutoStake, 'auction': auction } %}
+                                            {% include('client/stake/create_autostake.html.twig') with {'isHasAutoStake': isHasAutoStake, 'auction': auction } %}
 
                                             <ul style="list-style-type: none;">
                                                 <li ng-repeat="stake in auctionDetail.auction.stakes">
