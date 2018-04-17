@@ -71,8 +71,12 @@
             }
 
             $rootScope.$on('change-autostake-count-stakes', function(event, args){
-                console.log("HEre change-autostake-count-stakes");
-               self.countStakes = parseInt(args.count);
+                self.countStakes = parseInt(args.count);
+
+                if(self.countStakes === 0){
+                    self.isHasAutoStake = false;
+                    $(".autostake-settings").hide();
+                }
             });
 
             $rootScope.$on('user-logged-in', function(event, args){
