@@ -20,7 +20,6 @@
 
             //@@todo when remove autoStake - 2 request send: need to check
             function createOrCancelAutoStake(){
-                console.log("multiple times");
                 //remove autostake
                 if(self.isHasAutoStake && !self.isRequestProcessing){
                     self.isRequestProcessing = true;
