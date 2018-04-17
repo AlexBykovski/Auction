@@ -1,68 +1,49 @@
 (function(appAuction) {
     'use strict';
 
-    appAuction.controller('AuctionDetailController', ['StakeService',
-        function(StakeService) {
+    appAuction.controller('AuctionDetailController', ['$rootScope', 'StakeService',
+        function($rootScope, StakeService) {
             var self = this;
             var mainSelector = ".product-auction-bet-form-with-autostake";
-            var now = moment().subtract( "seconds", 1 );
-            var $fp = $( ".bootstrap-datetimepicker-autostake" );
-            this.isHasAutoStake = false;
-
-            moment.locale('ru');
-            $fp.filthypillow( {
-                enable24HourTime: true,
-                minDateTime: function( ) {
-                    return now;
-                }
-            } );
-
-            $fp.on( "focus", function( ) {
-                $fp.filthypillow( "show" );
-            } );
-            $fp.on( "fp:save", function( e, dateObj ) {
-                $fp.val( dateObj.format( "HH:mm MM.DD.YYYY" ) );
-                $fp.filthypillow( "hide" );
-            } );
+            //var now = moment().subtract( "seconds", 1 );
+            //var $fp = $( ".bootstrap-datetimepicker-autostake" );
+            //
+            //moment.locale('ru');
+            //$fp.filthypillow( {
+            //    enable24HourTime: true,
+            //    minDateTime: function( ) {
+            //        return now;
+            //    }
+            //} );
+            //
+            //$fp.on( "focus", function( ) {
+            //    $fp.filthypillow( "show" );
+            //} );
+            //$fp.on( "fp:save", function( e, dateObj ) {
+            //    $fp.val( dateObj.format( "HH:mm MM.DD.YYYY" ) );
+            //    $fp.filthypillow( "hide" );
+            //} );
 
             this.auction = {};
 
-            function init(auction, isHasAutoStakeFromServer){
+            function init(auction){
                 self.auction = angular.fromJson(auction);
-                self.isHasAutoStake = isHasAutoStakeFromServer;
 
                 $(mainSelector).ready(function(){
                     StakeService.updateSingleAuction(mainSelector, self.auction, function(auction){
-                        if(self.auction['isProcessing'] && auction["isFinish"] && self.isHasAutoStake){
-                            location.href = location.href;
+                        if(auction["hasAutoStake"]) {
+                            $rootScope.$broadcast('change-autostake-count-stakes', {count: auction["autoStakeStakes"]});
                         }
-
+                        if(self.auction["hasAutoStake"] && !auction["hasAutoStake"]){
+                            $rootScope.$broadcast('change-autostake-count-stakes', {count: 0});
+                        }
                         self.auction = auction;
-
-                        if(auction["hasAutoStake"]){
-                            if(self.isHasAutoStake){
-                                $(".count-stakes-autostake").val(auction["autoStakeStakes"]);
-                            }
-                            else{
-                                location.href = location.href;
-                            }
-                        }
                     });
                 });
-            }
-
-            function createOrCancelAutostake(){
-                if(self.isHasAutoStake){
-                    StakeService.removeAutoStake(self.auction["id"]);
-                }
-                else{
-                    $(".autostake-settings").show();
-                }
             }
 
 
             this.init = init;
             this.makeStake = StakeService.makeStake;
-            this.createOrCancelAutostake = createOrCancelAutostake;
         }]);
 })(window.appAuction);

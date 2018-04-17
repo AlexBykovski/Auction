@@ -27,10 +27,10 @@
                                             <span class="offer-new-label"><img ng-src="{{'{{ default_image_directory }}'}}/new_label.png" alt=""></span>
 
                                             <div class="offer-img-wrap">
-                                                <a href="/details/{{ '{{ auction.id }}' }}" class="offer-img" style="background-image: url({{ '{{ image_directory + auction.mainPhoto}}' }});"></a>
+                                                <a href="/auction/details/{{ '{{ auction.id }}' }}" class="offer-img" style="background-image: url({{ '{{ image_directory + auction.mainPhoto}}' }});"></a>
                                             </div>
 
-                                            <h4 class="offer-title"><a href="/details/{{ '{{ auction.id }}' }}">{{ '{{ auction.name }}' }}</a></h4>
+                                            <h4 class="offer-title"><a href="/auction/details/{{ '{{ auction.id }}' }}">{{ '{{ auction.name }}' }}</a></h4>
 
                                             <div ng-show="auction.isProcessing">
                                                 <div class="offer-rate-sum-box">{{ '{{ auction.cost }}' }} руб.</div>

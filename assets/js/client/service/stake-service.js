@@ -76,12 +76,25 @@
                         console.error("error");
                     });
                 },
-                removeAutoStake: function(productId){
+                removeAutoStake: function(productId, callback){
                     $http({
                         method: 'POST',
                         url: "/remove-auto-stake/" + productId
                     }).then(function (response) {
-                        location.href = location.href;
+                        callback(response);
+                    }, function (response) {
+                        console.error("error");
+                    });
+                },
+                createAutoStake: function(countStakes, productId, callback){
+                    $http({
+                        method: 'POST',
+                        url: "/create-auto-stake/" + productId,
+                        data: {
+                            countStakes: countStakes
+                        }
+                    }).then(function (response) {
+                        callback(response);
                     }, function (response) {
                         console.error("error");
                     });

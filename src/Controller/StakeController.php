@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\AutoStake;
 use App\Entity\Product;
+use App\Entity\StakeDetail;
 use App\Entity\StakeExpense;
 use App\Entity\StakePurchase;
 use App\Entity\User;
 use App\Form\Type\BuyStakesType;
 use App\Helper\StakeHelper;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -58,6 +60,62 @@ class StakeController extends BaseController
         return new JsonResponse([
             "success" => true,
         ]);
+    }
+
+    /**
+     * @Route("/create-auto-stake/{auction_id}", name="create_auto_stake_auction")
+     *
+     * @ParamConverter("auction", class="App:Product", options={"id" = "auction_id"})
+     *
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function createAutoStakeAction(Request $request, Product $auction)
+    {
+        /** @var EntityManagerInterface $em */
+        $em = $this->getDoctrine()->getManager();
+        /** @var StakeDetail $stakeDetail */
+        $stakeDetail = $this->getUser()->getStakeDetail();
+        $autoStakeInDB = $this->getDoctrine()->getRepository(AutoStake::class)->findOneBy(["stakeDetail" => $stakeDetail, "auction" => $auction]);
+        $countUserStakes = $stakeDetail->getCount();
+        $countStakes = json_decode($request->getContent(), true)["countStakes"];
+
+        $responseData = [
+            "success" => false,
+            "message" => ""
+        ];
+
+        if($autoStakeInDB instanceof AutoStake){
+            $responseData["message"] = "У вас уже есть автоставка на данном аукционе. Обновите страницу.";
+        }
+        elseif($auction->getEndAt() instanceof DateTime){
+            $responseData["message"] = "Аукцион уже завершён. Обновите страницу.";
+        }
+        elseif(!is_numeric($countStakes)){
+            $responseData["message"] = "Укажите корректное количество ставок";
+        }
+        elseif(intval($countStakes) < 1){
+            $countStakes = intval($countStakes);
+
+            $responseData["message"] = "Укажите положительное количество ставок";
+        }
+        elseif($countUserStakes < $countStakes){
+            $responseData["message"] = "У вас в наличии нет указанного количества ставок";
+        }
+        else{
+            $autoStake = new AutoStake();
+            $stakeDetail->setCount($stakeDetail->getCount() - $countStakes);
+
+            $autoStake->setStakeDetail($stakeDetail);
+            $autoStake->setAuction($auction);
+            $autoStake->setIsActive(true);
+            $autoStake->setCount($countStakes);
+
+            $em->persist($autoStake);
+            $em->flush();
+            $responseData["success"] = true;
+        }
+
+        return new JsonResponse($responseData);
     }
 
     /**

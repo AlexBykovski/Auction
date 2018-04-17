@@ -24,9 +24,9 @@ class AutoStake
     private $isActive;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default" : true})
      */
-    private $isWinEnd;
+    private $isWinEnd = true;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
