@@ -416,14 +416,14 @@ class Product
         ];
 
         if($parameters["isFinish"]){
-            $parameters["endAt"] = $this->endAt->getTimestamp() * 1000;
+            $parameters["endAt"] = $this->endAt->format("d.m.Y H:i");
             $parameters["winner"] = $this->winner ? $this->winner->getUsername() : null;
         }
         elseif($parameters["isSoon"]){
-            $parameters["startAt"] = $this->startAt->getTimestamp() * 1000;
+            $parameters["startAt"] = ($this->startAt->getTimestamp() - $now->getTimestamp()) * 1000;
         }
         else{
-            $parameters["timeEnd"] = $this->getTimer()->getEndTimeInMS();
+            $parameters["timeEnd"] = $this->getTimer()->getEndTimeInMS() - $now->getTimestamp() * 1000;
         }
 
         if($withAutoStake){

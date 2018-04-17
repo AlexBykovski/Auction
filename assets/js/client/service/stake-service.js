@@ -46,16 +46,18 @@
                     }, 1000);
                 },
                 updateTimeCountDown: function(mainSelector, auctions){
+                    var nowTime = (new Date()).getTime();
+
                     $(mainSelector + " .time-countdown").each(function(index, el){
                         if(auctions[$(el).attr("element-key")] && auctions[$(el).attr("element-key")].isProcessing) {
-                            $(this).countdown(auctions[$(el).attr("element-key")].timeEnd, function (event) {
+                            $(this).countdown(parseInt(auctions[$(el).attr("element-key")].timeEnd) + nowTime, function (event) {
                                 $(this).text(
                                     event.strftime('%H:%M:%S')
                                 );
                             });
                         }
                         if(auctions[$(el).attr("element-key")] && auctions[$(el).attr("element-key")].isSoon) {
-                            $(this).countdown(auctions[$(el).attr("element-key")].startAt, function (event) {
+                            $(this).countdown(parseInt(auctions[$(el).attr("element-key")].startAt) + nowTime, function (event) {
                                 var totalHours = event.offset.totalDays * 24 + event.offset.hours;
 
                                 $(this).text(
