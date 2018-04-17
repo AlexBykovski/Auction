@@ -167,7 +167,7 @@
                                                     <div class="offer-time-to-end-box"><div id="time-countdown-{{ '{{ auction.id }}' }}" element-key="{{ '{{ auction.id }}' }}" class="time-countdown"></div></div>
                                                 </div>
                                                 <div ng-show="auction.isFinish">
-                                                    <div class="offer-end-date">{{ '{{ auction.endAt | date: \'dd.MM.yyyy HH:mm:ss\' }}' }}</div>
+                                                    <div class="offer-end-date">{{ '{{ auction.endAt }}' }}</div>
 
                                                     <div class="offer-winner-name"><span class="simple-text-winner">Выиграл пользователь с ником</span> {{ '{{ auction.winner }}' }}</div>
 
