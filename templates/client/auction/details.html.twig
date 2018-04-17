@@ -37,7 +37,7 @@
 
                                         <div class="product-auction-bet-form product-auction-bet-form-with-autostake card-box">
                                             <div class="bet-form-main">
-                                                <div class="user-balance-wrap">Ваш баланс: <span id="bet-count" ng-bind="app.getCurrentUser().stakes"></span> ставок</div>
+                                                <div class="user-balance-wrap" ng-show="app.isUserLoggedIn()">Ваш баланс: <span id="bet-count" ng-bind="app.getCurrentUser().stakes"></span> ставок</div>
 
                                                 <div ng-show="auctionDetail.auction.isSoon">
                                                     <div class="offer-time-to-end-box"><div id="time-countdown-{{ '{{ auctionDetail.auction.id }}' }}" element-key="{{ '{{ auctionDetail.auction.id }}' }}" class="time-countdown"></div></div><br />

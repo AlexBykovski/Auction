@@ -31,11 +31,13 @@
 
                 $(mainSelector).ready(function(){
                     StakeService.updateSingleAuction(mainSelector, self.auction, function(auction){
-                        self.auction = auction;
-
                         if(auction["hasAutoStake"]) {
                             $rootScope.$broadcast('change-autostake-count-stakes', {count: auction["autoStakeStakes"]});
                         }
+                        if(self.auction["hasAutoStake"] && !auction["hasAutoStake"]){
+                            $rootScope.$broadcast('change-autostake-count-stakes', {count: 0});
+                        }
+                        self.auction = auction;
                     });
                 });
             }

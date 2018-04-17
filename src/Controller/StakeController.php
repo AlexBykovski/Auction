@@ -90,9 +90,6 @@ class StakeController extends BaseController
         elseif($auction->getEndAt() instanceof DateTime){
             $responseData["message"] = "Аукцион уже завершён. Обновите страницу.";
         }
-        elseif($auction->getStartAt() > (new DateTime())){
-            $responseData["message"] = "Аукцион ещё не начался. Обновите страницу.";
-        }
         elseif(!is_numeric($countStakes)){
             $responseData["message"] = "Укажите корректное количество ставок";
         }
