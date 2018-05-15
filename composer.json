@@ -13,6 +13,7 @@
         "knplabs/gaufrette": "^0.5.0",
         "knplabs/knp-gaufrette-bundle": "~0.5",
         "lexik/jwt-authentication-bundle": "^2.4",
+        "mashape/unirest-php": "^3.0",
         "sensio/framework-extra-bundle": "^5.1",
         "sonata-project/admin-bundle": "^3.32",
         "sonata-project/doctrine-orm-admin-bundle": "^3.4",
