@@ -140,6 +140,10 @@
                                 </div>
 
                                 <div class="user-balance-wrap" ng-show="app.isUserLoggedIn()">ВАШ БАЛАНС: <span id="bet-count" ng-bind="app.getCurrentUser().stakes"></span> ставок</div>
+
+                                <div id="lk-buy-bets-btn-wrap">
+                                    <a href="{{ path("buy_stakes") }}" class="bttn bttn-sm bttn-rounded bttn-luminous-red">Купить ставки</a>
+                                </div>
                             </div>
 
                             <div class="product-offers-list product-offers-list-main">
