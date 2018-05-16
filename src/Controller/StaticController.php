@@ -70,4 +70,44 @@ class StaticController extends BaseController
             "aboutUsPage" => $aboutUsPage
         ]);
     }
+
+    /**
+     * @Route("/terms-of-use", name="terms_of_use")
+     */
+    public function termUseShowAction(Request $request)
+    {
+        return $this->render('client/static/terms-of-use.html.twig', []);
+    }
+
+    /**
+     * @Route("/terms-of-sale", name="terms_of_sale")
+     */
+    public function termsSaleShowAction(Request $request)
+    {
+        return $this->render('client/static/terms-of-sale.html.twig', []);
+    }
+
+    /**
+     * @Route("/processing-personal-data", name="processing_personal_data")
+     */
+    public function processingPersonalDataShowAction(Request $request)
+    {
+        return $this->render('client/static/processing-personal-data.html.twig', []);
+    }
+
+    /**
+     * @Route("/referral-program", name="referral_program")
+     */
+    public function referralProgramShowAction(Request $request)
+    {
+        return $this->render('client/static/referral-program.html.twig', []);
+    }
+
+    /**
+     * @Route("/success-secrets", name="success_secrets")
+     */
+    public function successSecretsShowAction(Request $request)
+    {
+        return $this->render('client/static/success-secrets.html.twig', []);
+    }
 }
