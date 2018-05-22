@@ -56,7 +56,7 @@ class UserController extends BaseController
      */
     public function userSupportAction(Request $request)
     {
-        if($this->isGranted("ROLE_SUPER_ADMIN") || !$this->isGranted("ROLE_USER")){
+        if($this->isGranted("ROLE_SUPER_ADMIN")){
             return $this->redirectToRoute("list_products");
         }
 
