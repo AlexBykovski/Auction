@@ -41,7 +41,7 @@ class UserSupportHelper
         $this->uploader->setFolder(FileUpload::USER_SUPPORT);
     }
 
-    public function saveSupportQuestion(User $user, $message, $file)
+    public function saveSupportQuestion($user, $message, $file)
     {
         $question = new SupportQuestion();
 
