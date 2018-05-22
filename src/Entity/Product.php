@@ -77,13 +77,13 @@ class Product
     /**
      * One Product has One ProductDeliveryDetail.
      * @ORM\OneToOne(targetEntity="ProductDeliveryDetail")
-     * @ORM\JoinColumn(name="delivery_detail_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="delivery_detail_id", referencedColumnName="id", onDelete="cascade")
      */
     private $deliveryDetail;
 
     /**
      * One Product has Many StakeExpenses.
-     * @ORM\OneToMany(targetEntity="StakeExpense", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="StakeExpense", mappedBy="product", cascade={"remove"})
      */
     private $stakeExpenses;
 
@@ -94,8 +94,8 @@ class Product
 
     /**
      * One Product has One ProductTimer.
-     * @ORM\OneToOne(targetEntity="ProductTimer", mappedBy="product", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="timer_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="ProductTimer", mappedBy="product", cascade={"persist"})
+     * @ORM\JoinColumn(name="timer_id", referencedColumnName="id", onDelete="cascade")
      */
     private $timer;
 
@@ -106,7 +106,7 @@ class Product
 
     /**
      * One Product has Many AutoStakes.
-     * @ORM\OneToMany(targetEntity="AutoStake", mappedBy="auction")
+     * @ORM\OneToMany(targetEntity="AutoStake", mappedBy="auction", cascade={"remove"})
      */
     private $autoStakes;
 
