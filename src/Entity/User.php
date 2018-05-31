@@ -114,6 +114,12 @@ class User extends BaseUser
      */
     private $photo;
 
+    /**
+     * One User has One ForgotPassword.
+     * @ORM\OneToOne(targetEntity="ForgotPassword", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $forgotPassword;
+
     public function __construct()
     {
         parent::__construct();
@@ -296,6 +302,22 @@ class User extends BaseUser
     public function setPhoto($photo)
     {
         $this->photo = $photo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getForgotPassword()
+    {
+        return $this->forgotPassword;
+    }
+
+    /**
+     * @param mixed $forgotPassword
+     */
+    public function setForgotPassword($forgotPassword): void
+    {
+        $this->forgotPassword = $forgotPassword;
     }
 
     public function toArray()

@@ -5,6 +5,7 @@
         var self = this;
         var method = "login";
         var loginSelector = "#login-form";
+        var isForgotPassword = false;
         this.loginForm = "";
         this.loginRegisterForm = "";
 
@@ -96,7 +97,15 @@
 
                 removalDelay: 1000,
 
-                mainClass: 'mfp-zoom-in'
+                mainClass: 'mfp-zoom-in',
+                callbacks: {
+                    afterClose: function() {
+                        if(isForgotPassword){
+                            $rootScope.$broadcast('forgot-password-link-click');
+                            isForgotPassword = false;
+                        }
+                    }
+                }
             });
         }
 
@@ -115,6 +124,12 @@
             }
         }
 
+        function clickLinkForgotPassword(){
+            isForgotPassword = true;
+
+            closePopup();
+        }
+
         $rootScope.$on('open-login-modal', function(){
             if(method === "login") {
                 showLoginPopup();
@@ -125,6 +140,10 @@
             if(method === "registration") {
                 showLoginPopup();
             }
+        });
+
+        $("body").on("click", "#linkForgotPassword", function(){
+            clickLinkForgotPassword();
         });
 
     }]);
