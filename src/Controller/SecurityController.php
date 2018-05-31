@@ -8,10 +8,13 @@ use App\Entity\User;
 use App\Entity\UserDeliveryDetail;
 use App\Form\Type\LoginType;
 use App\Form\Type\RegistrationType;
+use App\Form\Type\ForgotPasswordType;
+use App\Helper\ForgotPasswordHelper;
 use App\Helper\LoginHelper;
 use App\Helper\RegistrationHelper;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -119,6 +122,40 @@ class SecurityController extends BaseController
         }
 
         return $this->getLoginResponseWithForm($form);
+    }
+
+    /**
+     * @Route("/forgot-password", name="forgot_password")
+     */
+    public function forgotPasswordAction(Request $request, ForgotPasswordHelper $helper)
+    {
+        if($this->getUser() instanceof User){
+            return new JsonResponse([
+                "success" => true,
+                "isRefresh" => true,
+            ]);
+        }
+
+        $form = $this->createForm(ForgotPasswordType::class);
+
+        $form->handleRequest($request);
+        $nextStep = $form->get("step")->getData() ? (int)$form->get("step")->getData() : 1;
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $form = $helper->processForm($form);
+
+            if(!$form->getErrors(true)->count()){
+                ++$nextStep;
+            }
+        }
+
+        return $this->render(
+            'client/security/forgot_password.html.twig',
+            [
+                "form" => $form->createView(),
+                "step" => $nextStep,
+            ]
+        );
     }
 
     public function getLoginResponseWithForm(FormInterface $form, array $errors = [])
