@@ -293,6 +293,13 @@
                 </div>
                 {#end register modal#}
 
+                {#start forgot password modal#}
+                <div id="forgot-password-modal" class="login-modal card-box mfp-hide mfp-with-anim">
+                    <div id="login-box-body" class="box-body" ng-controller="ForgotPasswordController as forgotPassword" ng-bind-html="forgotPassword.form">
+                    </div>
+                </div>
+                {#end forgot password modal#}
+
                 <span id="close-sidebar-btn"><i class="fa fa-close"></i></span>
 
                 <div id="to-top-btn" class="to-top"><i class="fa fa-angle-up"></i></div>

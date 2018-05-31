@@ -62,6 +62,14 @@ services:
         class:  App\Socket\SocketHelper
         arguments: ['@service_container']
 
+    app.generator.password_generator:
+        class:  App\Generator\PasswordGenerator
+        arguments: []
+
+    app.helper.forgot_password:
+        class:  App\Helper\ForgotPasswordHelper
+        arguments: ['@doctrine.orm.entity_manager', '@app.generator.password_generator', '@mailer', '@security.password_encoder']
+
     App\Twig\ImageUrlExtension:
         class: App\Twig\ImageUrlExtension
         arguments: ['%upload_image_directory%']
