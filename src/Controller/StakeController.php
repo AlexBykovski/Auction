@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\AutoStake;
+use App\Entity\AutoStakeBalance;
 use App\Entity\Product;
 use App\Entity\StakeBalance;
 use App\Entity\StakeDetail;
@@ -102,13 +103,16 @@ class StakeController extends BaseController
         }
         else{
             $autoStake = new AutoStake();
+            $autoStakeBalance = new AutoStakeBalance();
 
             $autoStake->setStakeDetail($stakeDetail);
             $autoStake->setAuction($auction);
             $autoStake->setIsActive(true);
+            $autoStake->setBalance($autoStakeBalance);
+            $em->persist($autoStake);
+
             $autoStake->addStakesFromUser(intval($countStakes));
 
-            $em->persist($autoStake);
             $em->flush();
             $responseData["success"] = true;
         }

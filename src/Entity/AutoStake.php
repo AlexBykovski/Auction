@@ -66,7 +66,7 @@ class AutoStake
      *
      * One AutoStake has One AutoStakeBalance.
      * @ORM\OneToOne(targetEntity="AutoStakeBalance", mappedBy="autoStake", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="balance", referencedColumnName="id")
+     * @ORM\JoinColumn(name="balance", referencedColumnName="id", onDelete="cascade")
      */
     private $balance;
 

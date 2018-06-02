@@ -69,6 +69,7 @@ class SecurityController extends BaseController
             $stakeBalance = new StakeBalance();
             $stakeDetail->setStakeBalance($stakeBalance);
             $stakeBalance->setStakeDetail($stakeDetail);
+            $stakeDetail->addStakes(StakeBalance::REGISTRATION_STAKES, StakeBalance::COUNT_REGISTRATION_STAKES);
 
             $user->setStakeDetail($stakeDetail);
             $user->setPassword($password);
