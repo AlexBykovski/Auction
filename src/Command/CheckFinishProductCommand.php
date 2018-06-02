@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-ini_set('max_execution_time', 60);
+ini_set('max_execution_time', 600);
 
 use App\Entity\AutoStake;
 use App\Entity\Product;
@@ -31,7 +31,7 @@ class CheckFinishProductCommand extends ContainerAwareCommand
 
         $time = new DateTime();
 
-        $time->add(new DateInterval("PT1M"));
+        $time->add(new DateInterval("PT10M"));
 
         while($time > (new DateTime())){
             $this->processAutoStakes();

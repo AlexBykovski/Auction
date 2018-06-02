@@ -15,6 +15,9 @@ class StakeBalance
     const REFERRAL_STAKES = "REFERRAL_STAKES";
     const DISCOUNT_STAKES = "DISCOUNT_STAKES";
     const SIMPLE_STAKES = "SIMPLE_STAKES";
+
+    const COUNT_REGISTRATION_STAKES = 25;
+
     /**
      * @var integer
      *
