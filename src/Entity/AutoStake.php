@@ -44,6 +44,8 @@ class AutoStake
     private $count;
 
     /**
+     * @var StakeDetail
+     *
      * Many AutoStakes have One StakeDetail.
      * @ORM\ManyToOne(targetEntity="StakeDetail", inversedBy="autoStakes")
      * @ORM\JoinColumn(name="stake_detail_id", referencedColumnName="id")
@@ -51,11 +53,22 @@ class AutoStake
     private $stakeDetail;
 
     /**
+     * @var Product
+     *
      * Many AutoStakes have One Product.
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="autoStakes")
      * @ORM\JoinColumn(name="auction_id", referencedColumnName="id")
      */
     private $auction;
+
+    /**
+     * @var AutoStakeBalance
+     *
+     * One AutoStake has One AutoStakeBalance.
+     * @ORM\OneToOne(targetEntity="AutoStakeBalance", mappedBy="autoStake", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="balance", referencedColumnName="id")
+     */
+    private $balance;
 
     /**
      * @return mixed
@@ -140,7 +153,7 @@ class AutoStake
     /**
      * @return StakeDetail
      */
-    public function getStakeDetail()
+    public function getStakeDetail(): StakeDetail
     {
         return $this->stakeDetail;
     }
@@ -148,7 +161,7 @@ class AutoStake
     /**
      * @param StakeDetail $stakeDetail
      */
-    public function setStakeDetail($stakeDetail)
+    public function setStakeDetail(StakeDetail $stakeDetail): void
     {
         $this->stakeDetail = $stakeDetail;
     }
@@ -156,7 +169,7 @@ class AutoStake
     /**
      * @return Product
      */
-    public function getAuction()
+    public function getAuction(): Product
     {
         return $this->auction;
     }
@@ -164,8 +177,94 @@ class AutoStake
     /**
      * @param Product $auction
      */
-    public function setAuction($auction)
+    public function setAuction(Product $auction): void
     {
         $this->auction = $auction;
+    }
+
+    /**
+     * @return AutoStakeBalance
+     */
+    public function getBalance(): AutoStakeBalance
+    {
+        return $this->balance;
+    }
+
+    /**
+     * @param AutoStakeBalance $balance
+     */
+    public function setBalance(AutoStakeBalance $balance): void
+    {
+        $this->balance = $balance;
+    }
+
+    public function spendOneStake()
+    {
+        --$this->count;
+
+        $this->balance->spendOneStake();
+    }
+
+    public function addStakesFromUser(int $count)
+    {
+        $leftAdded = $count;
+
+        if($this->stakeDetail->getCount() < $count){
+            return false;
+        }
+
+        $this->count += $count;
+
+        $registrationStakes = $this->addStakesFromUserByType(StakeBalance::REGISTRATION_STAKES, $leftAdded);
+        $leftAdded -= $registrationStakes;
+
+        if($leftAdded === 0){
+            return true;
+        }
+
+        $referralStakes = $this->addStakesFromUserByType(StakeBalance::REFERRAL_STAKES, $leftAdded);
+        $leftAdded -= $referralStakes;
+
+        if($leftAdded === 0){
+            return true;
+        }
+
+        $discountStakes = $this->addStakesFromUserByType(StakeBalance::DISCOUNT_STAKES, $leftAdded);
+        $leftAdded -= $discountStakes;
+
+        if($leftAdded === 0){
+            return true;
+        }
+
+        $this->addStakesFromUserByType(StakeBalance::SIMPLE_STAKES, $leftAdded);
+
+        return true;
+    }
+
+    public function returnStakesToUser()
+    {
+        $autoStakeBalance = $this->balance;
+
+        $this->stakeDetail->addStakes(StakeBalance::REGISTRATION_STAKES, $autoStakeBalance->getRegistrationStakes());
+        $this->stakeDetail->addStakes(StakeBalance::REFERRAL_STAKES, $autoStakeBalance->getReferralStakes());
+        $this->stakeDetail->addStakes(StakeBalance::DISCOUNT_STAKES, $autoStakeBalance->getDiscountStakes());
+        $this->stakeDetail->addStakes(StakeBalance::SIMPLE_STAKES, $autoStakeBalance->getSimpleStakes());
+
+        $this->count = 0;
+
+        $autoStakeBalance->setRegistrationStakes(0);
+        $autoStakeBalance->setReferralStakes(0);
+        $autoStakeBalance->setDiscountStakes(0);
+        $autoStakeBalance->setSimpleStakes(0);
+    }
+
+    protected function addStakesFromUserByType(string $type, int $count)
+    {
+        $userBalance = $this->stakeDetail->getStakeBalance();
+
+        $stakes = $userBalance->spendManyStakeByType($type, $count);
+        $this->balance->addStakes($type, $stakes);
+
+        return $stakes;
     }
 }

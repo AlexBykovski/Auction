@@ -19,6 +19,8 @@ class StakeDetail
     private $id;
 
     /**
+     * @var integer
+     *
      * @ORM\Column(type="integer", options={"default" : 0})
      */
     private $count = 0;
@@ -48,6 +50,15 @@ class StakeDetail
     private $user;
 
     /**
+     * @var StakeBalance
+     *
+     * One StakeDetail has One StakeBalance.
+     * @ORM\OneToOne(targetEntity="StakeBalance", mappedBy="stakeDetail", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="stake_balance", referencedColumnName="id")
+     */
+    private $stakeBalance;
+
+    /**
      * StakeDetail constructor.
      */
     public function __construct()
@@ -74,17 +85,17 @@ class StakeDetail
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getCount()
+    public function getCount(): int
     {
         return $this->count;
     }
 
     /**
-     * @param mixed $count
+     * @param int $count
      */
-    public function setCount($count)
+    public function setCount(int $count): void
     {
         $this->count = $count;
     }
@@ -151,5 +162,35 @@ class StakeDetail
     public function setUser($user)
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return StakeBalance
+     */
+    public function getStakeBalance(): StakeBalance
+    {
+        return $this->stakeBalance;
+    }
+
+    /**
+     * @param StakeBalance $stakeBalance
+     */
+    public function setStakeBalance(StakeBalance $stakeBalance): void
+    {
+        $this->stakeBalance = $stakeBalance;
+    }
+
+    public function spendOneStake()
+    {
+        --$this->count;
+
+        $this->stakeBalance->spendOneStake();
+    }
+
+    public function addStakes(string $type, int $count)
+    {
+        $this->count += $count;
+
+        $this->stakeBalance->addStakes($type, $count);
     }
 }

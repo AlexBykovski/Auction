@@ -66,7 +66,7 @@ class CheckFinishProductCommand extends ContainerAwareCommand
                 $stakeDetail = $autoStake->getStakeDetail();
 
                 if ($this->needRemoveAutoStake($autoStake)) {
-                    $stakeDetail->setCount($stakeDetail->getCount() + $autoStake->getCount());
+                    $autoStake->returnStakesToUser();
                     $em->remove($autoStake);
 
                     continue;
@@ -128,7 +128,7 @@ class CheckFinishProductCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
         $product = $autoStake->getAuction();
 
-        $autoStake->setCount($autoStake->getCount() - 1);
+        $autoStake->spendOneStake();
 
         $stakeExpense = new StakeExpense();
         $stakeExpense->setCount(1);
