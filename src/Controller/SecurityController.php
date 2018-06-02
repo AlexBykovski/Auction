@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\NotificationDetail;
+use App\Entity\StakeBalance;
 use App\Entity\StakeDetail;
 use App\Entity\User;
 use App\Entity\UserDeliveryDetail;
@@ -63,9 +64,17 @@ class SecurityController extends BaseController
             $notificationDetail = new NotificationDetail();
             $notificationDetail->setNews($getNews);
             $user->setNotificationDetail(new NotificationDetail());
-            $user->setStakeDetail(new StakeDetail());
+
+            $stakeDetail = new StakeDetail();
+            $stakeBalance = new StakeBalance();
+            $stakeDetail->setStakeBalance($stakeBalance);
+            $stakeBalance->setStakeDetail($stakeDetail);
+            $stakeDetail->addStakes(StakeBalance::REGISTRATION_STAKES, StakeBalance::COUNT_REGISTRATION_STAKES);
+
+            $user->setStakeDetail($stakeDetail);
             $user->setPassword($password);
 
+            $em->persist($stakeBalance);
             $em->persist($user);
             $em->flush();
 

@@ -11,8 +11,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity
  * @ORM\Table(name="`user`")
- * @UniqueEntity("username", message="Пользователь с таким ником уже существует", groups={"edit_profile"})
- * @UniqueEntity("email", message="Пользователь с таким email уже существует", groups={"edit_profile"})
+ * @UniqueEntity("username", message="Пользователь с таким ником уже существует", groups={"edit_profile", "registration"})
+ * @UniqueEntity("email", message="Пользователь с таким email уже существует", groups={"edit_profile", "registration"})
  */
 class User extends BaseUser
 {

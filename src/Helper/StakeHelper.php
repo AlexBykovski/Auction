@@ -36,19 +36,23 @@ class StakeHelper
 
     public function getCountForBuyAction(array $simpleStakes, array $specialStakes)
     {
-        $count = 0;
+        $countSimple = 0;
+        $countSpecial = 0;
 
         /** @var StakeOffering $stake */
         foreach($simpleStakes as $stake){
-            $count += $stake->getCount();
+            $countSimple += $stake->getCount();
         }
 
         /** @var StakeOffering $stake */
         foreach($specialStakes as $stake){
-            $count += $stake->getCount();
+            $countSpecial += $stake->getCount();
         }
 
-        return $count;
+        return [
+            "simple" => $countSimple,
+            "special" => $countSpecial,
+        ];
     }
 
     public function getCostForBuyAction(array $simpleStakes, array $specialStakes)
