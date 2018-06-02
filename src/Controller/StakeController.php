@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\AutoStake;
 use App\Entity\Product;
+use App\Entity\StakeBalance;
 use App\Entity\StakeDetail;
 use App\Entity\StakeExpense;
 use App\Entity\StakePurchase;
@@ -42,7 +43,7 @@ class StakeController extends BaseController
             ]);
         }
 
-        $stakeDetail->setCount($stakeDetail->getCount() - 1);
+        $stakeDetail->spendOneStake();
 
         $stakeExpense = new StakeExpense();
         $stakeExpense->setCount(1);
@@ -94,8 +95,6 @@ class StakeController extends BaseController
             $responseData["message"] = "Укажите корректное количество ставок";
         }
         elseif(intval($countStakes) < 1){
-            $countStakes = intval($countStakes);
-
             $responseData["message"] = "Укажите положительное количество ставок";
         }
         elseif($countUserStakes < $countStakes){
@@ -103,12 +102,11 @@ class StakeController extends BaseController
         }
         else{
             $autoStake = new AutoStake();
-            $stakeDetail->setCount($stakeDetail->getCount() - $countStakes);
 
             $autoStake->setStakeDetail($stakeDetail);
             $autoStake->setAuction($auction);
             $autoStake->setIsActive(true);
-            $autoStake->setCount($countStakes);
+            $autoStake->addStakesFromUser(intval($countStakes));
 
             $em->persist($autoStake);
             $em->flush();
@@ -135,7 +133,7 @@ class StakeController extends BaseController
 
         /** @var AutoStake $autoStake */
         $autoStake = $this->getAutoStakeRepository()->findOneBy(["stakeDetail" => $stakeDetail, "auction" => $product]);
-        $stakeDetail->setCount($stakeDetail->getCount() + $autoStake->getCount());
+        $autoStake->returnStakesToUser();
 
         $em->remove($autoStake);
         $em->flush();
@@ -176,7 +174,7 @@ class StakeController extends BaseController
                 $form->get("specialStakes")->addError(new FormError("Вы должны выбрать минимум 1 пакет для продолжения"));
             }
             else{
-                $count = $stakeHelper->getCountForBuyAction($selectedSimpleStakes, $selectedSpecialStakes);
+                $countArray = $stakeHelper->getCountForBuyAction($selectedSimpleStakes, $selectedSpecialStakes);
                 $cost = $stakeHelper->getCostForBuyAction($selectedSimpleStakes, $selectedSpecialStakes);
 
                 //@@todo add payment logic, and then remove this block
@@ -184,9 +182,11 @@ class StakeController extends BaseController
                 $stakeDetail = $user->getStakeDetail();
                 $stakePurchase = new StakePurchase();
                 $stakePurchase->setCost($cost);
-                $stakePurchase->setCount($count);
+                $stakePurchase->setCount($countArray["simple"] + $countArray["special"]);
                 $stakePurchase->setStakeDetail($stakeDetail);
-                $stakeDetail->setCount($stakeDetail->getCount() + $count);
+
+                $stakeDetail->addStakes(StakeBalance::DISCOUNT_STAKES, $countArray["special"]);
+                $stakeDetail->addStakes(StakeBalance::SIMPLE_STAKES, $countArray["simple"]);
 
                 $em->persist($stakePurchase);
                 $em->flush();
