@@ -51,15 +51,19 @@ class CheckFinishProductCommand extends ContainerAwareCommand
 
         $em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
 
-        $unGroupedAutoStakes = $em->getRepository(AutoStake::class)->findAll();
-        $groupedAutoStakes = $this->groupAutostakesByAuction($unGroupedAutoStakes);
+        $unGroupedAutoStakes = $em->getRepository(AutoStake::class)->findBy([], ["updatedAt" => "ASC"]);
+        $groupedAutoStakes = $this->groupAutoStakesByAuction($unGroupedAutoStakes);
 
         foreach($groupedAutoStakes as $autoStakes) {
             $isHasStake = false;
             /** @var Product $auction */
             $auction = $autoStakes[0]->getAuction();
 
-            shuffle($autoStakes);
+            $auctionEndTime = $auction->getTimer()->getEndTimeInMS() / 1000;
+
+            if (($auctionEndTime - $now->getTimestamp()) >= 2) {
+                continue;
+            }
 
             /** @var AutoStake $autoStake */
             foreach ($autoStakes as $autoStake) {
@@ -75,16 +79,11 @@ class CheckFinishProductCommand extends ContainerAwareCommand
                 $potentialWinner = $auction->getPotentialWinner();
                 $user = $stakeDetail->getUser();
 
-
                 if (!($potentialWinner instanceof User) || $potentialWinner instanceof User && $potentialWinner->getId() !== $user->getId()) {
-                    $auctionEndTime = $autoStake->getAuction()->getTimer()->getEndTimeInMS() / 1000;
-
-                    if (($auctionEndTime - $now->getTimestamp()) >= 2) {
-                        continue;
-                    }
-
                     $this->addStakeByAutoStake($autoStake);
                     $isHasStake = true;
+
+                    break;
                 }
             }
 
@@ -140,7 +139,7 @@ class CheckFinishProductCommand extends ContainerAwareCommand
         $em->persist($stakeExpense);
     }
 
-    protected function groupAutostakesByAuction($unGroupedAutoStakes)
+    protected function groupAutoStakesByAuction($unGroupedAutoStakes)
     {
         $groupedAutoStakes = [];
 

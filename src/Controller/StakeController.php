@@ -53,6 +53,12 @@ class StakeController extends BaseController
         $product->setPotentialWinner($user);
         $product->setCost($product->getCost() + 0.1);
 
+        $autoStake = $em->getRepository(AutoStake::class)->findOneBy(["stakeDetail" => $stakeDetail, "auction" => $product]);
+
+        if($autoStake instanceof AutoStake){
+            $autoStake->setUpdatedAt(new DateTime());
+        }
+
         $em->persist($stakeExpense);
 
         $product->getTimer()->restartTimer();

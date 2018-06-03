@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -69,6 +70,22 @@ class AutoStake
      * @ORM\JoinColumn(name="balance", referencedColumnName="id", onDelete="cascade")
      */
     private $balance;
+
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="datetime")
+     */
+    protected $updatedAt;
+
+    /**
+     * AutoStake constructor.
+     */
+    public function __construct()
+    {
+        $this->updatedAt = new DateTime();
+    }
+
 
     /**
      * @return mixed
@@ -198,11 +215,29 @@ class AutoStake
         $this->balance = $balance;
     }
 
+    /**
+     * @return DateTime
+     */
+    public function getUpdatedAt(): DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param DateTime $updatedAt
+     */
+    public function setUpdatedAt(DateTime $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
     public function spendOneStake()
     {
-        --$this->count;
+        //--$this->count;
 
-        $this->balance->spendOneStake();
+        //$this->balance->spendOneStake();
+
+        $this->updatedAt = new DateTime();
     }
 
     public function addStakesFromUser(int $count)
