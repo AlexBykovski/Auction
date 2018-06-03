@@ -4,11 +4,13 @@ namespace App\Form\Type;
 
 use App\Entity\ProductDeliveryDetail;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class ProductDeliveryType extends AbstractType
 {
@@ -42,6 +44,16 @@ class ProductDeliveryType extends AbstractType
             ->add('note', TextareaType::class, [
                 'label_attr' => ['class' => 'fg-label'],
                 'label' => 'Примечание',
+            ])
+            ->add('payment', ChoiceType::class, [
+                'choices'  => [
+                    "payment-visa-mscard" => "card",
+                    "payment-qiwi" => "qiwi",
+                    "payment-ipay" => "ipay",
+                    "payment-ydmoney" => "yandex",
+                ],
+                'expanded' => true,
+                'multiple' => false,
             ])
             ->add('submit', SubmitType::class, [
             ]);

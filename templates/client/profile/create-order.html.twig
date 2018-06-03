@@ -6,6 +6,9 @@
 
         {% if goodOrder is defined and goodOrder %}
             <div notify-message delay="5000" message="Спасибо за оформление, наш менеджер выйдет с вами на связь в ближайшем времени для повторной проверки адреса отправки"></div>
+            <script>
+                window.open('{{ link }}', '_blank');
+            </script>
         {% endif %}
 
         <section id="order-form-sect">
@@ -23,6 +26,43 @@
                                     {{ form_widget(form._token) }}
 
                                     <div class="order-form-data-set">
+                                        <fieldset class="form-group">
+                                            <span>Стоимость: {{ auction.cost }}</span>
+                                        </fieldset>
+
+                                        <section>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-12">
+
+                                                        <h4 class="bet-packages-title">Выберите платёжную систему</h4>
+
+                                                        <div class="payment-ways-list">
+                                                            <div class="row">
+                                                                {% for key,payment in form.payment.children %}
+                                                                    <div class="col-6 col-md-3">
+                                                                        <label class="payment-way-wrap">
+                                                                            {{ form_widget(payment, {attr: {class: 'payment-way-input'}} ) }}
+                                                                            <input type="radio" name="packages-purchase-payment-way-input" class="payment-way-input">
+
+                                                                            <div id="{{ payment.vars.label }}" class="payment-way">
+                                                                                <div class="payment-logo"></div>
+                                                                            </div>
+                                                                        </label>
+
+                                                                    </div>
+                                                                {% endfor %}
+                                                            </div>
+                                                            {% for key, error in form.payment.vars.errors.form.getErrors(true)%}
+                                                                <div style="display: block" class="fg-invalid-msg">{{ error.message }}</div>
+                                                            {% endfor %}
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+
                                         <fieldset class="form-group">
                                             {{ form_label(form.name) }}
                                             {{ form_widget(form.name, {attr: {class: 'fg-input input-block ' ~ (form.name.vars.errors | length ? 'is-invalid' : '')}} ) }}
