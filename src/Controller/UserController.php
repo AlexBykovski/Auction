@@ -129,6 +129,7 @@ class UserController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $link = $this->getPaymentLink($deliveryDetail->getPayment());
 
             if($isCreateAction) {
                 $em->persist($deliveryDetail);
@@ -141,6 +142,7 @@ class UserController extends BaseController
                 "form" => $form->createView(),
                 "auction" => $auction,
                 "goodOrder" => true,
+                "link" => $link,
             ]);
         }
 
@@ -241,5 +243,21 @@ class UserController extends BaseController
         return new JsonResponse([
             'result' => base64_encode($resizeImageHelper->getBlobUserProfileResizeImage($image)),
         ], 200);
+    }
+
+    protected function getPaymentLink($type)
+    {
+        switch($type){
+            case "card":
+                return "https://www.robokassa.ru/ru/Creditcards.aspx";
+            case "qiwi":
+                return "https://www.robokassa.ru/ru/Terminals.aspx";
+            case "ipay":
+                return "http://www.ipay.by/";
+            case "yandex":
+                return "https://www.robokassa.ru/ru/Currencies.aspx";
+            default:
+                return "https://www.robokassa.ru/ru/Creditcards.aspx";
+        }
     }
 }
