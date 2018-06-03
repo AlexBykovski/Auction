@@ -66,6 +66,13 @@ class ProductDeliveryDetail
     private $note;
 
     /**
+     * @ORM\Column(type="string")
+     *
+     * @Assert\NotNull(message = "Вы должны выбрать способ оплаты для продолжения", groups={"create_order"})
+     */
+    private $payment;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -191,6 +198,22 @@ class ProductDeliveryDetail
     public function setNote($note)
     {
         $this->note = $note;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPayment()
+    {
+        return $this->payment;
+    }
+
+    /**
+     * @param mixed $payment
+     */
+    public function setPayment($payment): void
+    {
+        $this->payment = $payment;
     }
 
     public function setUserDeliveryDetail(UserDeliveryDetail $deliveryDetail)
