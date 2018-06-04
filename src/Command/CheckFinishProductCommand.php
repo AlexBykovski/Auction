@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-ini_set('max_execution_time', 60);
+ini_set('max_execution_time', 600);
 
 use App\Entity\AutoStake;
 use App\Entity\Product;
@@ -31,7 +31,7 @@ class CheckFinishProductCommand extends ContainerAwareCommand
 
         $time = new DateTime();
 
-        $time->add(new DateInterval("PT1M"));
+        $time->add(new DateInterval("PT10M"));
 
         while($time > (new DateTime())){
             $this->processAutoStakes();
@@ -127,12 +127,13 @@ class CheckFinishProductCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
         $product = $autoStake->getAuction();
 
-        $autoStake->spendOneStake();
+        $typeStake = $autoStake->spendOneStake();
 
         $stakeExpense = new StakeExpense();
         $stakeExpense->setCount(1);
         $stakeExpense->setProduct($product);
         $stakeExpense->setStakeDetail($autoStake->getStakeDetail());
+        $stakeExpense->setType($typeStake);
         $product->setPotentialWinner($autoStake->getStakeDetail()->getUser());
         $product->setCost($product->getCost() + 0.1);
 

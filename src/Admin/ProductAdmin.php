@@ -55,6 +55,7 @@ class ProductAdmin extends AbstractAdmin
             ['label' => 'Фотографии', "multiple" => true, 'mapped' => false, 'required' => false],
             ["help" => $isEditAction ? $this->helper->getImagesHelp($goods->getPhotos()) : ""]);
         $formMapper->add('cost', IntegerType::class, ['label' => 'Стоимость', 'required' => true]);
+        $formMapper->add('buyCost', IntegerType::class, ['label' => 'Стоимость для покупки', 'required' => true]);
         $formMapper->add('characteristics', CKEditorType::class, ['label' => 'Характеристики', 'required' => true]);
         $formMapper->add('startAt', DateTimeType::class, [
             'label' => 'Начало',
