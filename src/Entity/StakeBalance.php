@@ -17,6 +17,7 @@ class StakeBalance
     const SIMPLE_STAKES = "SIMPLE_STAKES";
 
     const COUNT_REGISTRATION_STAKES = 25;
+    const STAKE_COST = 10;
 
     /**
      * @var integer
@@ -164,24 +165,24 @@ class StakeBalance
         if($this->registrationStakes > 0){
             --$this->registrationStakes;
 
-            return true;
+            return self::REGISTRATION_STAKES;
         }
 
         if($this->referralStakes > 0){
             --$this->referralStakes;
 
-            return true;
+            return self::REFERRAL_STAKES;
         }
 
         if($this->discountStakes > 0){
             --$this->discountStakes;
 
-            return true;
+            return self::DISCOUNT_STAKES;
         }
 
         --$this->simpleStakes;
 
-        return true;
+        return self::SIMPLE_STAKES;
     }
 
     public function spendManyStakeByType(string $type, int $count)

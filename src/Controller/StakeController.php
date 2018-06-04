@@ -45,12 +45,14 @@ class StakeController extends BaseController
             ]);
         }
 
-        $stakeDetail->spendOneStake();
+        $typeStake = $stakeDetail->spendOneStake();
 
         $stakeExpense = new StakeExpense();
         $stakeExpense->setCount(1);
         $stakeExpense->setProduct($product);
         $stakeExpense->setStakeDetail($stakeDetail);
+        $stakeExpense->setType($typeStake);
+
         $product->setPotentialWinner($user);
         $product->setCost($product->getCost() + 0.1);
 

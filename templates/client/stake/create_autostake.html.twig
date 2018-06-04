@@ -1,6 +1,9 @@
 <div class="bet-form-footer" ng-controller="AutoStakeController as autostake" ng-init="autostake.init('{{ isHasAutoStake }}', app.isUserLoggedIn(), '{{ auction["id"] }}')" ng-cloak>
     <div class="betting-settings-wrap">
         <div class="settings-title">
+            <a href="" ng-click="autostake.buyProduct();" class="bttn bttn-sm bttn-rounded bttn-luminous-red">Купить</a>
+        </div>
+        <div class="settings-title">
             Автоставки
 
             <label id="autobet-switch-input" class="switch-pill" ng-click="autostake.createOrCancelAutoStake()">

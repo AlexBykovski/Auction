@@ -156,24 +156,24 @@ class AutoStakeBalance
         if($this->registrationStakes > 0){
             --$this->registrationStakes;
 
-            return true;
+            return StakeBalance::REGISTRATION_STAKES;
         }
 
         if($this->referralStakes > 0){
             --$this->referralStakes;
 
-            return true;
+            return StakeBalance::REFERRAL_STAKES;
         }
 
         if($this->discountStakes > 0){
             --$this->discountStakes;
 
-            return true;
+            return StakeBalance::DISCOUNT_STAKES;
         }
 
         --$this->simpleStakes;
 
-        return true;
+        return StakeBalance::SIMPLE_STAKES;
     }
 
     public function addStakes(string $type, int $count)

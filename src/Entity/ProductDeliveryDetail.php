@@ -73,6 +73,29 @@ class ProductDeliveryDetail
     private $payment;
 
     /**
+     * @var Product
+     *
+     * Many ProductDeliveryDetails have One Product.
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="deliveryDetails")
+     * @ORM\JoinColumn(name="product", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $product;
+
+    /**
+     * @var User
+     *
+     * Many ProductDeliveryDetails have One User.
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="productDeliveryDetails")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $user;
+
+    /**
+     * @ORM\Column(type="float", options={"default" : 0}, nullable=false)
+     */
+    private $cost = 0;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -214,6 +237,54 @@ class ProductDeliveryDetail
     public function setPayment($payment): void
     {
         $this->payment = $payment;
+    }
+
+    /**
+     * @return Product
+     */
+    public function getProduct(): Product
+    {
+        return $this->product;
+    }
+
+    /**
+     * @param Product $product
+     */
+    public function setProduct(Product $product): void
+    {
+        $this->product = $product;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCost()
+    {
+        return $this->cost;
+    }
+
+    /**
+     * @param mixed $cost
+     */
+    public function setCost($cost): void
+    {
+        $this->cost = $cost;
     }
 
     public function setUserDeliveryDetail(UserDeliveryDetail $deliveryDetail)
