@@ -11,6 +11,12 @@
             else{
                 CurrentUserService.setUser(angular.fromJson(user));
             }
+
+            var urlParams = new URLSearchParams(window.location.search);
+
+            if(urlParams.has('ref') && urlParams.get('ref')){
+                $rootScope.referralCode = urlParams.get('ref');
+            }
         };
 
         this.isUserLoggedIn = function(){

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\AutoStake;
 use App\Entity\AutoStakeBalance;
 use App\Entity\Product;
+use App\Entity\ReferralSystem;
 use App\Entity\StakeBalance;
 use App\Entity\StakeDetail;
 use App\Entity\StakeExpense;
@@ -186,17 +187,24 @@ class StakeController extends BaseController
             else{
                 $countArray = $stakeHelper->getCountForBuyAction($selectedSimpleStakes, $selectedSpecialStakes);
                 $cost = $stakeHelper->getCostForBuyAction($selectedSimpleStakes, $selectedSpecialStakes);
+                $fullCount = $countArray["simple"] + $countArray["special"];
 
                 //@@todo add payment logic, and then remove this block
                 //start block
                 $stakeDetail = $user->getStakeDetail();
                 $stakePurchase = new StakePurchase();
                 $stakePurchase->setCost($cost);
-                $stakePurchase->setCount($countArray["simple"] + $countArray["special"]);
+                $stakePurchase->setCount($fullCount);
                 $stakePurchase->setStakeDetail($stakeDetail);
 
                 $stakeDetail->addStakes(StakeBalance::DISCOUNT_STAKES, $countArray["special"]);
                 $stakeDetail->addStakes(StakeBalance::SIMPLE_STAKES, $countArray["simple"]);
+
+                if($user->getReferrer() instanceof User){
+                    $percent = $em->getRepository(ReferralSystem::class)->findAll()[0]->getPercentFromReferral();
+
+                    $user->getReferrer()->getStakeDetail()->addStakes(StakeBalance::REFERRAL_STAKES, (int)($fullCount * $percent / 100));
+                }
 
                 $em->persist($stakePurchase);
                 $em->flush();
