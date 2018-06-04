@@ -120,12 +120,36 @@ class User extends BaseUser
      */
     private $forgotPassword;
 
+    /**
+     * @var User|null
+     * Many Users has One User.
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="referrals")
+     * @ORM\JoinColumn(name="referrer", referencedColumnName="id")
+     */
+    private $referrer;
+
+    /**
+     * @var ArrayCollection
+     *
+     * One User has Many Users.
+     * @ORM\OneToMany(targetEntity="User", mappedBy="referrer")
+     */
+    private $referrals;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $referralCode;
+
     public function __construct()
     {
         parent::__construct();
 
         $this->winProducts = new ArrayCollection();
         $this->questions = new ArrayCollection();
+        $this->referrals = new ArrayCollection();
     }
 
     /**
@@ -318,6 +342,59 @@ class User extends BaseUser
     public function setForgotPassword($forgotPassword): void
     {
         $this->forgotPassword = $forgotPassword;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getReferrer(): ?User
+    {
+        return $this->referrer;
+    }
+
+    /**
+     * @param User|null $referrer
+     */
+    public function setReferrer(?User $referrer): void
+    {
+        $this->referrer = $referrer;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getReferrals(): ArrayCollection
+    {
+        return $this->referrals;
+    }
+
+    /**
+     * @param ArrayCollection $referrals
+     */
+    public function setReferrals(ArrayCollection $referrals): void
+    {
+        $this->referrals = $referrals;
+    }
+
+    public function addReferral(User $referral) : void
+    {
+        $this->referrals->add($referral);
+    }
+
+    /**
+     * @return string
+     */
+    public function getReferralCode(): string
+    {
+        return $this->referralCode;
+    }
+
+    /**
+     * @param string $referralCode
+     */
+    public function setReferralCode(string $referralCode): void
+    {
+        $this->referralCode = $referralCode;
     }
 
     public function toArray()
