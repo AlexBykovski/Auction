@@ -143,6 +143,14 @@ class User extends BaseUser
      */
     private $referralCode;
 
+    /**
+     * @var ArrayCollection
+     *
+     * One User has Many ProductDeliveryDetail.
+     * @ORM\OneToOne(targetEntity="ProductDeliveryDetail", mappedBy="user")
+     */
+    private $productDeliveryDetails;
+
     public function __construct()
     {
         parent::__construct();
@@ -150,6 +158,7 @@ class User extends BaseUser
         $this->winProducts = new ArrayCollection();
         $this->questions = new ArrayCollection();
         $this->referrals = new ArrayCollection();
+        $this->productDeliveryDetails = new ArrayCollection();
     }
 
     /**
@@ -395,6 +404,22 @@ class User extends BaseUser
     public function setReferralCode(string $referralCode): void
     {
         $this->referralCode = $referralCode;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getProductDeliveryDetails(): ArrayCollection
+    {
+        return $this->productDeliveryDetails;
+    }
+
+    /**
+     * @param ArrayCollection $productDeliveryDetails
+     */
+    public function setProductDeliveryDetails(ArrayCollection $productDeliveryDetails): void
+    {
+        $this->productDeliveryDetails = $productDeliveryDetails;
     }
 
     public function toArray()

@@ -69,6 +69,14 @@
                 }
             }
 
+            function buyProduct(){
+                if(!isUserLogged){
+                    return $rootScope.$broadcast('open-login-modal');
+                }
+
+                location.href = '/profile/create-order/' + auctionId;
+            }
+
             $rootScope.$on('change-autostake-count-stakes', function(event, args){
                 self.countStakes = parseInt(args.count);
 
@@ -85,6 +93,7 @@
 
             this.init = init;
             this.createOrCancelAutoStake = createOrCancelAutoStake;
+            this.buyProduct = buyProduct;
 
             document.getElementById("auto_stake_count").addEventListener("keypress", function (evt) {
                 if (evt.which < 48 || evt.which > 57) {

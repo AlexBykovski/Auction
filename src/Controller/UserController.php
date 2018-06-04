@@ -10,6 +10,7 @@ use App\Entity\UserDeliveryDetail;
 use App\Form\Type\ProductDeliveryType;
 use App\Form\Type\UserProfileType;
 use App\Form\Type\UserSupportType;
+use App\Helper\DeliveryDetailHelper;
 use App\Helper\LoginHelper;
 use App\Helper\ResizeImageHelper;
 use App\Helper\UserSupportHelper;
@@ -110,30 +111,37 @@ class UserController extends BaseController
      *
      * @ParamConverter("auction", class="App:Product", options={"id" = "id"})
      */
-    public function createOrderAction(Request $request, Product $auction)
+    public function createOrderAction(Request $request, Product $auction, DeliveryDetailHelper $deliveryDetailHelper)
     {
-        if($this->isGranted("ROLE_SUPER_ADMIN") || !$this->isGranted("ROLE_USER") || $this->getUser()->getId() !== $auction->getWinner()->getId()){
+        if($this->isGranted("ROLE_SUPER_ADMIN") || !$this->isGranted("ROLE_USER")){
             return $this->redirectToRoute("list_products");
         }
 
-        $isCreateAction = !($auction->getDeliveryDetail() instanceof ProductDeliveryDetail);
-        $deliveryDetail = $isCreateAction ? new ProductDeliveryDetail() : $auction->getDeliveryDetail();
+        $em = $this->getDoctrine()->getManager();
+
+        $currentDeliveryDetail = $em->getRepository(ProductDeliveryDetail::class)->findOneBy(["product" => $auction, "user" => $this->getUser()]);
+
+        $isCreateAction = !($currentDeliveryDetail instanceof ProductDeliveryDetail);
+        $deliveryDetail = $isCreateAction ? new ProductDeliveryDetail() : $currentDeliveryDetail;
         $userDeliveryDetail = $this->getUser()->getDeliveryDetail();
 
         if($isCreateAction && $userDeliveryDetail instanceof UserDeliveryDetail) {
             $deliveryDetail->setUserDeliveryDetail($userDeliveryDetail);
         }
 
+        if($isCreateAction){
+            $deliveryDetail->setCost($deliveryDetailHelper->getUserCostForAuction($this->getUser(), $auction));
+        }
+
         $form = $this->createForm(ProductDeliveryType::class, $deliveryDetail);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $link = $this->getPaymentLink($deliveryDetail->getPayment());
 
             if($isCreateAction) {
                 $em->persist($deliveryDetail);
-                $auction->setDeliveryDetail($deliveryDetail);
+                $auction->addDeliveryDetail($deliveryDetail);
             }
 
             $em->flush();
@@ -143,12 +151,14 @@ class UserController extends BaseController
                 "auction" => $auction,
                 "goodOrder" => true,
                 "link" => $link,
+                "cost" => $deliveryDetail->getCost(),
             ]);
         }
 
         return $this->render('client/profile/create-order.html.twig', [
             "form" => $form->createView(),
             "auction" => $auction,
+            "cost" => $deliveryDetail->getCost(),
         ]);
     }
 
