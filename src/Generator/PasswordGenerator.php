@@ -13,6 +13,17 @@ class PasswordGenerator
      *
      * @return string
      */
+    public function generateNumberWordCode($count = 8){
+        $chars = 'abcdeifghijklmnopqrstyzABCDEFGHIKLMNOPQRSTYVWZ1234567890';
+
+        return $this->getUniqueCode($count, $chars);
+    }
+
+    /**
+     * @param int $count
+     *
+     * @return string
+     */
     public function generatePassword($count = 8){
         $chars = 'abcdeifghijklmnopqrstyz=ABCDEFGHIKLMNO+PQRSTYVWZ123456789!';
 

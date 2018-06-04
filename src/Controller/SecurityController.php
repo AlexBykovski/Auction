@@ -74,6 +74,12 @@ class SecurityController extends BaseController
             $user->setStakeDetail($stakeDetail);
             $user->setPassword($password);
 
+            if($request->query->has("ref") && ($refCode = $request->query->get("ref"))) {
+                $registrationHelper->addReferrer($refCode, $user);
+            }
+
+            $registrationHelper->addReferralCode($user);
+
             $em->persist($stakeBalance);
             $em->persist($user);
             $em->flush();

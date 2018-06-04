@@ -220,6 +220,15 @@
                                 <div id="lk-profile-info-save-btn-wrap">
                                     {{ form_widget(form.submit, {attr: {class: 'bttn bttn-sm bttn-rounded bttn-red'}, label: 'Сохранить'}) }}
                                 </div>
+
+                                <div class="profile-data-block" style="padding-bottom: 25px;">
+                                    <div class="profile-data-set" style="display: block;">
+                                        <fieldset class="form-group">
+                                            <label class="fg-label" for="referral_link">Реферальная ссылка</label>
+                                            <input type="string" id="referral_link" name="referral_link"  class="fg-input input-block" value="{{ app.request.schemeAndHttpHost ~ '?ref=' ~ user.referralCode }}" disabled>
+                                        </fieldset>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
