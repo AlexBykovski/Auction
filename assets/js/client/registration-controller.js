@@ -4,6 +4,7 @@
     appAuction.controller('RegistrationController', ['$scope', '$rootScope', '$http', '$sce', function($scope, $rootScope, $http, $sce) {
         var self = this;
         var registrationSelector = "#registration-form";
+        var baseUrl = "/registration";
         this.registrationForm = "";
 
         function request(url, data, callback) {
@@ -22,7 +23,7 @@
         function showRegisterPopup() {
             openPopup();
 
-            request("/registration", null, function (response) {
+            request(baseUrl, null, function (response) {
                 self.registrationForm = $sce.trustAsHtml(response.data);
 
                 handleRegistration();
@@ -40,10 +41,11 @@
                     $(registrationSelector).off().on("submit", function(e) {
                         e.preventDefault();
                         var data = $(registrationSelector).serialize();
+                        var url = $rootScope.referralCode ? baseUrl + "?ref=" + $rootScope.referralCode : baseUrl;
 
                         angular.element(registrationSelector).find("button[type=submit]").prop("disabled", true);
 
-                        request("/registration", data, function (response) {
+                        request(url, data, function (response) {
                             if(response.data.success){
                                 $rootScope.$broadcast('user-logged-in', {user: response.data.user});
                                 closePopup();

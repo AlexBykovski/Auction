@@ -68,3 +68,10 @@ services:
         tags:
             - { name: sonata.admin, group: Общее, manager_type: orm, label: Бонусы }
         public: true
+
+    admin.referral.referral_system:
+        class: App\Admin\ReferralSystemAdmin
+        arguments: [~, App\Entity\ReferralSystem, ~]
+        tags:
+            - { name: sonata.admin, group: Реферальная система, manager_type: orm, label: Настройка }
+        public: true
