@@ -127,12 +127,13 @@ class CheckFinishProductCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
         $product = $autoStake->getAuction();
 
-        $autoStake->spendOneStake();
+        $typeStake = $autoStake->spendOneStake();
 
         $stakeExpense = new StakeExpense();
         $stakeExpense->setCount(1);
         $stakeExpense->setProduct($product);
         $stakeExpense->setStakeDetail($autoStake->getStakeDetail());
+        $stakeExpense->setType($typeStake);
         $product->setPotentialWinner($autoStake->getStakeDetail()->getUser());
         $product->setCost($product->getCost() + 0.1);
 

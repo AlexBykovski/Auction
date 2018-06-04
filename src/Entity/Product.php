@@ -75,11 +75,12 @@ class Product
     private $potentialWinner;
 
     /**
-     * One Product has One ProductDeliveryDetail.
-     * @ORM\OneToOne(targetEntity="ProductDeliveryDetail")
-     * @ORM\JoinColumn(name="delivery_detail_id", referencedColumnName="id", onDelete="cascade")
+     * @var ArrayCollection
+     *
+     * One Product has Many ProductDeliveryDetail.
+     * @ORM\OneToMany(targetEntity="ProductDeliveryDetail", mappedBy="product")
      */
-    private $deliveryDetail;
+    private $deliveryDetails;
 
     /**
      * One Product has Many StakeExpenses.
@@ -110,6 +111,11 @@ class Product
      */
     private $autoStakes;
 
+    /**
+     * @ORM\Column(type="float", options={"default" : 0}, nullable=false)
+     */
+    private $buyCost = 0;
+
     static $allCategories = [
         'apple' => 'apple',
         //'детские товары' => 'child',
@@ -127,6 +133,7 @@ class Product
     public function __construct()
     {
         $this->stakeExpenses = new ArrayCollection();
+        $this->deliveryDetails = new ArrayCollection();
     }
 
 
@@ -306,19 +313,28 @@ class Product
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
-    public function getDeliveryDetail()
+    public function getDeliveryDetails(): ArrayCollection
     {
-        return $this->deliveryDetail;
+        return $this->deliveryDetails;
     }
 
     /**
-     * @param mixed $deliveryDetail
+     * @param ArrayCollection $deliveryDetails
      */
-    public function setDeliveryDetail($deliveryDetail)
+    public function setDeliveryDetails(ArrayCollection $deliveryDetails): void
     {
-        $this->deliveryDetail = $deliveryDetail;
+        $this->deliveryDetails = $deliveryDetails;
+    }
+
+    public function addDeliveryDetail(ProductDeliveryDetail $deliveryDetail)
+    {
+        if(!($this->deliveryDetails instanceof ArrayCollection)){
+            $this->setDeliveryDetails(new ArrayCollection());
+        }
+
+        $this->deliveryDetails->add($deliveryDetail);
     }
 
     /**
@@ -400,6 +416,23 @@ class Product
     {
         $this->potentialWinner = $potentialWinner;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getBuyCost()
+    {
+        return $this->buyCost;
+    }
+
+    /**
+     * @param mixed $buyCost
+     */
+    public function setBuyCost($buyCost): void
+    {
+        $this->buyCost = $buyCost;
+    }
+
 
     public function toArrayMainPage($withAutoStake = false)
     {

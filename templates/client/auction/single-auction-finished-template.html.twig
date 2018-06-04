@@ -23,7 +23,7 @@
         <div class="offer-controls">
             {% if not auction.winner %}
                 <a href="" class="bttn bttn-sm bttn-silver bttn-rounded">Не состоялся</a>
-            {% elseif auction.deliveryDetail or not app.user or auction.winner.id != app.user.id %}
+            {% elseif auction.endAt %}
                 <a href="" class="bttn bttn-sm bttn-silver bttn-rounded">Завершено</a>
             {% else %}
                 <a href="{{ path("profile_create_order", {id: auction.id}) }}" class="bttn bttn-sm bttn-green bttn-rounded">Оформить</a>

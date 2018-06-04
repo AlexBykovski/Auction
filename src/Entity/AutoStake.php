@@ -233,11 +233,10 @@ class AutoStake
 
     public function spendOneStake()
     {
-        //--$this->count;
-
-        //$this->balance->spendOneStake();
-
+        --$this->count;
         $this->updatedAt = new DateTime();
+
+        return $this->balance->spendOneStake();
     }
 
     public function addStakesFromUser(int $count)

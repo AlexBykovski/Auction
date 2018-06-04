@@ -36,11 +36,20 @@ class StakeExpense
     private $product;
 
     /**
+     * @var StakeDetail
+     *
      * Many StakeExpenses have One StakeDetail.
      * @ORM\ManyToOne(targetEntity="StakeDetail", inversedBy="expenses")
      * @ORM\JoinColumn(name="stake_detail_id", referencedColumnName="id")
      */
     private $stakeDetail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $type;
 
     /**
      * StakeExpense constructor.
@@ -115,18 +124,34 @@ class StakeExpense
     }
 
     /**
-     * @return mixed
+     * @return StakeDetail
      */
-    public function getStakeDetail()
+    public function getStakeDetail(): StakeDetail
     {
         return $this->stakeDetail;
     }
 
     /**
-     * @param mixed $stakeDetail
+     * @param StakeDetail $stakeDetail
      */
-    public function setStakeDetail($stakeDetail)
+    public function setStakeDetail(StakeDetail $stakeDetail): void
     {
         $this->stakeDetail = $stakeDetail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
+    {
+        $this->type = $type;
     }
 }

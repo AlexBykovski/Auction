@@ -184,7 +184,7 @@ class StakeDetail
     {
         --$this->count;
 
-        $this->stakeBalance->spendOneStake();
+        return $this->stakeBalance->spendOneStake();
     }
 
     public function addStakes(string $type, int $count)

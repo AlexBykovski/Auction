@@ -57,6 +57,10 @@ services:
         class:  App\Helper\StakeHelper
         arguments: ['@doctrine.orm.entity_manager']
 
+    app.helper.deivery_detail_helper:
+        class:  App\Helper\DeliveryDetailHelper
+        arguments: ['@doctrine.orm.entity_manager']
+
     app.helper.resize_image_helper:
         class:  App\Helper\ResizeImageHelper
         arguments: ['@app.file_upload', '%upload_directory%']
