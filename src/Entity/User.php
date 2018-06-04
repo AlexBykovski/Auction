@@ -147,7 +147,7 @@ class User extends BaseUser
      * @var ArrayCollection
      *
      * One User has Many ProductDeliveryDetail.
-     * @ORM\OneToOne(targetEntity="ProductDeliveryDetail", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="ProductDeliveryDetail", mappedBy="user")
      */
     private $productDeliveryDetails;
 
