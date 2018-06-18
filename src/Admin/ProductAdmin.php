@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class ProductAdmin extends AbstractAdmin
 {
@@ -56,14 +57,24 @@ class ProductAdmin extends AbstractAdmin
             ["help" => $isEditAction ? $this->helper->getImagesHelp($goods->getPhotos()) : ""]);
         $formMapper->add('cost', IntegerType::class, ['label' => 'Стоимость', 'required' => true]);
         $formMapper->add('buyCost', IntegerType::class, ['label' => 'Стоимость для покупки', 'required' => true]);
-        $formMapper->add('characteristics', CKEditorType::class, ['label' => 'Характеристики', 'required' => true]);
+        $formMapper->add('characteristics', CKEditorType::class, [
+            'label' => 'Характеристики',
+            'required' => true,
+            'constraints' => [
+                new NotNull(['message' => 'Введите характеристику']),
+            ]]);
         $formMapper->add('startAt', DateTimeType::class, [
             'label' => 'Начало',
             'widget' => 'single_text',
             'format' => 'yyyy.MM.dd HH:mm:ss',
             'required' => true
         ], ["help" => "<span>Формат гггг.мм.дд чч:мм:сс</span>"]);
-        $formMapper->add('conditions', CKEditorType::class, ['label' => 'Условия ', 'required' => true]);
+        $formMapper->add('conditions', CKEditorType::class, [
+            'label' => 'Условия ',
+            'required' => true,
+            'constraints' => [
+                new NotNull(['message' => 'Введите условия']),
+            ]]);
         $formMapper->add('categories', ChoiceType::class, [
             'label' => 'Категории',
             "choices" => Product::$allCategories,
