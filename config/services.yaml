@@ -6,7 +6,7 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'ru'
-    upload_directory: '%kernel.project_dir%/public/images'
+    upload_directory: '%kernel.project_dir%/public_html/images'
     upload_image_directory: '/images/'
     secret: '%env(APP_SECRET)%'
     jwt_private_key_path: './jwt/private.pem' # ssh private key path
