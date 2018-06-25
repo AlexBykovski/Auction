@@ -432,4 +432,9 @@ class User extends BaseUser
             "photo" => $this->photo ?: self::DEFAULT_PHOTO
         ];
     }
+
+    public function getFullName()
+    {
+       return $this->lastName . ' ' . $this->firstName;
+    }
 }
