@@ -168,6 +168,8 @@
                                                     <div style="text-align: center; font-size: 16px; font-weight: 700;">Скоро начало</div>
                                                 </div>
                                                 <div ng-show="auction.isProcessing">
+                                                    <div class="offer-winner-name" style="color: #000;" ng-show="auction.lastUser">{{ '{{ auction.lastUser }}' }}</div>
+                                                    <div class="offer-winner-name" style="color: #000;" ng-hide="auction.lastUser">&nbsp;</div>
                                                     <div class="offer-rate-sum-box">{{ '{{ auction.cost }}' }} руб.</div>
                                                     <div class="offer-time-to-end-box"><div id="time-countdown-{{ '{{ auction.id }}' }}" element-key="{{ '{{ auction.id }}' }}" class="time-countdown"></div></div>
                                                 </div>
