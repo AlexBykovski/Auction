@@ -457,6 +457,7 @@ class Product
         }
         else{
             $parameters["timeEnd"] = $this->getTimer()->getEndTimeInMS() - $now->getTimestamp() * 1000;
+            $parameters["lastUser"] = $this->potentialWinner instanceof User ? $this->potentialWinner->getUsername() : "";
         }
 
         if($withAutoStake){
