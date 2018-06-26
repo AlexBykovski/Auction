@@ -13,6 +13,11 @@
                             <h4>Ваш баланс ставок</h4>
                         </div>
 
+                        <div id="lk-buy-bets-btn-wrap">
+                            <span style="padding-right: 128px;" class="user-balance-wrap" ng-show="app.isUserLoggedIn()">ВАШ БАЛАНС: <span id="bet-count" ng-bind="app.getCurrentUser().stakes"></span> ставок</span>
+                            <a href="{{ path("buy_stakes") }}" class="bttn bttn-sm bttn-rounded bttn-luminous-red">Купить ставки</a>
+                        </div>
+
                         <div class="lk-bets-charge-off-wrap">
                             <h4 class="block-title">Списание ставок</h4>
 
@@ -63,10 +68,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-
-                        <div id="lk-buy-bets-btn-wrap">
-                            <a href="{{ path("buy_stakes") }}" class="bttn bttn-sm bttn-rounded bttn-luminous-red">Купить ставки</a>
                         </div>
 
                     </div>
