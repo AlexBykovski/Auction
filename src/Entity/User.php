@@ -370,9 +370,9 @@ class User extends BaseUser
     }
 
     /**
-     * @return ArrayCollection
+     * @return mixed
      */
-    public function getReferrals(): ArrayCollection
+    public function getReferrals()
     {
         return $this->referrals;
     }

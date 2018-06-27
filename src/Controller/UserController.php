@@ -212,6 +212,7 @@ class UserController extends BaseController
 
         return $this->render('client/profile/private-data.html.twig', [
             "form" => $form->createView(),
+            "referrals" => $user->getReferrals(),
         ]);
     }
 
