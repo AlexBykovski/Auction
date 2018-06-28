@@ -31,6 +31,8 @@ class DeliveryDetailHelper
         $stakeExpenses = $this->em->getRepository(StakeExpense::class)->findAllPayableStakes($auction, $user);
         $discount = count($stakeExpenses) * StakeBalance::STAKE_COST;
 
-        return number_format($auction->getBuyCost() - $discount, 2);
+        $formattedCost = number_format($auction->getBuyCost() - $discount, 2);
+
+        return $formattedCost > 0 ? $formattedCost : 0;
     }
 }

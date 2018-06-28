@@ -7,6 +7,7 @@ use App\Entity\BonusPage;
 use App\Upload\FileUpload;
 use App\Form\BonusForm;
 use Doctrine\ORM\EntityManagerInterface;
+use Hillrange\CKEditor\Form\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -32,7 +33,7 @@ class BonusPageAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('titleDescription', TextType::class, ['label' => 'Заголовок', 'required' => false]);
-        $formMapper->add('description', TextAreaType::class, ['label' => 'Описание', 'required' => false]);
+        $formMapper->add('description', CKEditorType::class, ['label' => 'Описание', 'required' => false]);
         $formMapper->add('titleBonuses', TextType::class, ['label' => 'Заголовок бонусов', 'required' => false]);
         $formMapper->add('bonuses', CollectionType::class, [
             'entry_type' => BonusForm::class,

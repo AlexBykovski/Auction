@@ -370,9 +370,9 @@ class User extends BaseUser
     }
 
     /**
-     * @return ArrayCollection
+     * @return mixed
      */
-    public function getReferrals(): ArrayCollection
+    public function getReferrals()
     {
         return $this->referrals;
     }
@@ -431,5 +431,10 @@ class User extends BaseUser
             "stakes" => $stakeDetail instanceof StakeDetail ? $stakeDetail->getCount() : 0,
             "photo" => $this->photo ?: self::DEFAULT_PHOTO
         ];
+    }
+
+    public function getFullName()
+    {
+       return $this->lastName . ' ' . $this->firstName;
     }
 }
