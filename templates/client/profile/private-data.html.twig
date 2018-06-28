@@ -221,11 +221,27 @@
                                     {{ form_widget(form.submit, {attr: {class: 'bttn bttn-sm bttn-rounded bttn-red'}, label: 'Сохранить'}) }}
                                 </div>
 
-                                <div class="profile-data-block" style="padding-bottom: 25px;">
+                                <div class="profile-data-block">
                                     <div class="profile-data-set" style="display: block;">
                                         <fieldset class="form-group">
                                             <label class="fg-label" for="referral_link">Реферальная ссылка</label>
-                                            <input type="string" id="referral_link" name="referral_link"  class="fg-input input-block" value="{{ app.request.schemeAndHttpHost ~ '?ref=' ~ user.referralCode }}" disabled>
+                                            <input type="text" id="referral_link" name="referral_link"  class="fg-input input-block" value="{{ app.request.schemeAndHttpHost ~ '?ref=' ~ user.referralCode }}" disabled>
+                                            <span class="fg-label" style="padding-top: 10px;">Количество рефералов - {{ referrals | length }}</span>
+                                        </fieldset>
+                                    </div>
+                                </div>
+
+                                <div class="profile-data-block" style="padding-bottom: 25px;">
+                                    <div class="block-title">
+                                        Рефералы
+                                        <span class="title-icon"><i class="fa fa-angle-down"></i></span>
+                                    </div>
+
+                                    <div class="profile-data-set">
+                                        <fieldset class="form-group">
+                                            {% for referral in referrals %}
+                                                <span class="fg-label">{{ referral.username }} - {{ referral.lastLogin | date("d/m/Y H:i") }}</span>
+                                            {% endfor %}
                                         </fieldset>
                                     </div>
                                 </div>
