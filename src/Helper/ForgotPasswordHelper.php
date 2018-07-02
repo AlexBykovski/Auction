@@ -154,6 +154,7 @@ class ForgotPasswordHelper
     {
         $message = (new \Swift_Message('Recovery password'))
             ->setTo($forgotPassword->getUser()->getEmail())
+            ->addFrom("info@lucky-deal.ru")
             ->setBody(
                 "Код для восстановления пароля: " . $forgotPassword->getCode()
             );

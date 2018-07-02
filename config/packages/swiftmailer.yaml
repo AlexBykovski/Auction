@@ -11,7 +11,5 @@ swiftmailer:
     host:      'smtp.beget.com'
     username:  'info@lucky-deal.ru'
     port : '2525'
-    encryption: ~
     password:  'fxGwv3HV'
-    spool:     { type: memory }
     sender_address: "info@lucky-deal.ru"
