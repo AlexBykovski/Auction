@@ -14,3 +14,4 @@ swiftmailer:
     encryption: ~
     password:  'fxGwv3HV'
     spool:     { type: memory }
+    sender_address: "info@lucky-deal.ru"
