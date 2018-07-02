@@ -63,7 +63,7 @@ class UserSupportHelper
     protected function sendEmail(SupportQuestion $question)
     {
         $message = (new \Swift_Message('Support User Question'))
-            ->setTo('bykovski.free@gmail.com')
+            ->setTo('info@lucky-deal.ru')
             ->setBody(
                 $question->getQuestion()
             );
