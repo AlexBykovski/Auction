@@ -4,6 +4,13 @@
 
 swiftmailer:
 #    disable_delivery: false
-    url: 'gmail://bykovski.free@gmail.com:15397715@localhost?encryption=tls&auth_mode=oauth'
-    spool: { type: memory }
-    sender_address: "bykovski.free@gmail.com"
+    #url: 'gmail://bykovski.free@gmail.com:15397715@localhost?encryption=tls&auth_mode=oauth'
+    #spool: { type: memory }
+    #sender_address: "info@lucky-deal.ru"
+    transport: 'smtp'
+    host:      'smtp.beget.com'
+    username:  'info@lucky-deal.ru'
+    port : '2525'
+    encryption: ~
+    password:  'fxGwv3HV'
+    spool:     { type: memory }
