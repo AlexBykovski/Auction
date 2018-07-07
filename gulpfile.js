@@ -16,8 +16,8 @@ var gulp           = require('gulp'),
     runSequence    = require('run-sequence');
 
 var projectDir = 'assets';
-var projectDistDir = 'public/build';
-var projectDistImageDir = 'public/images/default';
+var projectDistDir = 'public-html/build';
+var projectDistImageDir = 'public-html/images/default';
 
 //gulp.task('browser-sync', function () {
 //    browserSync({
