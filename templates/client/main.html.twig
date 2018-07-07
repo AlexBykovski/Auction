@@ -149,7 +149,7 @@
 
                             <div class="product-offers-list product-offers-list-main">
                                 <div class="row">
-                                    <div class="col-sm-6 col-md-4" ng-repeat="auction in main.currentAuctions">
+                                    <div class="col-sm-6 col-md-4" ng-repeat="auction in main.currentAuctions | orderObjectBy:'sortStartAt':false:true:'id'">
 
                                         {#@@todo product block#}
                                         <div class="product-offer card-box">
