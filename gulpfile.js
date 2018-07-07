@@ -89,8 +89,8 @@ gulp.task('client-js', function () {
             projectDir + '/js/client/directive/file-upload-cancel-directive.js',
             projectDir + '/js/client/directive/show-cut-image-directive.js',
             projectDir + '/js/client/autostake-controller.js',
-            projectDir + '/js/client/forgot-password-controller.js',
             projectDir + '/js/client/filter/order-object-by-filter.js',
+            projectDir + '/js/client/forgot-password-controller.js',
             //projectDir + '/js/client/service/web-socket-service.js'
         ])
         .pipe(concat('client.min.js'))
