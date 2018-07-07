@@ -446,6 +446,7 @@ class Product
             "isProcessing" => !$this->endAt && $this->startAt <= $now,
             "isFinish" => $this->endAt instanceof DateTime,
             "isSoon" => !$this->endAt && $this->startAt > $now,
+            "sortStartAt" => $this->startAt->getTimestamp()
         ];
 
         if($parameters["isFinish"]){
