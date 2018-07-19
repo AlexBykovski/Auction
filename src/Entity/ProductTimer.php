@@ -25,7 +25,7 @@ class ProductTimer
     /**
      * One ProductTimer has One Product.
      * @ORM\OneToOne(targetEntity="Product", inversedBy="timer")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="cascade")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $product;
 

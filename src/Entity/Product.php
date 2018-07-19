@@ -96,7 +96,7 @@ class Product
     /**
      * One Product has One ProductTimer.
      * @ORM\OneToOne(targetEntity="ProductTimer", mappedBy="product", cascade={"persist"})
-     * @ORM\JoinColumn(name="timer_id", referencedColumnName="id", onDelete="cascade")
+     * @ORM\JoinColumn(name="timer_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $timer;
 
