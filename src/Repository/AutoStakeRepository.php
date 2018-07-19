@@ -12,13 +12,13 @@ class AutoStakeRepository extends EntityRepository
      */
     public function findStarted()
     {
-        return $this->createQueryBuilder('as')
-            ->select('as')
-            ->innerJoin('as.auction', 'p')
+        return $this->createQueryBuilder('ast')
+            ->select('ast')
+            ->innerJoin('ast.auction', 'p')
             ->where("p.endAt IS NULL")
             ->andWhere("p.startAt < :now")
             ->setParameter("now", new DateTime())
-            ->orderBy("as.updatedAt", "ASC")
+            ->orderBy("ast.updatedAt", "ASC")
             ->getQuery()
             ->getResult();
     }
