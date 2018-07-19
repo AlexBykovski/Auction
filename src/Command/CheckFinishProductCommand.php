@@ -51,7 +51,7 @@ class CheckFinishProductCommand extends ContainerAwareCommand
 
         $em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
 
-        $unGroupedAutoStakes = $em->getRepository(AutoStake::class)->findBy([], ["updatedAt" => "ASC"]);
+        $unGroupedAutoStakes = $em->getRepository(AutoStake::class)->findStarted();
         $groupedAutoStakes = $this->groupAutoStakesByAuction($unGroupedAutoStakes);
 
         foreach($groupedAutoStakes as $autoStakes) {
