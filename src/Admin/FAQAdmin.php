@@ -3,7 +3,7 @@
 namespace App\Admin;
 
 use Doctrine\DBAL\Types\TextType;
-use Hillrange\CKEditor\Form\CKEditorType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
