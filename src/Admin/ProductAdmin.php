@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Entity\Product;
+use App\Entity\ProductMetaData;
 use App\Entity\ProductTimer;
 use App\Helper\AdminHelper;
 use App\Upload\FileUpload;
@@ -57,6 +58,10 @@ class ProductAdmin extends AbstractAdmin
             ["help" => $isEditAction ? $this->helper->getImagesHelp($goods->getPhotos()) : ""]);
         $formMapper->add('cost', IntegerType::class, ['label' => 'Стоимость', 'required' => true]);
         $formMapper->add('buyCost', IntegerType::class, ['label' => 'Стоимость для покупки', 'required' => true]);
+        $formMapper->add('metaData.additionalData', TextType::class, [
+            'label' => 'Доп. данные',
+            'required' => false,
+            ]);
         $formMapper->add('characteristics', CKEditorType::class, [
             'label' => 'Характеристики',
             'required' => true,

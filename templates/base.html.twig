@@ -203,7 +203,11 @@
                                         <li class="nav-item"><a href="{{ app.user ? path("list_products") : "" }}">Все аукционы</a></li>
                                         <li class="nav-item"><a href="{{ app.user ? path("profile_my_auctions") : "" }}">Мои аукционы</a></li>
                                         <li class="nav-item"><a href="{{ app.user ? path("profile_private_data") : "" }}">Личный кабинет</a></li>
-                                        <li class="nav-item"><a href="{{ app.user ? path("buy_stakes") : "" }}">Купить ставки</a></li>
+                                        <li class="nav-item">
+                                            <a ng-show="app.isUserLoggedIn()" href="{{ path("buy_stakes") }}">Купить ставки</a>
+                                            <a ng-hide="app.isUserLoggedIn()" href="" ng-click="security.loginClick()">Купить ставки</a>
+                                        </li>
+                                        <a ng-show="app.isUserLoggedIn()" href="{{ path("buy_stakes") }}" class="bttn bttn-sm bttn-rounded bttn-luminous-red">Купить ставки</a>
                                     </ul>
                                 </div>
 

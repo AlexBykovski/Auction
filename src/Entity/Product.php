@@ -116,6 +116,15 @@ class Product
      */
     private $buyCost = 0;
 
+    /**
+     * @var ProductMetaData
+     *
+     * One Product has One ProductMetaData.
+     * @ORM\OneToOne(targetEntity="ProductMetaData", mappedBy="product", cascade={"persist"})
+     * @ORM\JoinColumn(name="meta_data", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $metaData;
+
     static $allCategories = [
         'apple' => 'apple',
         //'детские товары' => 'child',
@@ -511,5 +520,21 @@ class Product
     public function getAllCategories()
     {
         return self::$allCategories;
+    }
+
+    /**
+     * @return ProductMetaData
+     */
+    public function getMetaData(): ProductMetaData
+    {
+        return $this->metaData;
+    }
+
+    /**
+     * @param ProductMetaData $metaData
+     */
+    public function setMetaData(ProductMetaData $metaData): void
+    {
+        $this->metaData = $metaData;
     }
 }
