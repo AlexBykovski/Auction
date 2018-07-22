@@ -143,6 +143,7 @@ class Product
     {
         $this->stakeExpenses = new ArrayCollection();
         $this->deliveryDetails = new ArrayCollection();
+        $this->metaData = new ProductMetaData();
     }
 
 

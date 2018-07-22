@@ -91,13 +91,19 @@ class ProductAdmin extends AbstractAdmin
 
     public function prePersist($product)
     {
-        $this->uploadFiles($this->getForm(), $product);
+        $form = $this->getForm();
+
+        $this->uploadFiles($form, $product);
 
         $timer = new ProductTimer();
         $timer->setUpdatedAt($product->getStartAt());
         $timer->setProduct($product);
 
         $product->setTimer($timer);
+
+        /** @var ProductMetaData $metaData */
+        $metaData = $product->getMetaData();
+        $metaData->setProduct($product);
     }
 
     public function preUpdate($product)
