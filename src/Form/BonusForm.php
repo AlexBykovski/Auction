@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\Entity\Bonus;
 use App\Helper\AdminHelper;
-use Hillrange\CKEditor\Form\CKEditorType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
