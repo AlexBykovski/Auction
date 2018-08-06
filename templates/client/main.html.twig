@@ -14,10 +14,10 @@
     {% for key, item in allCategories %}
         {% set allCategoriesArray = allCategoriesArray|merge([item]) %}
     {% endfor %}
-
+    {% set currentAuctions = (currentAuctions | json_encode | replace({'"' : '\\"', "'" : "\\'"})) %}
     <main class="main" ng-init="default_image_directory = '{{ default_image_directory }}';
     image_directory = '{{ image_directory }}';
-    main.init('{{ currentAuctions | json_encode }}', '{{ categories | json_encode }}', '{{ times | json_encode }}', '{{ allCategoriesArray | json_encode }}', '{{ allTimesArray | json_encode }}')" ng-controller="MainController as main">
+    main.init('{{ currentAuctions }}', '{{ categories | json_encode }}', '{{ times | json_encode }}', '{{ allCategoriesArray | json_encode }}', '{{ allTimesArray | json_encode }}')" ng-controller="MainController as main">
 
         <section id="header-main-slider-sect">
             <div class="container">
