@@ -109,6 +109,10 @@ class ProductAdmin extends AbstractAdmin
     public function preUpdate($product)
     {
         $this->uploadFiles($this->getForm(), $product);
+
+        /** @var ProductTimer $timer */
+        $timer = $product->getTimer();
+        $timer->setUpdatedAt($product->getStartAt());
     }
 
     protected function configureListFields(ListMapper $listMapper)
