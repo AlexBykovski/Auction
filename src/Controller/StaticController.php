@@ -7,6 +7,7 @@ use App\Entity\AboutUsPage;
 use App\Entity\BonusPage;
 use App\Entity\DeliveryPage;
 use App\Entity\FAQ;
+use App\Entity\TermsOfUsePage;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -76,7 +77,11 @@ class StaticController extends BaseController
      */
     public function termUseShowAction(Request $request)
     {
-        return $this->render('client/static/terms-of-use.html.twig', []);
+        $page = $this->getDoctrine()->getRepository(TermsOfUsePage::class)->findAll()[0];
+
+        return $this->render('client/static/terms-of-use.html.twig', [
+            "page" => $page
+        ]);
     }
 
     /**
